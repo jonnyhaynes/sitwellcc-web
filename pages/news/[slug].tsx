@@ -4,12 +4,6 @@ import imageUrlBuilder from '@sanity/image-url'
 import {PortableText} from '@portabletext/react'
 import client from '../../client'
 
-import { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder';
-
-interface ImageProps extends Omit<React.HTMLProps<HTMLImageElement>, 'src'> {
-    src: string | ImageUrlBuilder;
-  }
-
 function urlFor (source) {
   return imageUrlBuilder(client).image(source)
 }

@@ -7,7 +7,7 @@ const Index = ({posts}) => {
       <div>
         <h1>News</h1>
         {posts.length > 0 && posts.map(
-          ({ _id, title = '', slug = '', publishedAt = '' }) =>
+          ({ _id, title = '', slug = '' as any, publishedAt = '' }) =>
             slug && (
               <li key={_id}>
                 <Link href="/news/[slug]" as={`/news/${slug.current}`}>

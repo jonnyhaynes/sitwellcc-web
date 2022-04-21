@@ -4,6 +4,12 @@ import imageUrlBuilder from '@sanity/image-url'
 import {PortableText} from '@portabletext/react'
 import client from '../../client'
 
+import { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder';
+
+interface ImageProps extends Omit<React.HTMLProps<HTMLImageElement>, 'src'> {
+    src: string | ImageUrlBuilder;
+  }
+
 function urlFor (source) {
   return imageUrlBuilder(client).image(source)
 }
@@ -18,7 +24,7 @@ const ptComponents = {
         <img
           alt={value.alt || ' '}
           loading="lazy"
-          src={urlFor(value).width(320).height(240).fit('max').auto('format')}
+          src={urlFor(value).width(320).height(240).fit('max').auto('format') as any}
         />
       )
     }

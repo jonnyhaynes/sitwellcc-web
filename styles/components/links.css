@@ -1,0 +1,12 @@
+@layer base {
+    a {
+        /* @apply
+            pb-1; */
+        color: theme('colors.green');
+
+        /* &:focus,
+        &:hover {
+            border-bottom: 1px solid theme('colors.yellow');
+        } */
+    }
+}

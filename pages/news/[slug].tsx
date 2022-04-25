@@ -1,5 +1,6 @@
 // [slug].js
 import groq from 'groq'
+import {useRouter} from 'next/router'
 import imageUrlBuilder from '@sanity/image-url'
 import {PortableText} from '@portabletext/react'
 import client from '../../client'
@@ -27,16 +28,22 @@ const ptComponents = {
 
 const Post = ({post}) => {
   const {
-    title = 'Missing title',
-    name = 'Missing name',
+    title = '',
+    author = '',
     categories,
     authorImage,
     body = []
-  } = post
+  } = post;
+
+  const router = useRouter();
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
   return (
     <article>
-      <h1>{title}</h1>
-      <span>By {name}</span>
+      {title && <h1>{title}</h1>}
+      <span>By {author}</span>
       {categories && (
         <ul>
           Posted in
@@ -49,7 +56,7 @@ const Post = ({post}) => {
             src={urlFor(authorImage)
               .width(50)
               .url()}
-            alt={`${name}'s picture`}
+            alt={`${author}'s picture`}
           />
         </div>
       )}
@@ -63,7 +70,7 @@ const Post = ({post}) => {
 
 const query = groq`*[_type == "post" && slug.current == $slug][0]{
   title,
-  "name": author->name,
+  "author": author->name,
   "categories": categories[]->title,
   "authorImage": author->image,
   body

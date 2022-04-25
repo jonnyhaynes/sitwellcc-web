@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import groq from 'groq';
-import client from '../../client';
+import client from '../client';
 
-const Index = ({posts}) => {
+const News = ({posts}) => {
     return (
       <div>
         <h1>News</h1>
@@ -32,4 +32,4 @@ export async function getStaticProps() {
     }
 }
 
-export default Index
+export default News

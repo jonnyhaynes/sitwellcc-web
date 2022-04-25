@@ -1,0 +1,30 @@
+.strava h2 {
+    @apply
+        text-xs
+        opacity-50
+        mb-3;
+}
+
+.list-stats {
+    @apply
+        grid
+        grid-cols-2
+        gap-2.5;
+
+    .stat-subtext {
+        @apply
+            text-xs
+            uppercase
+            block;
+    }
+
+    .stat-text {
+        @apply
+            text-xl
+            uppercase;
+    }
+
+    abbr {
+        text-decoration: none;
+    }
+}

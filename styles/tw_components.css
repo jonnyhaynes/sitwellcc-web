@@ -1,0 +1,5 @@
+/* Importing from this css file keeps the order correct using postcss import */
+
+/* purgecss start ignore */
+@tailwind components;
+/* purgecss end ignore */

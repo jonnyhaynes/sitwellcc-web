@@ -6,3 +6,4 @@ export default sanityClient({
   apiVersion: '2022-04-20',
   useCdn: true
 })
+

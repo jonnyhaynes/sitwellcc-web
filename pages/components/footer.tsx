@@ -30,7 +30,7 @@ const Footer = () => {
                 </section>
                 <section className="copyright">
                     <p className="w-full text-sm text-center">&copy; { date } Sitwell Cycling Club and its members. Sitwell Cycling Club is a British Cycling Affiliated Go-Ride Club, and is affiliated to Cycling Time Trials.</p>
-                    <p className="w-full text-sm text-center mb-10">A <a href="https://www.colouringcode.com">Colouring Code</a> design and build. Powered by <a href="https://m.do.co/c/4ced04d9883d">Digital Ocean</a>. Sitwell CC Crest expertly crafted by Steve Smith.</p>
+                    <p className="w-full text-sm text-center mb-10">A <a href="https://www.colouringcode.com">Colouring Code</a> design and build. Powered by <a href="https://nextjs.org/">Next.js</a> and <a href="https://vercel.com/">Vercel</a>. Sitwell CC Crest expertly crafted by <a href="https://stvsmth.co.uk/">Steve Smith</a>.</p>
                 </section>
                 <section className="logos flex flex-row flex-wrap w-full">
                     <div className="flex flex-row justify-center w-full lg:w-2/5 mb-10 lg:mb-0 lg:justify-end">

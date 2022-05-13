@@ -1,6 +1,8 @@
-import Head from 'next/head'
+import Head from 'next/head';
 
-const Coaching = () => {
+import type { NextPage } from 'next';
+
+const Coaching: NextPage = () => {
     return (
         <>
             <Head>

@@ -1,8 +1,9 @@
-import Head from 'next/head'
-
+import Head from 'next/head';
 import History from './components/history';
 
-const About = () => {
+import type { NextPage } from 'next';
+
+const About: NextPage = () => {
     return (
         <>
             <Head>

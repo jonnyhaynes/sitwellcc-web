@@ -1,6 +1,8 @@
-import Head from 'next/head'
+import Head from 'next/head';
 
-const Kit = () => {
+import type { NextPage } from 'next';
+
+const Kit: NextPage = () => {
     return (
         <>
             <Head>

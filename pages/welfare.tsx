@@ -1,0 +1,127 @@
+/* eslint-disable @next/next/inline-script-id */
+import Head from 'next/head';
+import Script from 'next/script';
+
+import type { NextPage } from 'next';
+
+const Welfare: NextPage = () => {
+    return (
+        <>
+             <Head>
+                <title>Welfare &amp; Safeguarding // Sitwell Cycling Club</title>
+                <meta name="description" content="We believe everyone is entitled to participate in an enjoyable and safe environment and to be given the chance to experience the fun, challenge and sense of achievement that are inherent to cycling." />
+            </Head>
+            <section className="title w-full px-5 lg:px-10 mb-20">
+                <h1 className="text-6xl font-ropa-bold mb-5">Welfare & Safeguarding</h1>
+                <h2 className="text-3xl font-ropa lg:w-3/4">We believe everyone is entitled to participate in an enjoyable and safe environment and to be given the chance to experience the fun, challenge and sense of achievement that are inherent to cycling.</h2>
+            </section>
+            <section className="w-full px-5 lg:px-10 mb-20 grid lg:grid-cols-3 lg:gap-5">
+                <section className="lg:col-span-2">
+                    <p className="text-sm mb-2">Sitwell Cycling Club is committed to implementing policies and procedures to ensure all those involved comply with the British Cycling standards of good practice, including Code of Conduct.</p>
+                    <section className="mb-2 grid md:grid-cols-2 md:gap-2">
+                        <a href="https://www.britishcycling.org.uk/zuvvi/media/bc_files/rulebook/2018/21._Code_of_Conduct_2021.pdf" className="bg-black bg-opacity-5 p-2.5 inline-flex flex-row items-center">
+                            <img src="/img/pdf.svg" width="30" className="mr-2.5" alt="PDF icon" />
+                            <h3 className="text-sm">British Cycling Code Of Conduct</h3>
+                        </a>
+                    </section>
+                    <p className="text-sm mb-2">All young people and adults at risk are entitled to a duty of care and be protected from abuse. Sitwell Cycling Club is committed to implementing policies and procedures to ensure everyone in the Club accepts their responsibilities to safeguard children and adults at risk from harm and abuse. This means taking action to safeguard and report any concerns about their welfare in accordance with the Club's Safeguarding Children and Young People Policy and Safeguarding Adults Policy.</p>
+                    <section className="mb-2 grid md:grid-cols-2 md:gap-2">
+                        <a href="/downloads/SitwellCyclingClub-SafeguardingChildrenandYoungPeople(A).pdf" className="bg-black bg-opacity-5 p-2.5 inline-flex flex-row items-center mb-2 md:mb-0">
+                            <img src="/img/pdf.svg" width="30" className="mr-2.5" alt="PDF icon" />
+                            <h3 className="text-sm">Sitwell Cycling Club Safeguarding Children & Young People Policy</h3>
+                        </a>
+                        <a href="/downloads/SitwellCyclingClubSafeguardingAdultsPolicyandProcedures(A).pdf" className="bg-black bg-opacity-5 p-2.5 inline-flex flex-row items-center">
+                            <img src="/img/pdf.svg" width="30" className="mr-2.5" alt="PDF icon" />
+                            <h3 className="text-sm">Sitwell Cycling Club Safeguarding Adult Policy</h3>
+                        </a>
+                    </section>
+                    <p className="text-sm">The above Sitwell Cycling Club policies are consistent with British Cycling's Safeguarding Children and Young People Policy / Safeguarding Adults Policy which together with <a href="https://www.britishcycling.org.uk/safeguarding">more information on Safeguarding in general can be found here</a>.</p>
+                </section>
+                <section></section>
+                <section className="lg:col-span-2">
+                    <h2 className="text-2xl font-ropa">Welfare Officers</h2>
+                    <p className="text-sm mb-2">Sitwell Cycling Club has Welfare Officers who are responsible for ensuring that we meet British Cycling's requirements and making sure they are communicated to Members, Coaches, Parents, and Children. Our Welfare Officers will also advise Sitwell Cycling Club Committee on how best to safeguard the welfare of children and adults at risk who are participating in Club activities.</p>
+                    <p className="text-sm mb-2">If you have any concerns about the welfare of children or adults at risk involved in the Club you can contact our Welfare Officers by emailing: <a href="mailto:welfare@sitwell.cc">welfare@sitwell.cc</a></p>
+                    <p className="text-sm mb-2"><strong>The role of a Club Welfare Officer is an advisory role and is not intended to replace, even on a temporary basis, the roles and responsibilities of Parents, Guardians, Responsible Adults or Carers. The final decision as to whether an activity or event which involves young people or adults at risk receives approval remains at all times with the Committee of the Club.</strong></p>
+                    <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 pt-5 mb-5">
+                        <article>
+                            <picture className="block mb-5">
+                                <source srcSet="/img/david.webp" type="image/webp" />
+                                <img src="/img/david.jpg" alt="A portrait photograph of David Hush" />
+                            </picture>
+                            <h3 className="text-xl font-ropa">David Hush</h3>
+                            <p className="text-sm"><a href="https://www.nspcc.org.uk/what-you-can-do/get-expert-training/child-protection-sport-online-course/">Child Protection in Sport Certified</a></p>
+                            <p className="text-sm mb-2.5"><a href="https://www.dbscheck.org/">DBS Checked</a></p>
+                            <a href="mailto:david.hush@sitwell.cc" className="btn">Contact David</a>
+                        </article>
+                    </section>
+                    <p className="text-sm"><strong>British Cycling's Safeguarding Liaison Officer:</strong> <a href="tel:01612742000">0161 274 2000</a>.</p>
+                    <p className="text-sm"><strong>Rotherham Safeguarding Children Partnership:</strong> <a href="http://www.rscp.org.uk/">www.rscp.org.uk</a>.</p>
+                    <p className="text-sm"><strong>South Yorkshire Police:</strong> <a href="https://southyorks.police.uk/">southyorks.police.uk</a>.</p>
+                    <p className="text-sm"><strong>NSPCC:</strong> <a href="tel:08088005000">0808 800 5000</a>.</p>
+                    <p className="text-sm mb-2"><strong>Childline:</strong> <a href="tel:08001111">0800 1111</a> or <a href="https://www.childline.org.uk">www.childline.org.uk</a>.</p>
+                    <section className="mb-2 grid md:grid-cols-2 md:gap-2">
+                        <a href="http://www.rotherhamccg.nhs.uk/Downloads/Safeguarding/2020/Adult%20and%20CYP%20Safeguarding%20flowchart%202020%2009%2015%20no%20contacts.pdf" className="bg-black bg-opacity-5 p-2.5 inline-flex flex-row items-center">
+                            <img src="/img/pdf.svg" width="30" className="mr-2.5" alt="PDF icon" />
+                            <h3 className="text-sm">Rotherham Clinical Commissioning Group Adult And Children & Young People Safeguarding Flowchart</h3>
+                        </a>
+                    </section>
+                </section>
+                <section>
+
+                </section>
+                <section className="lg:col-span-2">
+                    <h2 className="text-2xl font-ropa">Anti-bullying</h2>
+                    <p className="text-sm mb-2">Sitwell Cycling Club are completely opposed to bullying behaviour and will seek to ensure that bullying is not accepted or condoned. Every club member has a right to enjoy their sport free from abuse and bullying. Action will be taken to investigate and respond to any alleged incidents of bullying. All members are required to adhere to the Club's Anti-Bullying Policy.</p>
+                    <section className="mb-2 grid md:grid-cols-2 md:gap-2">
+                        <a href="/downloads/SitwellCyclingClub-SafeguardingAntibullyingPolicy(A).pdf" className="bg-black bg-opacity-5 p-2.5 inline-flex flex-row items-center">
+                            <img src="/img/pdf.svg" width="30" className="mr-2.5" alt="PDF icon" />
+                            <h3 className="text-sm">Sitwell Cycling Club Anti-Bullying Policy</h3>
+                        </a>
+                    </section>
+                    <p className="text-sm"><strong>Kidscape:</strong> <a href="https://www.kidscape.org.uk">www.kidscape.org.uk</a>.</p>
+                    <p className="text-sm"><strong>Anti-Bullying Alliance:</strong> <a href="https://www.anti-bullyingalliance.org.uk">www.anti-bullyingalliance.org.uk</a>.</p>
+                </section>
+                <section>
+
+                </section>
+                <section className="lg:col-span-2">
+                    <h2 className="text-2xl font-ropa">Equality</h2>
+                    <p className="text-sm mb-2">Sitwell Cycling Club positively encourages the involvement of all people, regardless of their gender, age, race, ethnicity, disability, religious belief, sexuality and social/economic status. All club members have a responsibility to respect the rights, dignity and worth of every person, oppose discriminatory behaviour and promote equality of opportunity.</p>
+                    <p className="text-sm mb-2">The Club is committed to everyone having the right to enjoy their cycling in an environment free from threat of intimidation, harassment and abuse.</p>
+                    <p className="text-sm mb-2">Sitwell Cycling Club will also adhere to British Cycling Equality Policy.</p>
+                    <section className="mb-2 grid md:grid-cols-2 md:gap-2">
+                        <a href="https://www.britishcycling.org.uk/zuvvi/media/bc_files/rulebook/2018/20._Equality_Policy_2021.pdf" className="bg-black bg-opacity-5 p-2.5 inline-flex flex-row items-center">
+                            <img src="/img/pdf.svg" width="30" className="mr-2.5" alt="PDF icon" />
+                            <h3 className="text-sm">British Cycling Equality Policy</h3>
+                        </a>
+                    </section>
+                    <p className="text-sm mb-2">The Club will deal with any incidence of discriminatory behaviour seriously, according to club disciplinary procedures. </p>
+                </section>
+                <section>
+
+                </section>
+                <section className="lg:col-span-2">
+                    <h2 className="text-2xl font-ropa">Photography and video</h2>
+                    <p className="text-sm">Photography and video provides an excellent opportunity to celebrate the achievements of our club members. Sitwell Cycling Club, its members and other participants may take photographs and/or video during the course of an event, club run or club social activity for use on the Club's website and social media accounts; some images may be used for local or national publicity purposes. The Club is compliant with <a href="https://www.britishcycling.org.uk/zuvvi/media/bc_files/safeguarding/SG_5.4_Safeguarding_and_Photography.pdf">British Cycling's Safeguarding and Photography guidelines</a>. Photographs and video of our under 18 members will only be used where parental consent has been given. </p>
+                </section>
+                <section>
+
+                </section>
+                <section className="lg:col-span-2">
+                    <h2 className="text-2xl font-ropa">Social Media</h2>
+                    <p className="text-sm mb-2">On becoming a member of the Sitwell Cycling Club you will be invited to join our Slack Members' Forum. This forum provides an excellent opportunity for the Club and its members to promote and keep up-to-date with club events and activities; to celebrate achievements; to share knowledge and seek advice on all things cycling; debate a host of cycling issues; and, to generally catch-up and have a banter with fellow members. All members are required to adhere to the Club's Social Media Policy. </p>
+                    <section className="mb-2 grid md:grid-cols-2 md:gap-2">
+                        <a href="/downloads/SitwellCyclingClub-SafeguardingSocialMediaGuidance(A).pdf" className="bg-black bg-opacity-5 p-2.5 inline-flex flex-row items-center">
+                            <img src="/img/pdf.svg" width="30" className="mr-2.5" alt="PDF icon" />
+                            <h3 className="text-sm">Sitwell Cycling Club Social Media Policy</h3>
+                        </a>
+                    </section>
+                    <p className="text-sm">The Club is compliant with <a href="https://www.britishcycling.org.uk/zuvvi/media/bc_files/safeguarding/SG_5.2_Using_Social_Networking_Services_and_Social_Media.pdf">British Cycling's Safeguarding using Social Networking and Social Media guidelines</a>.</p>
+                </section>
+    </section>
+        </>
+    );
+};
+
+export default Welfare;

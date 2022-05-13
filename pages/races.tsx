@@ -1,6 +1,28 @@
-import Head from 'next/head'
+import { useEffect, useRef, useState } from 'react';
+import Head from 'next/head';
 
-const Races = () => {
+import type { NextPage } from 'next';
+
+const Races: NextPage = () => {
+    const ref = useRef();
+    const [open, toggleOpen] = useState(false);
+    const [content, setContent] = useState(null);
+
+    useEffect(() => {
+        const checkIfClickedOutside = (e) => {
+            if (open && ref.current && !ref.current.contains(e.target)) {
+                toggleOpen(false);
+                setContent(null);
+            }
+        };
+
+        document.addEventListener('click', checkIfClickedOutside);
+
+        return () => {
+            document.removeEventListener('click', checkIfClickedOutside);
+        };
+      }, [open]);
+
     return (
         <>
             <Head>
@@ -192,9 +214,11 @@ const Races = () => {
                 </div>
             </section>
 
-            {/* <section className="fixed top-0 left-0 z-10 flex items-center justify-center w-full h-full bg-black bg-opacity-50" x-show="openmodal">
-                <div className="text-left bg-white w-full md:m-5 lg:m-10 md:max-w-5xl h-full md:h-auto overflow-y-scroll md:overflow-y-hidden" x-ref="modal" @click.away="openmodal = false"></div>
-            </section> */}
+            {open && (
+                <section className="fixed top-0 left-0 z-10 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
+                    <div className="text-left bg-white w-full md:m-5 lg:m-10 md:max-w-5xl h-full md:h-auto overflow-y-scroll md:overflow-y-hidden"></div>
+                </section>
+            )}
         </>
     )
 }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 
 const Header = () => {
     const ref = useRef();
@@ -34,29 +35,35 @@ const Header = () => {
                         </button>
                         <nav className="navigation bg-black lg:w-1/4 absolute left-0 ml-3 lg:ml-6 p-2 lg:p-4 z-20">
                             <ul className="mb-2 lg:mb-4">
-                                <li><a href="/rides" className="text-white block text-3xl font-ropa mb-2">Club rides</a></li>
-                                <li><a href="/coaching" className="text-white block text-3xl font-ropa mb-2">Go-Ride coaching</a></li>
-                                <li><a href="/races" className="text-white block text-3xl font-ropa mb-2">Races</a></li>
-                                <li><a href="/charity" className="text-white block text-3xl font-ropa">Charity work</a></li>
+                                <li><Link href="/rides"><a className="text-white block text-3xl font-ropa mb-2">Club rides</a></Link></li>
+                                <li><Link href="/coaching"><a className="text-white block text-3xl font-ropa mb-2">Go-Ride coaching</a></Link></li>
+                                <li><Link href="/races"><a className="text-white block text-3xl font-ropa mb-2">Races</a></Link></li>
+                                <li><Link href="/charity"><a className="text-white block text-3xl font-ropa">Charity work</a></Link></li>
                             </ul>
                             <ul>
-                                <li><a href="/about" className="text-white block mb-1">About</a></li>
-                                <li><a href="/membership" className="text-white block mb-1">Membership</a></li>
-                                <li><a href="/kit" className="text-white block mb-1">Kit</a></li>
-                                <li><a href="/constitution" className="text-white block mb-1">Constitution</a></li>
-                                <li><a href="/welfare" className="text-white block mb-1">Welfare &amp; Safeguarding</a></li>
-                                {/* <li><a href="/news" className="text-white block mb-1">News</a></li> */}
-                                <li><a href="/contact" className="text-white block mb-4">Contact</a></li>
+                                <li><Link href="/about"><a className="text-white block mb-1">About</a></Link></li>
+                                <li><Link href="/membership"><a className="text-white block mb-1">Membership</a></Link></li>
+                                <li><Link href="/kit"><a className="text-white block mb-1">Kit</a></Link></li>
+                                <li><Link href="/constitution"><a className="text-white block mb-1">Constitution</a></Link></li>
+                                <li><Link href="/welfare"><a className="text-white block mb-1">Welfare &amp; Safeguarding</a></Link></li>
+                                <li><Link href="/news"><a className="text-white block mb-1">News</a></Link></li>
+                                <li><Link href="/contact"><a className="text-white block mb-4">Contact</a></Link></li>
                             </ul>
-                            <a href="/membership" className="btn mb-1.5">Join us today</a>
+                            <Link href="/membership"><a className="btn mb-1.5">Join us today</a></Link>
                         </nav>
                     </div>
                 </div>
                 <div className="flex-grow flex flex-row w-full lg:w-3/5 justify-center order-1 lg:order-2 mb-10 lg:mb-0">
-                    <a href="/" className=""><img src="/img/scc-logotype.svg" alt="Sitwell Cycling Club" width="250" /></a>
+                    <Link href="/">
+                        <a>
+                            <img src="/img/scc-logotype.svg" alt="Sitwell Cycling Club" width="250" />
+                        </a>
+                    </Link>
                 </div>
                 <div className="flex flex-row flex-none w-2/3 lg:w-1/5 content-center justify-end order-3">
-                    <a href="/membership" className="btn btn--large self-center whitespace-nowrap">Join us today</a>
+                    <Link href="/membership">
+                        <a className="btn btn--large self-center whitespace-nowrap">Join us today</a>
+                    </Link>
                     {/* <form className="search-wrapper ml-10">
                         <fieldset className="form bg-black lg:w-1/4 absolute mr-3 lg:mr-6 p-2 lg:p-4">
                             <x-input type="search" className="py-0 w-full focus:ring-transparent" placeholder="Search" />

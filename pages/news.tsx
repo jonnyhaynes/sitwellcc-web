@@ -1,3 +1,5 @@
+import Head from 'next/head';
+
 import Link from 'next/link';
 import groq from 'groq';
 import client from '../client';
@@ -6,22 +8,27 @@ import type { NextPage } from 'next';
 
 const News: NextPage = ({ posts }) => {
     return (
-      <div>
-        <h1>News</h1>
-        {posts.length > 0 && posts.map(
-          ({ _id, title = '', slug = '' as any, publishedAt = '' }) => {
-              return slug && (
-                <li key={_id}>
-                  <Link href="/news/[slug]" as={`/news/${slug.current}`}>
-                    <a>{title}</a>
-                  </Link>{' '}
-                  ({new Date(publishedAt).toDateString()})
-                </li>
-              )
-          }
-
-        )}
-      </div>
+      <>
+        <Head>
+            <title>News // Sitwell Cycling Club</title>
+            <meta name="description" content="Founded 2016. Rotherham Advertiser Sports Awards Club of the Year 2018. 9 social rides a week. Go-Ride Coaching. Meet Brookside Pharmacy, Whiston." />
+        </Head>
+        <ul>
+            {posts.length > 0 && posts.map(
+                ({ _id, title = '', slug = '' as any, publishedAt = '', summary = '' }) => {
+                    return slug && (
+                        <li key={_id}>
+                        <Link href="/news/[slug]" as={`/news/${slug.current}`}>
+                            <a>{title}</a>
+                        </Link>{' '}
+                        ({new Date(publishedAt).toDateString()}){' '}
+                        {summary}
+                        </li>
+                    )
+                }
+            )}
+        </ul>
+      </>
     )
 }
 
@@ -37,4 +44,4 @@ export async function getStaticProps() {
     }
 }
 
-export default News
+export default News;

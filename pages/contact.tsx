@@ -1,8 +1,95 @@
+import {useState} from 'react';
 import Head from 'next/head';
 
 import type { NextPage } from 'next';
 
 const Contact: NextPage = () => {
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [query, setQuery] = useState('');
+    const [message, setMessage] = useState('');
+
+    const [errors, setErrors] = useState({});
+
+    const [buttonText, setButtonText] = useState('Send message');
+
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+
+    const handleValidation = () => {
+        let tempErrors: any = {};
+        let isValid = true;
+
+        if (name.length <= 0) {
+            tempErrors['name'] = true;
+            isValid = false;
+          }
+          if (email.length <= 0) {
+            tempErrors['email'] = true;
+            isValid = false;
+          }
+          if (query.length <= 0) {
+            tempErrors['query'] = true;
+            isValid = false;
+          }
+          if (message.length <= 0) {
+            tempErrors['message'] = true;
+            isValid = false;
+          }
+
+          setErrors({ ...tempErrors });
+          console.log("errors", errors);
+          return isValid;
+    };
+
+    const onSubmit = async (event: any) => {
+        event.preventDefault();
+
+        let isValidForm = handleValidation();
+
+        if (isValidForm) {
+            setButtonText('Sending…');
+
+            const res = await fetch('/api/sendgrid', {
+                body: JSON.stringify({
+                    email,
+                    name,
+                    query,
+                    message,
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+            });
+
+            const { error } = await res.json();
+            if (error) {
+                console.log(error);
+                setShowSuccess(false);
+                setShowError(true);
+
+                resetFormFields();
+                return;
+            }
+
+            setShowSuccess(true);
+            setShowError(false);
+
+            resetFormFields();
+        }
+
+        console.log(email, name, query, message);
+    };
+
+    const resetFormFields = () => {
+        setButtonText('Send message');
+        setEmail('');
+        setName('');
+        setQuery('');
+        setMessage('');
+    }
+
     return (
         <>
             <Head>
@@ -16,41 +103,37 @@ const Contact: NextPage = () => {
             </section>
             <section className="w-full px-5 lg:px-10 mb-5 grid lg:grid-cols-3 lg:gap-5">
                 <section className="lg:col-span-2 mb-5">
-                    {/* @if(session('success'))
-                        <p className="text-green text-sm bg-green bg-opacity-25 px-3.5 py-2 mb-5">Thanks for getting in touch.</p>
-                    @endif
-                    @if($errors->has('name') || $errors->has('email') || $errors->has('query') || $errors->has('info'))
-                        <p className="text-red text-sm bg-red bg-opacity-25 px-3.5 py-2 mb-5">Please correct the errors below.</p>
-                    @endif */}
-                    <form method="POST" action="/contact">
+                    {showSuccess && <p className="text-green text-sm bg-green bg-opacity-25 px-3.5 py-2 mb-5">Thanks for getting in touch.</p>}
+                    {showError && <p className="text-red text-sm bg-red bg-opacity-25 px-3.5 py-2 mb-5">Please correct the errors below.</p>}
+                    <form onSubmit={onSubmit}>
                         <fieldset className="mb-5">
                             <label htmlFor="name" className="block text-sm mb-2">Name</label>
-                            <input name="name" type="text" id="name" aria-describedby="name" className="w-1/2" value="" />
+                            <input name="name" type="text" id="name" aria-describedby="name" className={`w-1/2 ${showError && errors.name ? 'border-red bg-red bg-opacity-25 text-red' : ''}`} value={name} onChange={e => setName(e.target.value)} />
                         </fieldset>
                         <fieldset className="mb-5">
                             <label htmlFor="email" className="block text-sm mb-2">Email address</label>
-                            <input name="email" type="email" id="email" aria-describedby="email" className="w-1/2" value="" />
+                            <input name="email" type="email" id="email" aria-describedby="email" className={`w-1/2 ${showError && errors.email ? 'border-red bg-red bg-opacity-25 text-red' : ''}`} value={email} onChange={e => setEmail(e.target.value)} required />
                         </fieldset>
                         <fieldset className="mb-5">
                             <label htmlFor="query" className="block text-sm mb-2">Query</label>
-                            <select name="query" id="query" aria-describedby="query" className="w-1/2">
+                            <select name="query" id="query" aria-describedby="query" className={`w-1/2 ${showError && errors.query ? 'border-red bg-red bg-opacity-25 text-red' : ''}`} onChange={e => setQuery(e.target.value)} required>
                                 <option value=""></option>
-                                <option value="Club Rides">Club Rides</option>
-                                <option value="Go-Ride coaching">Go-Ride coaching</option>
-                                <option value="Races">Races</option>
-                                <option value="Charity work">Charity work</option>
-                                <option value="Membership">Membership</option>
-                                <option value="Kit">Kit</option>
-                                <option value="Welfare & Safeguarding">Welfare & Safeguarding</option>
-                                <option value="Sponsorship">Sponsorship</option>
-                                <option value="Other">Other</option>
+                                <option value="Club Rides" {...query === 'Club Rides' ? 'selected' : null}>Club Rides</option>
+                                <option value="Go-Ride coaching" {...query === 'Go-Ride coaching' ? 'selected' : null}>Go-Ride coaching</option>
+                                <option value="Races" {...query === 'Races' ? 'selected' : null}>Races</option>
+                                <option value="Charity work" {...query === 'Charity work' ? 'selected' : null}>Charity work</option>
+                                <option value="Membership" {...query === 'Membership' ? 'selected' : null}>Membership</option>
+                                <option value="Kit" {...query === 'Kit' ? 'selected' : null}>Kit</option>
+                                <option value="Welfare & Safeguarding" {...query === 'Welfare & Safeguarding' ? 'selected' : null}>Welfare</option>
+                                <option value="Sponsorship" {...query === 'Sponsorship' ? 'selected' : null}>Sponsorship</option>
+                                <option value="Other" {...query === 'Other' ? 'selected' : null}>Other</option>
                             </select>
                         </fieldset>
                         <fieldset className="mb-5">
                             <label htmlFor="info" className="block text-sm mb-2">Message</label>
-                            <textarea name="info" id="info" rows={5} className="w-full"></textarea>
+                            <textarea name="info" id="info" rows={5} className={`w-full ${showError && errors.message ? 'border-red bg-red bg-opacity-25 text-red' : ''}`} onChange={e => setMessage(e.target.value)} value={message} required />
                         </fieldset>
-                        <button type="submit" className="btn" aria-label="Send message">Send message</button>
+                        <button type="submit" className="btn" aria-label="Send message">{ buttonText }</button>
                     </form>
                 </section>
                 <section className="lg:col-span-2">

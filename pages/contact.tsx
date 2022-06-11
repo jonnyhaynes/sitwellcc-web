@@ -38,7 +38,6 @@ const Contact: NextPage = () => {
           }
 
           setErrors({ ...tempErrors });
-          console.log("errors", errors);
           return isValid;
     };
 
@@ -65,7 +64,6 @@ const Contact: NextPage = () => {
 
             const { error } = await res.json();
             if (error) {
-                console.log(error);
                 setShowSuccess(false);
                 setShowError(true);
 
@@ -78,8 +76,6 @@ const Contact: NextPage = () => {
 
             resetFormFields();
         }
-
-        console.log(email, name, query, message);
     };
 
     const resetFormFields = () => {

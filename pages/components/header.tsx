@@ -6,7 +6,7 @@ const Header = () => {
     const [open, toggleOpen] = useState(false);
 
     useEffect(() => {
-        const checkIfClickedOutside = (e) => {
+        const checkIfClickedOutside = (e: any) => {
             if (open && ref.current && !ref.current.contains(e.target)) {
                 toggleOpen(false);
             }

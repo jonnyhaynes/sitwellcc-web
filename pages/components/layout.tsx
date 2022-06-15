@@ -1,7 +1,11 @@
 import Header from './header'
 import Footer from './footer'
 
-export default function Layout({ children }) {
+type Props = {
+    children: any;
+};
+
+export default function Layout({ children } : Props) {
     return (
         <>
             <Header />

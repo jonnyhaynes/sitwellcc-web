@@ -6,7 +6,11 @@ import client from '../client';
 
 import type { NextPage } from 'next';
 
-const News: NextPage = ({ posts }) => {
+type Props = {
+    posts: [];
+};
+
+const News: NextPage = ({ posts } : Props) => {
     return (
       <>
         <Head>

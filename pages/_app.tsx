@@ -5,7 +5,12 @@ import Layout from './components/layout';
 
 import '../styles/app.css';
 
-const App = ({ Component, pageProps }) => {
+type Props = {
+    Component: any;
+    pageProps: any;
+};
+
+const App = ({ Component, pageProps} : Props) => {
     return (
         <>
             <Head>

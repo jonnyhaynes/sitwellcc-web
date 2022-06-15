@@ -10,7 +10,12 @@ import Strava from './components/strava';
 
 import type { NextPage } from 'next';
 
-const Index: NextPage = ({ announcement, news }) => {
+type Props = {
+    announcement: [];
+    news: [];
+};
+
+const Index: NextPage = ({ announcement, news } : Props) => {
     return (
       <>
         <Head>

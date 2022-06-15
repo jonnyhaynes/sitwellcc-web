@@ -7,7 +7,9 @@ const Header = () => {
 
     useEffect(() => {
         const checkIfClickedOutside = (e: any) => {
-            if (open && ref.current && !ref.current.contains(e.target)) {
+            const currentRef: any = ref.current;
+
+            if (open && currentRef && !currentRef.contains(e.target)) {
                 toggleOpen(false);
             }
         };

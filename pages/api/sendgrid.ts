@@ -1,6 +1,7 @@
 import sendgrid from "@sendgrid/mail";
 
-sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
+const apiKey = process.env.SENDGRID_API_KEY || '';
+sendgrid.setApiKey(apiKey);
 
 async function sendEmail(req: any, res: any) {
     let to = 'team@sitwell.cc';

@@ -4,14 +4,13 @@ import Link from 'next/link';
 import groq from 'groq';
 import client from '../client';
 
-import Instragram from './components/instagram';
+import Instagram from './components/instagram';
 import Twitter from './components/twitter';
 import Strava from './components/strava';
-import Instagram from './components/instagram';
 
 import type { NextPage } from 'next';
 
-const Index: NextPage = ({ news }) => {
+const Index: NextPage = ({ announcement, news }) => {
     return (
       <>
         <Head>
@@ -21,10 +20,16 @@ const Index: NextPage = ({ news }) => {
         <section className="updates grid gap-5 lg:grid-cols-4 px-5 lg:px-10 mb-20">
             <section className="announcements">
                 <h3  className="w-full border-b-8 border-green mb-5 lg:mr-10"><span className="inline-block bg-green text-yellow text-md font-ropa uppercase pt-2 px-3">Announcements</span></h3>
-                <article>
-                    <h2 className="text-3xl font-ropa-bold"><Link href="/"><a className="text-black">COVID-19 &amp; Club rides</a></Link></h2>
-                    <p className="opacity-75">We're pleased to announce that following a change in guidance from British Cycling, the Committee have agreed that club rides will commence on Saturday 1st August.</p>
-                </article>
+                {announcement.length > 0 && announcement.map(
+                    ({ _id, title = '', slug = '' as any, summary = '' }) => {
+                        return slug && (
+                            <article key={_id}>
+                                <h2 className="text-3xl font-ropa-bold"><Link href="/news/[slug]" as={`/news/${slug.current}`}><a className="text-black">{title}</a></Link></h2>
+                                <p className="opacity-75">{ summary }</p>
+                            </article>
+                        )
+                    }
+                )}
             </section>
             <section className="news lg:col-span-3">
                 <h3  className="w-full border-b-8 border-yellow mb-5"><span className="inline-block bg-yellow text-green text-md font-ropa uppercase pt-2 px-3">Don't miss this</span></h3>
@@ -127,11 +132,11 @@ const Index: NextPage = ({ news }) => {
 }
 
 export async function getStaticProps() {
-    const news = await client.fetch(groq`
-      *[_type == "post" && publishedAt < now()] | order(publishedAt desc)
-    `)
+    const announcement = await client.fetch(groq`*[_type == "post" && publishedAt < now() && announcement == true] [0]`);
+    const news = await client.fetch(groq`*[_type == "post" && publishedAt < now() && announcement != true] | order(publishedAt desc) [0...4]`);
     return {
       props: {
+        announcement,
         news
       }
     }

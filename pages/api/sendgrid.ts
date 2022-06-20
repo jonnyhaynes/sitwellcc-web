@@ -3,7 +3,7 @@ import sendgrid from "@sendgrid/mail";
 const apiKey = process.env.SENDGRID_API_KEY || '';
 sendgrid.setApiKey(apiKey);
 
-async function sendEmail(req: any, res: any) {
+const sendEmail = async (req: any, res: any) => {
     let to = 'team@sitwell.cc';
 
     switch (req.body.query) {

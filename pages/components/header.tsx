@@ -1,9 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const Header = () => {
     const ref = useRef();
     const [open, toggleOpen] = useState(false);
+    const router = useRouter();
+
+    const hide = useCallback(() => {
+        toggleOpen(false);
+      }, [toggleOpen]);
 
     useEffect(() => {
         const checkIfClickedOutside = (e: any) => {
@@ -20,6 +27,12 @@ const Header = () => {
             document.removeEventListener('click', checkIfClickedOutside);
         };
       }, [open]);
+
+      useEffect(() => {
+        router.events.on('routeChangeStart', hide);
+
+        return () => router.events.off('routeChangeStart', hide);
+      }, [hide, router.events]);
 
     return (
         <header className="page-header flex-shrink-0 w-full max-w-screen-xl mx-auto mb-20">
@@ -48,7 +61,6 @@ const Header = () => {
                                 <li><Link href="/kit"><a className="text-white block mb-1">Kit</a></Link></li>
                                 <li><Link href="/constitution"><a className="text-white block mb-1">Constitution</a></Link></li>
                                 <li><Link href="/welfare"><a className="text-white block mb-1">Welfare &amp; Safeguarding</a></Link></li>
-                                <li><Link href="/news"><a className="text-white block mb-1">News</a></Link></li>
                                 <li><Link href="/contact"><a className="text-white block mb-4">Contact</a></Link></li>
                             </ul>
                             <Link href="/membership"><a className="btn mb-1.5">Join us today</a></Link>
@@ -58,7 +70,7 @@ const Header = () => {
                 <div className="flex-grow flex flex-row w-full lg:w-3/5 justify-center order-1 lg:order-2 mb-10 lg:mb-0">
                     <Link href="/">
                         <a>
-                            <img src="/img/scc-logotype.svg" alt="Sitwell Cycling Club" width="250" />
+                            <Image src="/img/scc-logotype.svg" alt="Sitwell Cycling Club" width="250" height="75" />
                         </a>
                     </Link>
                 </div>
@@ -66,14 +78,6 @@ const Header = () => {
                     <Link href="/membership">
                         <a className="btn btn--large self-center whitespace-nowrap">Join us today</a>
                     </Link>
-                    {/* <form className="search-wrapper ml-10">
-                        <fieldset className="form bg-black lg:w-1/4 absolute mr-3 lg:mr-6 p-2 lg:p-4">
-                            <x-input type="search" className="py-0 w-full focus:ring-transparent" placeholder="Search" />
-                        </fieldset>
-                        <button type="button" className="search focus:outline-none -mr-2 lg:-mr-4 p-2 lg:p-4 rounded-none relative z-10" aria-label="Search">
-                            <x-magnifying-glass />
-                        </button>
-                    </form> */}
                 </div>
             </div>
         </header>

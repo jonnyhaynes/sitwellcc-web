@@ -19,7 +19,7 @@ const Kit: NextPage<Props> = ({host}) => {
             <section className="title w-full px-5 lg:px-10 mb-20">
                 <h1 className="text-6xl font-ropa-bold mb-5">Kit</h1>
                 <h2 className="text-3xl font-ropa">SCC + Bioracer = &hearts;</h2>
-                <p className="text-sm lg:w-3/4">With a great range of items including casual wear and at a very competitive price point, <a href="https://shop-bioracer.co.uk/">Bioracer</a> have been the club's kit supplier since 2021. After all, if it's good enough for the Belgian, Dutch, German, Team DSM and <a href="https://www.ineosgrenadiers.com/article/ineos-grenadiers-and-castelli-part-ways-after-five-successful-seasons">Ineos Grenadiers</a> cycling teams as well as local team <a href="https://www.cyclingsheffield.com/bioracer/">Cycling Sheffield</a>, then it's good enough for us.</p>
+                <p className="text-sm lg:w-3/4">With a great range of items including casual wear and at a very competitive price point, <a href="https://shop-bioracer.co.uk/">Bioracer</a> have been the club&apos;s kit supplier since 2021. After all, if it&apos;s good enough for the Belgian, Dutch, German, Team DSM and <a href="https://www.ineosgrenadiers.com/article/ineos-grenadiers-and-castelli-part-ways-after-five-successful-seasons">Ineos Grenadiers</a> cycling teams as well as local team <a href="https://www.cyclingsheffield.com/bioracer/">Cycling Sheffield</a>, then it&apos;s good enough for us.</p>
             </section>
             <section className="races w-full px-5 lg:px-10 mb-20 grid lg:grid-cols-3 lg:gap-5">
                 <section className="lg:col-start-3 mb-10 lg:mb-0">

@@ -1,6 +1,7 @@
 // [slug].js
 import groq from 'groq'
 import {useRouter} from 'next/router'
+import Image from 'next/image';
 import imageUrlBuilder from '@sanity/image-url'
 import {PortableText} from '@portabletext/react'
 import client from '../../client'
@@ -16,11 +17,7 @@ const ptComponents = {
         return null
       }
       return (
-        <img
-          alt={value.alt || ' '}
-          loading="lazy"
-          src={urlFor(value).width(320).height(240).fit('max').auto('format') as any}
-        />
+        <Image src={urlFor(value).width(320).height(240).fit('max').auto('format') as any} className="block w-full" alt={value.alt || ' '} width="285" height="285" />
       )
     }
   }
@@ -51,14 +48,9 @@ const Post = ({post}) => {
         </ul>
       )}
       {authorImage && (
-        <div>
-          <img
-            src={urlFor(authorImage)
-              .width(50)
-              .url()}
-            alt={`${author}'s picture`}
-          />
-        </div>
+        <Image src={urlFor(authorImage)
+            .width(50)
+            .url()} className="block w-full" alt={`${author}'s picture`} width="285" height="285" />
       )}
       <PortableText
         value={body}

@@ -18,7 +18,7 @@ const Index: NextPage = () => {
                         <Image src="/img/rides.webp" className="w-full h-full" layout="fill" objectFit="cover" objectPosition="right" priority={true} alt="A landscape photograph of a sunset over Whiston with two Club riders up front" />
                         <div className="absolute left-0 bottom-0 text-white p-5">
                             <h3 className="font-ropa text-lg uppercase">Club rides</h3>
-                            <h2 className="font-ropa text-3xl">We’re here for the smiles, not&nbsp;the&nbsp;miles.</h2>
+                            <h2 className="font-ropa text-3xl">We&apos;re here for the smiles, not&nbsp;the&nbsp;miles.</h2>
                             <p>Nine social rides a week on Wednesday evenings, and Saturday and Sunday mornings.</p>
                         </div>
                         <button className="btn absolute top-5 left-5" aria-label="Find out more">Find out more</button>
@@ -42,18 +42,15 @@ const Index: NextPage = () => {
                 <Link href="/races">
                     <a className="block w-full h-full overflow-hidden relative">
                         <Image src="/img/racing.webp" className="w-full h-full" layout="fill" objectFit="cover" objectPosition="right" priority={true} alt="A photograph of Club member Joe Srike racing up Ulley Lane" />
-                        <div className="absolute top-0 right-0 text-white text-right p-5 flex flex-col">
+                        <div className="absolute top-0 right-0 text-white text-right p-5 flex flex-col items-end">
                             <h3 className="font-ropa text-lg uppercase">Races</h3>
                             <h2 className="font-ropa text-3xl">
                                 We host races.<br />
                                 We support races.<br />
                                 We race.
                             </h2>
-                            <p className="w-3/5 lg:w-2/5 self-end">Up hills, down hills, round tracks, circuits, and off road.</p>
-                            <picture className="self-end">
-                                <source srcSet="/img/epic-kitemark--white.webp" type="image/webp" />
-                                <img src="/img/epic-kitemark--white.png" className="mt-2.5 w-10" alt="Equality and Parity In Cycling" />
-                            </picture>
+                            <p className="w-3/5 lg:w-2/5 mb-2.5 self-end">Up hills, down hills, round tracks, circuits, and off road.</p>
+                            <Image src="/img/epic-kitemark--white.webp" layout="fixed" alt="Equality and Parity In Cycling" width="40" height="55" />
                         </div>
                         <button className="btn absolute right-5 lg:right-10 bottom-5" aria-label="Find out more">Find out more</button>
                     </a>
@@ -65,7 +62,7 @@ const Index: NextPage = () => {
                         <Image src="/img/coaching.webp" className="w-full h-full" layout="fill" objectFit="cover" objectPosition="right" priority={true} alt="A photograph of Club Coach Chris Habershon with a group of children sat on the floor in front of him" />
                         <div className="absolute top-0 left-0 text-white p-5">
                             <h3 className="font-ropa text-lg uppercase">Go-ride coaching</h3>
-                            <h2 className="font-ropa text-3xl">We’re coaching the&nbsp;next&nbsp;generation.</h2>
+                            <h2 className="font-ropa text-3xl">We&apos;re coaching the&nbsp;next&nbsp;generation.</h2>
                             <p>Our Saturday morning sessions are suitable for under 16s.</p>
                         </div>
                         <button className="btn absolute right-5 bottom-5" aria-label="Find out more">Find out more</button>

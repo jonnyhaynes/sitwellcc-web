@@ -47,13 +47,13 @@ const Coaching: NextPage = () => {
                         <li className="text-sm">Membership of the Club shall be open to anyone interested in the sport on application regardless of sex, age, disability, ethnicity, nationality, sexual orientation, religion or other beliefs. However, limitation of membership according to available facilities is allowable on a non-discriminatory basis.</li>
                         <li className="text-sm">The Club may have different classes of membership and subscription on a non-discriminatory and fair basis. The Club will keep subscriptions at levels that will not pose a significant obstacle to people participating.</li>
                         <li className="text-sm">All applications for membership shall be approved by the Membership Officer.</li>
-                        <li className="text-sm">A new member joining after October 1st shall be credited with the next year's membership.</li>
+                        <li className="text-sm">A new member joining after October 1st shall be credited with the next year&apos;s membership.</li>
                         <li className="text-sm">Where appropriate an AGM shall award Honorary Life Membership for outstanding services to the Club.</li>
                         <li className="text-sm">Annual Subscription Fees are due by 1st January. Members paid up for the previous year remain members until 31st December. Anyone not paid up by the 1st January shall be deemed to have left the Club.</li>
-                        <li className="text-sm">The Club’s membership period runs from 1st January to the 31st December.</li>
+                        <li className="text-sm">The Club&apos;s membership period runs from 1st January to the 31st December.</li>
                         <li className="text-sm">Members are not eligible to compete in racing events unless their subscriptions are up to date.
                             <ol className="list-roman ml-5">
-                                <li className="text-sm">Members who race will be required to offer assistance at either one of the Club's own events or at another local club's event.</li>
+                                <li className="text-sm">Members who race will be required to offer assistance at either one of the Club&apos;s own events or at another local club&apos;s event.</li>
                                 <li className="text-sm">Youth members (12-15 years of age), shall only be eligible to compete in Club Competitions with written consent of their parent or guardian.</li>
                                 <li className="text-sm">No second claim member with less than 5 years unbroken membership shall be allowed to compete in club competitions.</li>
                             </ol>
@@ -71,7 +71,7 @@ const Coaching: NextPage = () => {
                             </ol>
                         </li>
                         <li className="text-sm">The Club Committee may refuse membership, or remove it, only for good cause such as but not limited to conduct or character likely to bring the Club or sport into disrepute, antisocial behaviour or abuse. Appeal against refusal or removal may be made to an appointed panel consisting of club members.</li>
-                        <li className="text-sm">If a current Club Member has acted in such a way as to merit disciplinary action, the Club Committee must notify the member and convene a disciplinary hearing as outlined in the Club’s Complaints Procedure.</li>
+                        <li className="text-sm">If a current Club Member has acted in such a way as to merit disciplinary action, the Club Committee must notify the member and convene a disciplinary hearing as outlined in the Club&apos;s Complaints Procedure.</li>
                         <li className="text-sm">When disciplinary action is necessary, it will be followed up by a member of the Club Committee in the following manner:
                             <ol className="list-roman ml-5">
                                 <li className="text-sm">1st offence - Verbal conversation</li>
@@ -96,7 +96,7 @@ const Coaching: NextPage = () => {
                     <ol className="list-alpha ml-5 mb-5">
                         <li className="text-sm">The Members will elect a Committee consisting of a Chair, two Vice Chairs and Treasurer to serve until the next AGM;</li>
                         <li className="text-sm">The Treasurer will produce accounts of the Club for the latest financial year audited as the Committee shall decide;</li>
-                        <li className="text-sm">The Committee will present a report on the Club's activities since the previous AGM;</li>
+                        <li className="text-sm">The Committee will present a report on the Club&apos;s activities since the previous AGM;</li>
                         <li className="text-sm">The Members will appoint a suitable person to audit the accounts; and</li>
                         <li className="text-sm">The Members will discuss and vote on any resolution (whether about policy or to change the Rules) and deal with any other business put to the meeting.</li>
                     </ol>
@@ -125,7 +125,7 @@ const Coaching: NextPage = () => {
                         </li>
                         <li className="text-sm">Composition etc -
                             <ol className="list-roman ml-5">
-                                <li className="text-sm">The Committee shall consist of at least 10 members or 10% of the Club's Membership, whichever is fewer.</li>
+                                <li className="text-sm">The Committee shall consist of at least 10 members or 10% of the Club&apos;s Membership, whichever is fewer.</li>
                                 <li className="text-sm">The diverse make-up of the Committee should represent where possible the make-up of the Club.</li>
                                 <li className="text-sm">The Committee members may co-opt club members as Officers to serve until the end of the next AGM.</li>
                                 <li className="text-sm">Any Committee member may be re-elected or re-co-opted without limit.</li>
@@ -137,7 +137,7 @@ const Coaching: NextPage = () => {
                                 <li className="text-sm">Whenever a Committee member has a personal interest in a matter to be discussed, he/she must declare it, withdraw from that part of the meeting (unless asked to stay), not be counted in the quorum for that agenda item and withdraw during the vote and have no vote on the matter concerned.</li>
                                 <li className="text-sm">The Committee may decide its own way of operating. Unless it otherwise resolves the following rules apply:
                                     <ol className="list-alpha ml-5">
-                                        <li className="text-sm">At least 50% of the Committee's members must be present for the meeting to be valid;</li>
+                                        <li className="text-sm">At least 50% of the Committee&apos;s members must be present for the meeting to be valid;</li>
                                         <li className="text-sm">Committee meetings shall be held face to face;</li>
                                         <li className="text-sm">The Chair, or whoever else those present choose shall chair meetings;</li>
                                         <li className="text-sm">Decisions shall be by simple majority of those voting;</li>
@@ -153,7 +153,7 @@ const Coaching: NextPage = () => {
 
                     <h3 className="text-2xl font-ropa">9. Amendments</h3>
                     <ol className="list-alpha ml-5 mb-5">
-                        <li className="text-sm">These Rules may be amended at a general meeting by two-thirds of the votes cast but not (if relevant) so as to jeopardise the Club’s status as a Community Amateur Sports Club as first provided for by the Finance Act 2002 and not in any event to alter its purposes (unless the procedure set out in 9 (b) has been followed) or winding up provisions.</li>
+                        <li className="text-sm">These Rules may be amended at a general meeting by two-thirds of the votes cast but not (if relevant) so as to jeopardise the Club&apos;s status as a Community Amateur Sports Club as first provided for by the Finance Act 2002 and not in any event to alter its purposes (unless the procedure set out in 9 (b) has been followed) or winding up provisions.</li>
                         <li className="text-sm">The Club Purposes may be changed to include another eligible sport if the Committee unanimously agree and the members also agreed the change by a 75% majority of votes cast.</li>
                         <li className="text-sm">Any matter not provided for in these Rules shall be dealt with by the Committee, whose decision shall be binding on all parties.</li>
                     </ol>
@@ -161,12 +161,12 @@ const Coaching: NextPage = () => {
                     <h3 className="text-2xl font-ropa">10. Winding up the Club</h3>
                     <ol className="list-alpha ml-5">
                         <li className="text-sm">The members may vote to wind up the Club if not less than three quarters of those present and voting support that proposal at a properly convened general meeting.</li>
-                        <li className="text-sm">The Committee will then be responsible for the orderly winding up of the Club’s affairs.</li>
+                        <li className="text-sm">The Committee will then be responsible for the orderly winding up of the Club&apos;s affairs.</li>
                         <li className="text-sm">After settling all liabilities of the Club, the Committee shall dispose of the net assets remaining to one or more of the following:
                             <ol className="list-roman ml-5">
                                 <li className="text-sm">To another Club with similar sports purposes which is a charity and/or</li>
                                 <li className="text-sm">To another Club with similar sports purposes which is a registered CASC and/or</li>
-                                <li className="text-sm">To the Club’s national governing body for use by them for related community sports.</li>
+                                <li className="text-sm">To the Club&apos;s national governing body for use by them for related community sports.</li>
                             </ol>
                         </li>
                     </ol>

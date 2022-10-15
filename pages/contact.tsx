@@ -120,16 +120,16 @@ const Contact: NextPage = () => {
                         <fieldset className="mb-5">
                             <label htmlFor="query" className="block text-sm mb-2">Query</label>
                             <select name="query" id="query" aria-describedby="query" className={`w-1/2 ${showError && errors.query ? 'border-red bg-red bg-opacity-25 text-red' : ''}`} onChange={e => setQuery(e.target.value)} required>
-                                <option value="" {query === '' ? 'selected' : null}></option>
-                                <option value="Club Rides" {query === 'Club Rides' ? 'selected' : null}>Club Rides</option>
-                                <option value="Go-Ride coaching" {query === 'Go-Ride coaching' ? 'selected' : null}>Go-Ride coaching</option>
-                                <option value="Races" {query === 'Races' ? 'selected' : null}>Races</option>
-                                <option value="Charity work" {query === 'Charity work' ? 'selected' : null}>Charity work</option>
-                                <option value="Membership" {query === 'Membership' ? 'selected' : null}>Membership</option>
-                                <option value="Kit" {query === 'Kit' ? 'selected' : null}>Kit</option>
-                                <option value="Welfare & Safeguarding" {query === 'Welfare & Safeguarding' ? 'selected' : null}>Welfare & Safeguarding</option>
-                                <option value="Sponsorship" {query === 'Sponsorship' ? 'selected' : null}>Sponsorship</option>
-                                <option value="Other" {query === 'Other' ? 'selected' : null}>Other</option>
+                                <option value="" {query === '' && 'selected'}></option>
+                                <option value="Club Rides" {query === 'Club Rides' && 'selected'}>Club Rides</option>
+                                <option value="Go-Ride coaching" {query === 'Go-Ride coaching' && 'selected'}>Go-Ride coaching</option>
+                                <option value="Races" {query === 'Races' && 'selected'}>Races</option>
+                                <option value="Charity work" {query === 'Charity work' && 'selected'}>Charity work</option>
+                                <option value="Membership" {query === 'Membership' && 'selected'}>Membership</option>
+                                <option value="Kit" {query === 'Kit' && 'selected'}>Kit</option>
+                                <option value="Welfare & Safeguarding" {query === 'Welfare & Safeguarding' && 'selected'}>Welfare & Safeguarding</option>
+                                <option value="Sponsorship" {query === 'Sponsorship' && 'selected'}>Sponsorship</option>
+                                <option value="Other" {query === 'Other' && 'selected'}>Other</option>
                             </select>
                         </fieldset>
                         <fieldset className="mb-5">

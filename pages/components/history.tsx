@@ -181,7 +181,7 @@ const History = () => {
                 <div className="w-full bg-yellow bg-opacity-5 col-start-6 col-end-10 p-5 my-2.5 md:-my-5 mr-auto">
                     <h3 className="text-base font-ropa block uppercase opacity-50">December 2020</h3>
                     <h2 className="text-2xl font-ropa">Storey Racing</h2>
-                    <p className="text-sm">Erin Avill signed with Dame Sarah Storey's team for the 2021 season.</p>
+                    <p className="text-sm">Erin Avill signed with Dame Sarah Storey&apos;s team for the 2021 season.</p>
                 </div>
             </div>
             {/* left */}
@@ -405,7 +405,7 @@ const History = () => {
                 <div className="w-full bg-yellow bg-opacity-5 col-start-6 col-end-10 p-5 my-2.5 md:-my-5 mr-auto">
                     <h3 className="text-base font-ropa block uppercase opacity-50">August 2019</h3>
                     <h2 className="text-2xl font-ropa">Fish and chips</h2>
-                    <p className="text-sm">Now in it's third year our classic coast ride to Cleethorpes.</p>
+                    <p className="text-sm">Now in it&apos;s third year our classic coast ride to Cleethorpes.</p>
                 </div>
             </div>
             {/* left */}
@@ -658,7 +658,7 @@ const History = () => {
                 <div className="w-full bg-yellow bg-opacity-5 col-start-6 col-end-10 p-5 my-2.5 md:-my-5 mr-auto">
                     <h3 className="text-base font-ropa block uppercase opacity-50">June 2018</h3>
                     <h2 className="text-2xl font-ropa">Accredited Marshal Scheme</h2>
-                    <p className="text-sm">Members Jonny Haynes and Andy Laidler became the club's first British Cycling qualified AMs.</p>
+                    <p className="text-sm">Members Jonny Haynes and Andy Laidler became the club&apos;s first British Cycling qualified AMs.</p>
                 </div>
             </div>
             {/* left */}
@@ -666,7 +666,7 @@ const History = () => {
                 <div className="w-full bg-green bg-opacity-5 col-start-1 col-end-5 p-5 my-2.5 md:-my-5 ml-auto md:text-right">
                     <h3 className="text-base font-ropa block uppercase opacity-50">May 2018</h3>
                     <h2 className="text-2xl font-ropa">Yes Coach!</h2>
-                    <p className="text-sm">Andy Laidler became the club's first British Cycling qualified coach.</p>
+                    <p className="text-sm">Andy Laidler became the club&apos;s first British Cycling qualified coach.</p>
                 </div>
                 <div className="col-start-5 col-end-6 md:mx-auto relative mr-10">
                     <div className="h-full w-6 flex items-center justify-center">
@@ -917,7 +917,7 @@ const History = () => {
                 <div className="w-full bg-green bg-opacity-5 col-start-1 col-end-5 p-5 my-2.5 md:-my-5 ml-auto md:text-right">
                     <h3 className="text-base font-ropa block uppercase opacity-50">August 2016</h3>
                     <h2 className="text-2xl font-ropa">First Club Social</h2>
-                    <p className="text-sm">And where else would it be other than future club sponsor's the Sitwell Arms.</p>
+                    <p className="text-sm">And where else would it be other than future club sponsor&apos;s the Sitwell Arms.</p>
                 </div>
                 <div className="col-start-5 col-end-6 md:mx-auto relative mr-10">
                     <div className="h-full w-6 flex items-center justify-center">
@@ -1001,7 +1001,7 @@ const History = () => {
                 <div className="w-full bg-green bg-opacity-5 col-start-1 col-end-5 p-5 my-2.5 md:-my-5 ml-auto md:text-right">
                     <h3 className="text-base font-ropa block uppercase opacity-50">Jan 2016</h3>
                     <h2 className="text-2xl font-ropa">Club founded</h2>
-                    <p className="text-sm">The club was founded New Year's Day 2016 by Jonny Haynes and David Southwood.</p>
+                    <p className="text-sm">The club was founded New Year&apos;s Day 2016 by Jonny Haynes and David Southwood.</p>
                 </div>
                 <div className="col-start-5 col-end-6 md:mx-auto relative mr-10">
                     <div className="h-full w-6 flex items-center justify-center">

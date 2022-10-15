@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: true,
     images: {
-        domains: ['uploads.tickettailor.com'],
+        domains: ['uploads.tickettailor.com', 'cdn.sanity.io'],
     },
   }
 

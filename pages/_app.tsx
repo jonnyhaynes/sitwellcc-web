@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/inline-script-id */
+/* eslint-disable @next/next/no-script-component-in-head */
 import Head from 'next/head';
 import Script from 'next/script';
 
@@ -5,12 +7,9 @@ import Layout from './components/layout';
 
 import '../styles/app.css';
 
-type Props = {
-    Component: any;
-    pageProps: any;
-};
+import type { AppProps } from 'next/app';
 
-const App = ({ Component, pageProps} : Props) => {
+const App = ({ Component, pageProps} : AppProps) => {
     return (
         <>
             <Head>

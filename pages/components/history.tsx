@@ -2,6 +2,19 @@ const History = () => {
     return (
         <section className="flex flex-col md:grid md:grid-cols-9 mx-auto p-2 text-black">
             <h2 className="text-3xl font-ropa mb-2 md:col-span-9">History</h2>
+            {/* right */}
+            <div className="flex md:contents">
+                <div className="col-start-5 col-end-6 mr-10 md:mx-auto relative">
+                    <div className="h-full w-6 flex items-center justify-center">
+                        <div className="h-full w-1 bg-black bg-opacity-25 pointer-events-none"></div>
+                    </div>
+                    <div className="w-6 h-6 absolute top-1/2 -mt-3 rounded-full bg-yellow"></div>
+                </div>
+                <div className="w-full bg-yellow bg-opacity-5 col-start-6 col-end-10 p-5 my-2.5 md:-my-5 mr-auto">
+                    <h3 className="text-base font-ropa block uppercase opacity-50">February 2022</h3>
+                    <h2 className="text-2xl font-ropa">AGM</h2>
+                </div>
+            </div>
             {/* left */}
             <div className="flex flex-row-reverse md:contents">
                 <div className="w-full bg-green bg-opacity-5 col-start-1 col-end-5 p-5 my-2.5 md:-my-5 ml-auto md:text-right">

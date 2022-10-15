@@ -6,3 +6,5 @@ out
 sanitytutorialblog
 .vercel
 .env
+.env.local
+.env.production

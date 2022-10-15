@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 const Header = () => {
-    const ref = useRef();
+    const ref = useRef<HTMLDivElement>(null);
     const [open, toggleOpen] = useState(false);
     const router = useRouter();
 

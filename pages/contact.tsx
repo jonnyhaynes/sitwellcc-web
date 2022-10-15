@@ -1,20 +1,21 @@
 import {useState} from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 
 import type { NextPage } from 'next';
 
 const Contact: NextPage = () => {
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [query, setQuery] = useState('');
-    const [message, setMessage] = useState('');
+    const [email, setEmail] = useState<string>('');
+    const [name, setName] = useState<string>('');
+    const [query, setQuery] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
 
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState<any>({});
 
-    const [buttonText, setButtonText] = useState('Send message');
+    const [buttonText, setButtonText] = useState<string>('Send message');
 
-    const [showSuccess, setShowSuccess] = useState(false);
-    const [showError, setShowError] = useState(false);
+    const [showSuccess, setShowSuccess] = useState<boolean>(false);
+    const [showError, setShowError] = useState<boolean>(false);
 
     const handleValidation = () => {
         let tempErrors: any = {};
@@ -119,16 +120,16 @@ const Contact: NextPage = () => {
                         <fieldset className="mb-5">
                             <label htmlFor="query" className="block text-sm mb-2">Query</label>
                             <select name="query" id="query" aria-describedby="query" className={`w-1/2 ${showError && errors.query ? 'border-red bg-red bg-opacity-25 text-red' : ''}`} onChange={e => setQuery(e.target.value)} required>
-                                <option value="" {...query === '' ? 'selected' : null}></option>
-                                <option value="Club Rides" {...query === 'Club Rides' ? 'selected' : null}>Club Rides</option>
-                                <option value="Go-Ride coaching" {...query === 'Go-Ride coaching' ? 'selected' : null}>Go-Ride coaching</option>
-                                <option value="Races" {...query === 'Races' ? 'selected' : null}>Races</option>
-                                <option value="Charity work" {...query === 'Charity work' ? 'selected' : null}>Charity work</option>
-                                <option value="Membership" {...query === 'Membership' ? 'selected' : null}>Membership</option>
-                                <option value="Kit" {...query === 'Kit' ? 'selected' : null}>Kit</option>
-                                <option value="Welfare & Safeguarding" {...query === 'Welfare & Safeguarding' ? 'selected' : null}>Welfare & Safeguarding</option>
-                                <option value="Sponsorship" {...query === 'Sponsorship' ? 'selected' : null}>Sponsorship</option>
-                                <option value="Other" {...query === 'Other' ? 'selected' : null}>Other</option>
+                                <option value="" {query === '' ? 'selected' : null}></option>
+                                <option value="Club Rides" {query === 'Club Rides' ? 'selected' : null}>Club Rides</option>
+                                <option value="Go-Ride coaching" {query === 'Go-Ride coaching' ? 'selected' : null}>Go-Ride coaching</option>
+                                <option value="Races" {query === 'Races' ? 'selected' : null}>Races</option>
+                                <option value="Charity work" {query === 'Charity work' ? 'selected' : null}>Charity work</option>
+                                <option value="Membership" {query === 'Membership' ? 'selected' : null}>Membership</option>
+                                <option value="Kit" {query === 'Kit' ? 'selected' : null}>Kit</option>
+                                <option value="Welfare & Safeguarding" {query === 'Welfare & Safeguarding' ? 'selected' : null}>Welfare & Safeguarding</option>
+                                <option value="Sponsorship" {query === 'Sponsorship' ? 'selected' : null}>Sponsorship</option>
+                                <option value="Other" {query === 'Other' ? 'selected' : null}>Other</option>
                             </select>
                         </fieldset>
                         <fieldset className="mb-5">
@@ -142,23 +143,23 @@ const Contact: NextPage = () => {
                     <h3 className="text-xl font-ropa mb-1">Follow us on the socials</h3>
                     <ul className="flex mb-10">
                         <li>
-                            <a href="https://www.instgram.com/sitwellcc">
-                                <img src="/img/instagram.svg" className="w-10 mr-2.5" alt="Instagram icon" />
+                            <a href="https://www.instgram.com/sitwellcc" className="mr-2.5" >
+                                <Image src="/img/instagram.svg" alt="Instagram icon" width="40" height="40" />
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.twitter.com/sitwellcc">
-                                <img src="/img/twitter.svg" className="w-10 mr-2.5" alt="Twitter icon" />
+                            <a href="https://www.twitter.com/sitwellcc" className="mr-2.5" >
+                                <Image src="/img/twitter.svg" alt="Twitter icon" width="40" height="40" />
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.strava.com/sitwellcc">
-                                <img src="/img/strava.svg" className="w-10 mr-2.5" alt="Strava icon" />
+                            <a href="https://www.strava.com/sitwellcc" className="mr-2.5" >
+                                <Image src="/img/strava.svg" alt="Strava icon" width="40" height="40" />
                             </a>
                         </li>
                         <li>
                             <a href="https://www.facebook.com/sitwellcc">
-                                <img src="/img/facebook.svg" className="w-10" alt="Facebook icon" />
+                                <Image src="/img/facebook.svg" alt="Facebook icon" width="40" height="40" />
                             </a>
                         </li>
                     </ul>
@@ -175,11 +176,6 @@ const Contact: NextPage = () => {
                     <h3 className="text-xl font-ropa">Herringthorpe Go-Ride coaching meet point</h3>
                     <p className="text-sm mb-2.5">Herringthorpe Playing Fields, S65 2HR</p>
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2377.577895390717!2d-1.3385427841369621!3d53.42237477999504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48797731c1c4e535%3A0xfa2acc1afb74ead5!2sSitwell%20Cycling%20Club%20%3A%20Go-Ride%20Coaching!5e0!3m2!1sen!2suk!4v1615472068476!5m2!1sen!2suk" height="250" style={{ border: 0 }}  allowFullScreen loading="lazy" className="w-full"></iframe>
-                </section>
-                <section>
-                    <h3 className="text-xl font-ropa">Clifton Go-Ride coaching meet point</h3>
-                    <p className="text-sm mb-2.5">Clifton Community School, S65 2SN</p>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2377.0161638490713!2d-1.3399420985953423!3d53.432419257644675!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4879769025682677%3A0xf649173c40582200!2sClifton%20Community%20School!5e0!3m2!1sen!2suk!4v1652198558911!5m2!1sen!2suk" height="250" style={{ border: 0 }}  allowFullScreen loading="lazy" className="w-full"></iframe>
                 </section>
             </section>
         </>

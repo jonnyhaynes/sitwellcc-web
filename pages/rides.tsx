@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Script from 'next/script';
 import base64 from 'base-64';
+import moment from 'moment';
 
 import Accordion from './components/accordion';
 
@@ -109,29 +110,24 @@ const Rides: NextPage = ({ events }) => {
                 <meta name="description" content="We're here for the smiles, not the miles." />
             </Head>
             {/* <Script type="application/ld+json">
-                {`[
-                    @foreach ($eventbrite_data as $event)
-                        {
-                            "@context": "https://schema.org/",
-                            "@type": "SportsEvent",
-                            "name": "{{ $event['title'] }}",
-                            "startDate": "{{ $event['date']['local'] }}",
-                            "location": {
-                                "@type": "Place",
-                                "name": "Brookside Pharmacy",
-                                "address": "Whiston, S60 4HY",
-                                "geo": {
-                                    "@type": "GeoCoordinates",
-                                    "latitude": "53.405298",
-                                    "longitude": "-1.327339"
-                                }
+                events?.data?.sort((a, b) => a.start.unix - b.start.unix).map((event, index) => {
+                    return {
+                        "@context": "https://schema.org/",
+                        "@type": "SportsEvent",
+                        "name": event.name,
+                        "startDate": event.start.iso,
+                        "location": {
+                            "@type": "Place",
+                            "name": "Brookside Pharmacy",
+                            "address": "Whiston, S60 4HY",
+                            "geo": {
+                                "@type": "GeoCoordinates",
+                                "latitude": "53.405298",
+                                "longitude": "-1.327339"
                             }
                         }
-                        @if (!$loop->last)
-                            ,
-                        @endif
-                    @endforeach
-                ]`}
+                    },
+                })
             </Script> */}
             <svg className="hidden" aria-hidden="true">
                 <symbol id="icon--distance" viewBox="0 0 200 200">
@@ -257,7 +253,7 @@ const Rides: NextPage = ({ events }) => {
                                 <use xlinkHref="#icon--distance" />
                             </svg>
                             <p className="self-center">
-                                10-20<br />
+                                30-50+<br />
                                 Miles
                             </p>
                         </div>
@@ -275,7 +271,8 @@ const Rides: NextPage = ({ events }) => {
                                 <use xlinkHref="#icon--time" />
                             </svg>
                             <p className="self-center">
-                                Wed 7pm
+                                Wed 7pm<br />
+                                Sun 8am
                             </p>
                         </div>
                     </div>
@@ -313,7 +310,8 @@ const Rides: NextPage = ({ events }) => {
                                 color = 'black';
                         }
 
-                        const regex = '/(Saturday|Sunday) (RED|AMBER|GREEN) Ride( |)(-|–|:)/m';
+                        const regex = /(Saturday|Sunday|) (RED|AMBER|GREEN|AMBER GRAVEL\/MTB) Ride( |)(-|–|:)/m;
+                        const eventName = event.name.replace(regex, '');
 
                         return (
                             <article className={`mb-5 border-t-8 border-${color} p-5 bg-${color} bg-opacity-25 flex flex-row`} key={index}>
@@ -323,7 +321,7 @@ const Rides: NextPage = ({ events }) => {
                                 <div className="flex flex-col flex-grow justify-between">
                                     <div className="w-full">
                                         <time dateTime={event.start.iso} className="uppercase text-sm w-full self-start">{event.start.formatted}</time>
-                                        <h4 className="text-2xl font-ropa leading-none w-full self-start"><a href={event.url} className={`text-${color}`}>{event.name.replace(regex, '')}</a></h4>
+                                        <h4 className="text-2xl font-ropa leading-none w-full self-start"><a href={event.url} className={`text-${color}`}>{eventName}</a></h4>
                                     </div>
                                     <a href={event.url} className="btn self-start">View event</a>
                                 </div>
@@ -349,8 +347,13 @@ export async function getServerSideProps() {
     const baseURL = process.env.TICKET_TAILOR_BASE_URL || '';
     const apiKey = process.env.TICKET_TAILOR_API_KEY || '';
 
-    const start = 1655679600;
-    const end = 1656284399;
+    const start = moment().isoWeekday(1).hour(0).minute(0).second(0).unix();
+    const end = moment().isoWeekday(7).hour(23).minute(59).second(59).unix();
+    console.log({
+        start,
+        end,
+    });
+
     const limit = 10;
 
     const res = await fetch(`${baseURL}events?start_at.gte=${start}&end_at.lte=${end}&limit=${limit}`, {

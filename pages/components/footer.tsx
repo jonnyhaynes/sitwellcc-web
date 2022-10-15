@@ -39,13 +39,13 @@ const Footer = () => {
                         <a href="https://www.britishcycling.org.uk/club/profile/7596/sitwell-cycling-club" className="mr-10 self-center p-0 hover:border-none focus:border-none">
                             <picture>
                                 <source srcSet="/img/bc-affiliated.webp 1x, /img/bc-affiliated@2x.webp 2x" type="image/webp" />
-                                <Image src="/img/bc-affiliated.png" srcSet="/img/bc-affiliated.png 1x, /img/bc-affiliated@2x.png 2x" alt="British Cycling Affilated Club" width="98" height="55" />
+                                <Image src="/img/bc-affiliated.png" alt="British Cycling Affilated Club" width="98" height="55" />
                             </picture>
                         </a>
                         <a href="https://www.britishcycling.org.uk/go-ride/article/goridest-What-is-Go-Ride" className="self-center p-0 hover:border-none focus:border-none">
                             <picture>
                                 <source srcSet="/img/bc-goride.webp 1x, /img/bc-goride@2x.webp 2x" type="image/webp" />
-                                <Image src="/img/bc-goride.png" srcSet="/img/bc-goride.png 1x, /img/bc-goride@2x.png 2x" alt="British Cycling Go-Ride Registered Club" width="98" height="55" />
+                                <Image src="/img/bc-goride.png" alt="British Cycling Go-Ride Registered Club" width="98" height="55" />
                             </picture>
                         </a>
                     </div>

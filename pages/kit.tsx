@@ -2,14 +2,9 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
-import type { GetStaticProps, NextPage } from "next";
+import type { NextPage } from "next";
 
-type Props = { host: string | null };
-
-export const getStaticProps: GetStaticProps<Props> =
-  async () => ({ props: { host: process.env.HOST || null }});
-
-const Kit: NextPage<Props> = ({host}) => {
+const Kit: NextPage= () => {
     return (
         <>
             <Head>
@@ -32,22 +27,22 @@ const Kit: NextPage<Props> = ({host}) => {
                 </section>
                 <section className="lg:col-span-2 lg:col-start-1 lg:row-start-1">
                     <div className="mb-5 border border-black border-opacity-5 block relative">
-                        <ReactPlayer url={`${host}/video/jersey.mp4`} muted={true} controls={true} width="100%" height="100%" />
+                        <ReactPlayer url="/video/jersey.mp4" muted={true} controls={true} width="100%" height="100%" />
                         <h2 className="font-ropa text-3xl absolute top-5 left-5">S/S Jersey</h2>
                         <a className="btn absolute bottom-5 right-5" href="https://www.bioracer.co.uk/en/mybioracer">Order kit</a>
                     </div>
                     <div className="mb-5 border border-black border-opacity-5 block relative">
-                        <ReactPlayer url={`${host}/video/bib-shorts.mp4`} muted={true} controls={true} width="100%" height="100%" />
+                        <ReactPlayer url="/video/bib-shorts.mp4" muted={true} controls={true} width="100%" height="100%" />
                         <h2 className="font-ropa text-3xl absolute top-5 left-5">Bib Shorts</h2>
                         <a className="btn absolute bottom-5 right-5" href="https://www.bioracer.co.uk/en/mybioracer">Order kit</a>
                     </div>
                     <div className="mb-5 border border-black border-opacity-5 block relative">
-                        <ReactPlayer url={`${host}/video/cap.mp4`} muted={true} controls={true} width="100%" height="100%" />
+                        <ReactPlayer url="/video/cap.mp4" muted={true} controls={true} width="100%" height="100%" />
                         <h2 className="font-ropa text-3xl absolute top-5 left-5">Cap</h2>
                         <a className="btn absolute bottom-5 right-5" href="https://www.bioracer.co.uk/en/mybioracer">Order kit</a>
                     </div>
                     <div className="mb-5 border border-black border-opacity-5 block relative">
-                        <ReactPlayer url={`${host}/video/socks.mp4`} muted={true} controls={true} width="100%" height="100%" />
+                        <ReactPlayer url="/video/socks.mp4" muted={true} controls={true} width="100%" height="100%" />
                         <h2 className="font-ropa text-3xl absolute top-5 left-5">Socks</h2>
                         <a className="btn absolute bottom-5 right-5" href="https://www.bioracer.co.uk/en/mybioracer">Order kit</a>
                     </div>

@@ -1,16 +1,69 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/future/image';
+import groq from 'groq';
+import client from '../client';
 
 import type { NextPage } from 'next';
 
-const Index: NextPage = () => {
+type Props = {
+    announcement: {
+        _id: string;
+        title: string;
+        slug: any;
+        summary: string;
+    };
+    news: [];
+};
+
+
+const Index: NextPage<Props> = ({announcement, news}) => {
+
+    const Announcement = () => {
+        const {
+            _id,
+            title = '',
+            slug = '',
+            summary = '',
+        } = announcement;
+
+        return slug && (
+            <article key={_id}>
+                <h2 className="text-3xl font-ropa-bold"><Link href="/news/[slug]" as={`/news/${slug.current}`}><a className="text-black">{title}</a></Link></h2>
+                <p className="opacity-75">{ summary }</p>
+            </article>
+        )
+    };
+
     return (
       <>
         <Head>
             <title>Sitwell Cycling Club</title>
             <meta name="description" content="Founded 2016. Rotherham Advertiser Sports Awards Club of the Year 2018. 9 social rides a week. Go-Ride Coaching. Meet Brookside Pharmacy, Whiston." />
         </Head>
+
+        <section className="updates grid gap-5 lg:grid-cols-4 px-5 lg:px-10 mb-20">
+            <section className="announcements">
+                <h3  className="w-full border-b-8 border-green mb-5 lg:mr-10"><span className="inline-block bg-green text-yellow text-md font-ropa uppercase pt-2 px-3">Announcements</span></h3>
+                <Announcement />
+            </section>
+            <section className="news lg:col-span-3">
+                <h3  className="w-full border-b-8 border-yellow mb-5"><span className="inline-block bg-yellow text-green text-md font-ropa uppercase pt-2 px-3">Don&apos;t miss this</span></h3>
+                <div className="grid gap-5 md:grid-cols-3">
+                {news.length > 0 && news.map(
+                    ({ _id, title = '', slug = '' as any, summary = '' }) => {
+                        return slug && (
+                            <article key={_id}>
+                                <h2 className="text-3xl font-ropa-bold"><Link href="/news/[slug]" as={`/news/${slug.current}`}><a className="text-black">{title}</a></Link></h2>
+                                <p className="opacity-75">{ summary }</p>
+                            </article>
+                        )
+                    }
+                )}
+                </div>
+            </section>
+        </section>
+
          <section className="media flex flex-row w-full flex-wrap px-5 lg:px-10 mb-10">
             <article className="club-rides block relative w-full lg:w-7/12 lg:pr-5 mb-10 h-96">
                 <Link href="/rides" >
@@ -72,6 +125,18 @@ const Index: NextPage = () => {
         </section>
       </>
     )
+}
+
+export async function getStaticProps() {
+    const announcement = await client.fetch(groq`*[_type == "post" && publishedAt <= now() && announcement == true] | order(publishedAt desc) [0]`);
+    const news = await client.fetch(groq`*[_type == "post" && publishedAt <= now() && announcement != true] | order(publishedAt desc) [0...3]`);
+
+    return {
+        props: {
+            announcement,
+            news
+        }
+    }
 }
 
 export default Index;

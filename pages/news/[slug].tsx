@@ -13,11 +13,15 @@ function urlFor (source: any) {
 const ptComponents = {
     types: {
         image: ({ value }: any) => {
+            console.log({
+                value,
+            });
+
             if (!value?.asset?._ref) {
                 return null
             }
             return (
-                <Image src={urlFor(value).width(320).height(240).fit('max').auto('format') as any} className="block w-full" alt={value.alt || ' '} width="285" height="285" />
+                <Image src={urlFor(value).width(320).height(240).fit('max').auto('format').url() as any} className="block w-full" alt={value.alt || ' '} width="285" height="285" />
             )
         }
     }
@@ -86,7 +90,7 @@ export async function getStaticProps(context: any) {
     const post = await client.fetch(query, { slug })
     return {
         props: {
-        post
+            post
         }
     }
 }

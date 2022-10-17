@@ -61,6 +61,7 @@ const Header = () => {
                                 <li><Link href="/kit"><a className="text-white block mb-1">Kit</a></Link></li>
                                 <li><Link href="/constitution"><a className="text-white block mb-1">Constitution</a></Link></li>
                                 <li><Link href="/welfare"><a className="text-white block mb-1">Welfare &amp; Safeguarding</a></Link></li>
+                                <li><Link href="/news"><a className="text-white block mb-1">News</a></Link></li>
                                 <li><Link href="/contact"><a className="text-white block mb-4">Contact</a></Link></li>
                             </ul>
                             <Link href="/membership"><a className="btn mb-1.5">Join us today</a></Link>

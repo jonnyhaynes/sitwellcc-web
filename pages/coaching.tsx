@@ -110,7 +110,7 @@ const Coaching: NextPage = () => {
                     <h2 className="text-3xl font-ropa">Rotherham Children&apos;s University</h2>
                     <p className="mb-5">We are proud to be a validated Learning Destination. Collect CU credits at our activities with your Passport to Learning. There is more on <a href="https://www.childrensuniversity.co.uk/universities/rotherham-childrens-university/">Rotherham Children&apos;s University</a> here.</p>
                     <h2 className="text-3xl font-ropa">The Coalfields Regeneration Trust</h2>
-                    <p className="mb-5">The Coalfields Regeneration Trust has provided funding to train 3 British Cycling Level 1 coaches and progress 3 coaches to Level 2. More can be found on <a href="https://www.coalfields-regen.org.uk/">The Coalfields Regeneration Trust</a> here.</p>
+                    <p className="mb-5">The Coalfields Regeneration Trust has provided funding to train three British Cycling Level 1 coaches and progress three coaches to Level 2. More can be found on <a href="https://www.coalfields-regen.org.uk/">The Coalfields Regeneration Trust</a> here.</p>
                     <h2 className="text-3xl font-ropa">Community Leadership Fund</h2>
                     <p className="mb-5">Rotherham East ward have provided funding to train two new coaches in emergency first aid.</p>
                     <h2 className="text-3xl font-ropa">Safeguarding</h2>

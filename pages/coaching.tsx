@@ -103,6 +103,7 @@ const Coaching: NextPage = () => {
                     <h2 className="text-3xl font-ropa">Herringthorpe</h2>
                     <p className="mb-2">We use various sections of Herringthorpe Playing Fields. Please lookout for the SCC tent or flag.</p>
                     <p className="mb-5">Free off-street parking is available just off Middle Lane South towards the junction with Dryden Road.</p>
+                    <p className="mb-5">We announce the week before on social media and our Slack channels where we&apos;ll be on Herringthorpe.</p>
                     <h2 className="text-3xl font-ropa">Requirements</h2>
                     <p className="mb-2">There&apos;s no minimum age requirement for these sessions other than can your child follow instructions. Our youngest member is three years old. These aren&apos;t sessions for teaching your child to ride a bike, but to enhance their skills and grow their confidence. If you&apos;re not sure, bring them along. We can provide advice and guidance no matter what their cycling ability.</p>
                     <p className="mb-5">They will need a bike with working brakes (if a pedal bike) and the bar ends need to be plugged. As well as a correctly fitting helmet.</p>

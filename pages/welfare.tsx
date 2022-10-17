@@ -36,7 +36,7 @@ const Welfare: NextPage = () => {
                             <h3 className="text-sm">Sitwell Cycling Club Safeguarding Adult Policy</h3>
                         </a>
                     </section>
-                    <p className="text-sm">The above Sitwell Cycling Club policies are consistent with British Cycling&apos;s Safeguarding Children and Young People Policy / Safeguarding Adults Policy which together with <a href="https://www.britishcycling.org.uk/safeguarding">more information on Safeguarding in general can be found here</a>.</p>
+                    <p>The above Sitwell Cycling Club policies are consistent with British Cycling&apos;s Safeguarding Children and Young People Policy / Safeguarding Adults Policy which together with <a href="https://www.britishcycling.org.uk/safeguarding">more information on Safeguarding in general can be found here</a>.</p>
                 </section>
                 <section></section>
                 <section className="lg:col-span-2">
@@ -108,7 +108,7 @@ const Welfare: NextPage = () => {
                 </section>
                 <section className="lg:col-span-2">
                     <h2 className="text-2xl font-ropa">Photography and video</h2>
-                    <p className="text-sm">Photography and video provides an excellent opportunity to celebrate the achievements of our club members. Sitwell Cycling Club, its members and other participants may take photographs and/or video during the course of an event, club run or club social activity for use on the Club&apos;s website and social media accounts; some images may be used for local or national publicity purposes. The Club is compliant with <a href="https://www.britishcycling.org.uk/zuvvi/media/bc_files/safeguarding/SG_5.4_Safeguarding_and_Photography.pdf">British Cycling&apos;s Safeguarding and Photography guidelines</a>. Photographs and video of our under 18 members will only be used where parental consent has been given. </p>
+                    <p>Photography and video provides an excellent opportunity to celebrate the achievements of our club members. Sitwell Cycling Club, its members and other participants may take photographs and/or video during the course of an event, club run or club social activity for use on the Club&apos;s website and social media accounts; some images may be used for local or national publicity purposes. The Club is compliant with <a href="https://www.britishcycling.org.uk/zuvvi/media/bc_files/safeguarding/SG_5.4_Safeguarding_and_Photography.pdf">British Cycling&apos;s Safeguarding and Photography guidelines</a>. Photographs and video of our under 18 members will only be used where parental consent has been given. </p>
                 </section>
                 <section>
 

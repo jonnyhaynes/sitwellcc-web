@@ -18,25 +18,9 @@ const Welfare: NextPage = () => {
             </section>
             <section className="w-full px-5 lg:px-10 mb-20 grid lg:grid-cols-3 lg:gap-5">
                 <section className="lg:col-span-2">
-                    <p className="mb-2">Sitwell Cycling Club is committed to implementing policies and procedures to ensure all those involved comply with the British Cycling standards of good practice, including Code of Conduct.</p>
-                    <section className="mb-2 grid md:grid-cols-2 md:gap-2">
-                        <a href="https://www.britishcycling.org.uk/zuvvi/media/bc_files/rulebook/2018/21._Code_of_Conduct_2021.pdf" className="bg-black bg-opacity-5 p-2.5 inline-flex flex-row items-center">
-                            <Image src="/img/pdf.svg" width="30" height="30" alt="" className="mr-2.5" />
-                            <h3 className="text-sm">British Cycling Code Of Conduct</h3>
-                        </a>
-                    </section>
-                    <p className="mb-2">All young people and adults at risk are entitled to a duty of care and be protected from abuse. Sitwell Cycling Club is committed to implementing policies and procedures to ensure everyone in the Club accepts their responsibilities to safeguard children and adults at risk from harm and abuse. This means taking action to safeguard and report any concerns about their welfare in accordance with the Club&apos;s Safeguarding Children and Young People Policy and Safeguarding Adults Policy.</p>
-                    <section className="mb-2 grid md:grid-cols-2 md:gap-2">
-                        <a href="/downloads/SitwellCyclingClub-SafeguardingChildrenandYoungPeople(A).pdf" className="bg-black bg-opacity-5 p-2.5 inline-flex flex-row items-center mb-2 md:mb-0">
-                            <Image src="/img/pdf.svg" width="30" height="30" alt="" className="mr-2.5" />
-                            <h3 className="text-sm">Sitwell Cycling Club Safeguarding Children & Young People Policy</h3>
-                        </a>
-                        <a href="/downloads/SitwellCyclingClubSafeguardingAdultsPolicyandProcedures(A).pdf" className="bg-black bg-opacity-5 p-2.5 inline-flex flex-row items-center">
-                            <Image src="/img/pdf.svg" width="30" height="30" alt="" className="mr-2.5" />
-                            <h3 className="text-sm">Sitwell Cycling Club Safeguarding Adult Policy</h3>
-                        </a>
-                    </section>
-                    <p>The above Sitwell Cycling Club policies are consistent with British Cycling&apos;s Safeguarding Children and Young People Policy / Safeguarding Adults Policy which together with <a href="https://www.britishcycling.org.uk/safeguarding">more information on Safeguarding in general can be found here</a>.</p>
+                    <p className="mb-2">Sitwell Cycling Club is committed to implementing and complying to <a href="https://www.britishcycling.org.uk/about/article/bcst_rulebook_and_constitution">British Cycling standards of good practice, policies, and procedures</a>.</p>
+                    <p className="mb-2">All young people and adults at risk are entitled to a duty of care and be protected from abuse. Sitwell Cycling Club is committed to implementing policies and procedures to ensure everyone in the Club accepts their responsibilities to safeguard children and adults at risk from harm and abuse. This means taking action to safeguard and report any concerns about their welfare in accordance with the British Cycling Safeguarding Children and Young People Policy and Safeguarding Adults Policy.</p>
+                    <p><a href="https://www.britishcycling.org.uk/safeguarding">More information on Safeguarding in general can be found here</a>.</p>
                 </section>
                 <section></section>
                 <section className="lg:col-span-2">
@@ -95,12 +79,6 @@ const Welfare: NextPage = () => {
                     <p className="mb-2">Sitwell Cycling Club positively encourages the involvement of all people, regardless of their gender, age, race, ethnicity, disability, religious belief, sexuality and social/economic status. All club members have a responsibility to respect the rights, dignity and worth of every person, oppose discriminatory behaviour and promote equality of opportunity.</p>
                     <p className="mb-2">The Club is committed to everyone having the right to enjoy their cycling in an environment free from threat of intimidation, harassment and abuse.</p>
                     <p className="mb-2">Sitwell Cycling Club will also adhere to British Cycling Equality Policy.</p>
-                    <section className="mb-2 grid md:grid-cols-2 md:gap-2">
-                        <a href="https://www.britishcycling.org.uk/zuvvi/media/bc_files/rulebook/2018/20._Equality_Policy_2021.pdf" className="bg-black bg-opacity-5 p-2.5 inline-flex flex-row items-center">
-                            <Image src="/img/pdf.svg" width="30" height="30" alt="" className="mr-2.5" />
-                            <h3 className="text-sm">British Cycling Equality Policy</h3>
-                        </a>
-                    </section>
                     <p className="mb-2">The Club will deal with any incidence of discriminatory behaviour seriously, according to club disciplinary procedures. </p>
                 </section>
                 <section>

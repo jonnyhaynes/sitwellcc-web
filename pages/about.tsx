@@ -64,6 +64,12 @@ const About: NextPage = () => {
                             <a href="mailto:bc.racing@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Jonny</a>
                         </article>
                         <article className="relative pb-8">
+                            <Image className="block mb-2.5" src="/img/coaching/david.webp" alt="A portrait photograph of David Hush" width="285" height="285" />
+                            <h3 className="text-xl font-ropa">David Hush</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2">Welfare Officer</h3>
+                            <a href="mailto:welfare@sitwell.cc" className="btn absolute left-0 bottom-0">Contact David</a>
+                        </article>
+                        <article className="relative pb-8">
                             <Image className="block mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Andy Laidler" width="285" height="285" />
                             <h3 className="text-xl font-ropa">Andy Laidler</h3>
                             <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Vice Chair <br /> CTT Racing Officer</h3>
@@ -102,6 +108,12 @@ const About: NextPage = () => {
                             <Image className="block mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of David Southwood" width="285" height="285" />
                             <h3 className="text-xl font-ropa">David Southwood</h3>
                             <h3 className="text-base font-ropa block uppercase opacity-50">Member</h3>
+                        </article>
+                        <article className="relative pb-8">
+                            <Image className="block mb-2.5" src="/img/coaching/claire.webp" alt="A portrait photograph of Claire Wardle" width="285" height="285" />
+                            <h3 className="text-xl font-ropa">Claire Wardle</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2">Welfare Officer</h3>
+                            <a href="mailto:welfare@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Claire</a>
                         </article>
                         <article className="relative pb-8">
                             <Image className="block mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Mark Weston" width="285" height="285" />

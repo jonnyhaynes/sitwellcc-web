@@ -76,6 +76,11 @@ const Coaching: NextPage = () => {
                             <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 2 Coach</h3>
                             <a href="mailto:coaching@sitwell.cc" className="btn">Contact Julie</a>
                         </article>
+                        <article className="relative pb-8">
+                            <Image className="block mb-2.5" src="/img/coaching/claire.webp" alt="A portrait photograph of Claire Wardle" width="285" height="285" />
+                            <h3 className="text-xl font-ropa">Claire Wardle</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50">Welfare Officer</h3>
+                        </article>
                     </section>
                 </section>
                 <section className="mb-5 md:mb-0 md:col-span-2 border-t-8 border-blue pt-5 px-5 bg-blue bg-opacity-5">

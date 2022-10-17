@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Image from 'next/image';
+import Image from 'next/future/image';
 
 import type { NextPage } from 'next';
 
@@ -13,13 +13,13 @@ const Membership: NextPage = () => {
             <section className="title w-full px-5 lg:px-10 mb-20">
                 <h1 className="text-6xl font-ropa-bold mb-5">Membership</h1>
                 <h2 className="text-3xl font-ropa">For the good times!</h2>
-                <p className="text-sm lg:w-3/4">You&apos;re more than welcome to come along for a couple of rides before deciding if we&apos;re the club for you, but we think our membership is great value for money. Membership runs January - December, and if you join from October onwards you&apos;ll be credited with the following year. Benefits include discounts on bike servicing and parts, bike fits, sports nutrition, bike insurance, and skincare, as well as access to club kit, socials and awards amongst a whole host of other things. First year members receive a club branded buff, stickers and <a href="https://onelifeid.com/">OneLifeiD</a> tags.</p>
+                <p className="lg:w-3/4">You&apos;re more than welcome to come along for a couple of rides before deciding if we&apos;re the club for you, but we think our membership is great value for money. Membership runs January - December, and if you join from October onwards you&apos;ll be credited with the following year. Benefits include discounts on bike servicing and parts, bike fits, sports nutrition, bike insurance, and skincare, as well as access to club kit, socials and awards amongst a whole host of other things. First year members receive a club branded buff, stickers and <a href="https://onelifeid.com/">OneLifeiD</a> tags.</p>
             </section>
             <section className="membership w-full px-5 lg:px-10 mb-20 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-                <Image src="/img/membership/zero.jpg" className="block w-full" alt="A photograph of members" width="285" height="285" />
-                <Image src="/img/membership/one.jpg" className="block w-full" alt="A photograph of members" width="285" height="285" />
-                <Image src="/img/membership/two.jpg" className="block w-full" alt="A photograph of members" width="285" height="285" />
-                <Image src="/img/membership/three.jpg" className="block w-full" alt="A photograph of members" width="285" height="285" />
+                <Image src="/img/membership/zero.webp" className="block w-full" alt="A photograph of members" width="285" height="285" />
+                <Image src="/img/membership/one.webp" className="block w-full" alt="A photograph of members" width="285" height="285" />
+                <Image src="/img/membership/two.webp" className="block w-full" alt="A photograph of members" width="285" height="285" />
+                <Image src="/img/membership/three.webp" className="block w-full" alt="A photograph of members" width="285" height="285" />
                 <section className="md:col-span-2 lg:col-span-4 grid gap-5 md:grid-cols-5">
                     <div className="md:py-5 flex">
                         <div className="bg-yellow bg-opacity-25 p-5 w-full flex flex-col content-center justify-center">
@@ -73,14 +73,14 @@ const Membership: NextPage = () => {
                     </div>
                 </section>
                 <p className="md:col-span-2 lg:col-span-4 text-center text-xs opacity-50">*All membership is subject to a £1 processing fee by British Cycling</p>
-                <Image src="/img/membership/four.jpg" className="block w-full" alt="A photograph of members" width="285" height="285" />
-                <Image src="/img/membership/five.jpg" className="block w-full" alt="A photograph of members" width="285" height="285" />
-                <Image src="/img/membership/six.jpg" className="block w-full" alt="A photograph of members" width="285" height="285" />
-                <Image src="/img/membership/seven.jpg" className="block w-full" alt="A photograph of members" width="285" height="285" />
-                <Image src="/img/membership/eight.jpg" className="block w-full" alt="A photograph of members" width="285" height="285" />
-                <Image src="/img/membership/nine.jpg" className="block w-full" alt="A photograph of members" width="285" height="285" />
-                <Image src="/img/membership/ten.jpg" className="block w-full" alt="A photograph of members" width="285" height="285" />
-                <Image src="/img/membership/eleven.jpg" className="block w-full" alt="A photograph of members" width="285" height="285" />
+                <Image src="/img/membership/four.webp" className="block w-full" alt="A photograph of members" width="285" height="285" />
+                <Image src="/img/membership/five.webp" className="block w-full" alt="A photograph of members" width="285" height="285" />
+                <Image src="/img/membership/six.webp" className="block w-full" alt="A photograph of members" width="285" height="285" />
+                <Image src="/img/membership/seven.webp" className="block w-full" alt="A photograph of members" width="285" height="285" />
+                <Image src="/img/membership/eight.webp" className="block w-full" alt="A photograph of members" width="285" height="285" />
+                <Image src="/img/membership/nine.webp" className="block w-full" alt="A photograph of members" width="285" height="285" />
+                <Image src="/img/membership/ten.webp" className="block w-full" alt="A photograph of members" width="285" height="285" />
+                <Image src="/img/membership/eleven.webp" className="block w-full" alt="A photograph of members" width="285" height="285" />
             </section>
         </>
     )

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from 'next/future/image';
 import History from './components/history';
 
 import type { NextPage } from 'next';
@@ -15,16 +15,16 @@ const About: NextPage = () => {
             <section className="title w-full px-5 lg:px-10 mb-20">
                 <h1 className="text-6xl font-ropa-bold mb-5">Sitwell Cycling Club</h1>
                 <h2 className="text-3xl font-ropa">Rotherham&apos;s award-winning Go-Ride club.</h2>
-                <p className="text-sm lg:w-3/4">Offering nine social rides a week, Go-Ride coaching sessions for under 16s, monthly socials and overseas trips. Some of us race, but most of us are just here for the coffee and the cake. We ride on road and off-road. There&apos;s something for everyone, so <Link href="/contact"><a>contact us</a></Link> now to see what you&apos;re missing.</p>
+                <p className="lg:w-3/4">Offering nine social rides a week, Go-Ride coaching sessions for under 16s, monthly socials and overseas trips. Some of us race, but most of us are just here for the coffee and the cake. We ride on road and off-road. There&apos;s something for everyone, so <Link href="/contact"><a>contact us</a></Link> now to see what you&apos;re missing.</p>
             </section>
             <section className="rides w-full px-5 lg:px-10 mb-20 grid md:gap-5 md:grid-cols-2">
                 <section>
                     <section>
                         <h2 className="text-3xl font-ropa">Committee</h2>
-                        <p className="text-sm mb-2">The Club is managed by a Committee. The Committee is responsible for the Club, its funds, property and affairs.</p>
-                        <p className="text-sm mb-5">The Committee is made up of four elected positions and co-opted Officers. Votes - if necessary - take place at each AGM to elect the Committee.</p>
+                        <p className="mb-2">The Club is managed by a Committee. The Committee is responsible for the Club, its funds, property and affairs.</p>
+                        <p className="mb-5">The Committee is made up of four elected positions and co-opted Officers. Votes - if necessary - take place at each AGM to elect the Committee.</p>
                         <h3 className="text-2xl font-ropa">Meetings</h3>
-                        <p className="text-sm mb-5">Committee meetings are held at The Sitwell Arms, usually on the first Monday of the month, unless it&apos;s a Bank Holiday. Club members are more than welcome to attend to discuss any issues they have.</p>
+                        <p className="mb-5">Committee meetings are held at The Sitwell Arms, usually on the first Monday of the month, unless it&apos;s a Bank Holiday. Club members are more than welcome to attend to discuss any issues they have.</p>
                         <h3 className="text-2xl font-ropa mb-1">Members</h3>
                     </section>
                     <section className="grid grid-cols-2 lg:grid-cols-3 gap-5 mb-5">

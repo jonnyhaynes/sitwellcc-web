@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
+import Image from 'next/future/image';
 
 import type { NextPage } from 'next';
 
 const Races: NextPage = () => {
-    const ref = useRef();
+    const ref = useRef<any>();
     const [open, toggleOpen] = useState(false);
     const [content, setContent] = useState(null);
 
     useEffect(() => {
-        const checkIfClickedOutside = (e) => {
+        const checkIfClickedOutside = (e: any) => {
             if (open && ref.current && !ref.current.contains(e.target)) {
                 toggleOpen(false);
                 setContent(null);
@@ -33,26 +34,17 @@ const Races: NextPage = () => {
                 <h1 className="text-6xl font-ropa-bold mb-5 flex flex-row content-center">
                     <span>Races</span>
                     <a href="https://epic-group.org/" className="ml-5">
-                        <picture>
-                            <source srcSet="/img/epic-kitemark.webp" type="image/webp" />
-                            <img src="/img/epic-kitemark.png" className="w-10" alt="Equality and Parity In Cycling" />
-                        </picture>
+                        <Image src="/img/epic-kitemark.webp" alt="Equality and Parity In Cycling" width="40" height="55" />
                     </a>
                 </h1>
                 <h2 className="text-3xl font-ropa">We host races. We support races. We race.</h2>
-                <p className="text-sm lg:w-3/4">Up hills, down hills, round tracks, circuits, and off road. We've even had our stripes represented at National Championships. Throughout the year we host a handful of races, across multiple disciplines and age groups. Our members also support grassroots and national level races through the <a href="https://www.britishcycling.org.uk/accreditedmarshal">British Cycling Accredited Marshal Scheme</a>, as well as just being an extra pair of hands when required. <em>All of our races are <a href="https://epic-group.org/">EPiC Kitemark</a> certified</em>.</p>
+                <p className="lg:w-3/4">Up hills, down hills, round tracks, circuits, and off road. We&apos;ve even had our stripes represented at National Championships. Throughout the year we host a handful of races, across multiple disciplines and age groups. Our members also support grassroots and national level races through the <a href="https://www.britishcycling.org.uk/accreditedmarshal">British Cycling Accredited Marshal Scheme</a>, as well as just being an extra pair of hands when required. <em>All of our races are <a href="https://epic-group.org/">EPiC Kitemark</a> certified</em>.</p>
             </section>
             <section className="races w-full px-5 lg:px-10 mb-20 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
                 <div className="border-t-8 border-blue pt-5">
-                    <a href="#" className="relative block w-full">
-                        <picture className="block w-full mb-5">
-                            <source srcSet="/img/herringthorpe.webp" type="image/webp" />
-                            <img src="/img/herringthorpe.jpg" alt="A photograph of children at a British Cycling Go-Race" />
-                        </picture>
-                        <picture className="absolute bottom-5 right-5" >
-                            <source srcSet="/img/go-race.webp" type="image/webp" />
-                            <img src="/img/go-race.png" alt="The British Cycling Go-Race logo" />
-                        </picture>
+                    <a href="#" className="relative block w-full mb-5">
+                        <Image src="/img/herringthorpe.webp" className="block w-full" alt="A photograph of children at a British Cycling Go-Race" width="285" height="285" />
+                        <Image src="/img/go-race.webp" className="absolute bottom-5 right-5" alt="The British Cycling Go-Race logo" width="61" height="49" />
                         <button className="btn absolute bottom-5 left-5" aria-label="Coming soon">Coming soon</button>
                     </a>
                     <h3 className="text-base font-ropa block uppercase opacity-50">All year</h3>
@@ -60,36 +52,23 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2">Exciting entry-level competition for novice cyclists under the age of 16.</p>
                     <p className="text-sm mb-1">Sign on: <strong>Herringthorpe Playing Fields, S65 2HR</strong></p>
                     <p className="text-sm mb-2">Fee: <strong>TBA</strong></p>
-                    <p className="text-sm"><em>This event will start in 2022 due to COVID-19 restrictions</em>.</p>
                 </div>
                 <div className="border-t-8 border-amber pt-5">
-                    <a href="https://www.britishcycling.org.uk/events/details/256749/Ranskill-Gold" className="relative block w-full">
-                        <picture className="block w-full mb-5">
-                            <source srcSet="/img/ranskill.webp" type="image/webp" />
-                            <img src="/img/ranskill.jpg" alt="A photograph of members at Ranskill" />
-                        </picture>
-                        <picture className="absolute bottom-5 right-5" >
-                            <source srcSet="/img/bc.webp" type="image/webp" />
-                            <img src="/img/bc.png" alt="The British Cycling logo" />
-                        </picture>
+                    <a href="https://www.britishcycling.org.uk/events/details/256749/Ranskill-Gold" className="relative block w-full mb-5">
+                        <Image src="/img/ranskill.webp" className="block w-full" alt="A photograph of members at Ranskill" width="285" height="285" />
+                        <Image src="/img/bc.webp" className="absolute bottom-5 right-5" alt="The British Cycling logo" width="88" height="50" />
                         <button className="btn absolute top-5 left-5" aria-label="Enter now">Enter now</button>
                     </a>
                     <h3 className="text-base font-ropa block uppercase opacity-50">March</h3>
                     <h2 className="text-2xl font-ropa text-amber">Ranskill Gold</h2>
-                    <p className="text-sm mb-2">Three routes to choose from (40/60/80 miles) using familiar roads out east. Money raised goes to Bluebell Wood Children's Hospice.</p>
+                    <p className="text-sm mb-2">Three routes to choose from (40/60/80 miles) using familiar roads out east. Money raised goes to Bluebell Wood Children&apos;s Hospice.</p>
                     <p className="text-sm mb-1">Sign on: <strong>Ulley Village Hall, S66 2DD</strong></p>
                     <p className="text-sm mb-2">Fee: <strong>£10</strong></p>
                 </div>
-                <div className="border-t-8 border-red pt-5">
-                    <a href="https://www.britishcycling.org.uk/events/details/255819/Team-Pursuit-Open-Event" className="relative block w-full">
-                        <picture className="block w-full mb-5">
-                            <source srcSet="/img/winter-series.webp" type="image/webp" />
-                            <img src="/img/winter-series.jpg" alt="A photograph of club member Jonny Haynes racing at York" />
-                        </picture>
-                        <picture className="absolute bottom-5 right-5" >
-                            <source srcSet="/img/bc.webp" type="image/webp" />
-                            <img src="/img/bc.png" alt="The British Cycling logo" />
-                        </picture>
+                {/* <div className="border-t-8 border-red pt-5">
+                    <a href="https://www.britishcycling.org.uk/events/details/255819/Team-Pursuit-Open-Event" className="relative block w-full mb-5">
+                        <Image src="/img/winter-series.webp" className="block w-full" alt="A photograph of club member Jonny Haynes racing at York" width="285" height="285" />
+                        <Image src="/img/bc.webp" className="absolute bottom-5 right-5" alt="The British Cycling logo" width="88" height="50" />
                         <button className="btn absolute bottom-5 left-5" aria-label="Enter now">Enter now</button>
                     </a>
                     <h3 className="text-base font-ropa block uppercase opacity-50">April</h3>
@@ -97,7 +76,7 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2">An afternoon of track racing at Derby Arena. Seniors, masters, all-male, all-female or mixed teams. Paracyclists and tandems welcomed.</p>
                     <p className="text-sm mb-1">Sign on: <strong>Derby Arena, DE24 8JB</strong></p>
                     <p className="text-sm">Fee: <strong>£100</strong> (Four person team)</p>
-                </div>
+                </div> */}
                 {/* <div className="border-t-8 border-red pt-5">
                     <a href="https://www.facebook.com/groups/418279868887120" className="relative block w-full">
                         <picture className="block w-full mb-5">
@@ -117,15 +96,9 @@ const Races: NextPage = () => {
                     <p className="text-sm">Fee: <strong>£12</strong></p>
                 </div> */}
                 <div className="border-t-8 border-red pt-5">
-                    <div className="relative">
-                        <picture className="block w-full mb-5">
-                            <source srcSet="/img/kilo.webp" type="image/webp" />
-                            <img src="/img/kilo.jpg" alt="A photograph of James Fox racing at Thurcroft" />
-                        </picture>
-                        <picture className="absolute bottom-5 left-5" >
-                            <source srcSet="/img/ctt.webp" type="image/webp" />
-                            <img src="/img/ctt.png"alt="The Cycling Time Trials logo" />
-                        </picture>
+                    <div className="relative mb-5">
+                        <Image src="/img/kilo.webp" className="block w-full" alt="A photograph of James Fox racing at Thurcroft" width="285" height="285" />
+                        <Image src="/img/ctt.webp" className="absolute bottom-5 left-5" alt="The Cycling Time Trials logo" width="55" height="50" />
                     </div>
                     <h3 className="text-base font-ropa block uppercase opacity-50">May</h3>
                     <h2 className="text-2xl font-ropa text-red">Club Kilo</h2>
@@ -155,15 +128,9 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2"><em>Club members only</em>.</p>
                 </div> */}
                 <div className="border-t-8 border-red pt-5">
-                    <div className="relative">
-                        <picture className="block w-full mb-5">
-                            <source srcSet="/img/hill-climb.webp" type="image/webp" />
-                            <img src="/img/hill-climb.jpg" alt="A photograph of the finish board at Ulley" />
-                        </picture>
-                        <picture className="absolute bottom-5 left-5" >
-                            <source srcSet="/img/ctt.webp" type="image/webp" />
-                            <img src="/img/ctt.png"alt="The Cycling Time Trials logo" />
-                        </picture>
+                    <div className="relative mb-5">
+                        <Image src="/img/hill-climb.webp" className="block w-full" alt="A photograph of the finish board at Ulley" width="285" height="285" />
+                        <Image src="/img/ctt.webp" className="absolute bottom-5 left-5" alt="The Cycling Time Trials logo" width="55" height="50" />
                     </div>
                     <h3 className="text-base font-ropa block uppercase opacity-50">July</h3>
                     <h2 className="text-2xl font-ropa text-red">Club Hill Climb</h2>
@@ -175,15 +142,9 @@ const Races: NextPage = () => {
                     {/* <p className="text-sm text-green cursor-pointer" @click="fetch('/hc-results').then(response => response.text()).then(html => { $refs.modal.innerHTML = html; openmodal = true; })">View records and results</p> */}
                 </div>
                 <div className="border-t-8 border-red pt-5">
-                    <a href="https://www.britishcycling.org.uk/events/details/258843/SCC-Presents--The-Dinnington-Dynamo" className="relative block w-full">
-                        <picture className="block w-full mb-5">
-                            <source srcSet="/img/firbeck.webp" type="image/webp" />
-                            <img src="/img/firbeck.jpg" alt="A photograph of club member Tom George racing at Firbeck" />
-                        </picture>
-                        <picture className="absolute bottom-5 right-5" >
-                            <source srcSet="/img/bc.webp" type="image/webp" />
-                            <img src="/img/bc.png" alt="The British Cycling logo" />
-                        </picture>
+                    <a href="https://www.britishcycling.org.uk/events/details/258843/SCC-Presents--The-Dinnington-Dynamo" className="relative block w-full mb-5">
+                        <Image src="/img/firbeck.webp" className="block w-full" alt="A photograph of club member Tom George racing at Firbeck" width="285" height="285" />
+                        <Image src="/img/bc.webp" className="absolute bottom-5 right-5" alt="The British Cycling logo" width="88" height="50" />
                         <button className="btn absolute top-5 left-5" aria-label="Enter now">Enter now</button>
                     </a>
                     <h3 className="text-base font-ropa block uppercase opacity-50">July</h3>
@@ -193,15 +154,9 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2">Fee: <strong>25</strong></p>
                 </div>
                 <div className="border-t-8 border-red pt-5">
-                    <a href="https://www.cyclingtimetrials.org.uk/race-details/23260" className="relative block w-full">
-                        <picture className="block w-full mb-5">
-                            <source srcSet="/img/open.webp" type="image/webp" />
-                            <img src="/img/open.jpg" alt="A photograph of club member Joe Strike racing at Ulley" />
-                        </picture>
-                        <picture className="absolute top-5 right-5" >
-                            <source srcSet="/img/ctt.webp" type="image/webp" />
-                            <img src="/img/ctt.png"alt="The Cycling Time Trials logo" />
-                        </picture>
+                    <a href="https://www.cyclingtimetrials.org.uk/race-details/23260" className="relative block w-full mb-5">
+                        <Image src="/img/open.webp" className="block w-full" alt="A photograph of club member Joe Strike racing at Ulley" width="285" height="285" />
+                        <Image src="/img/ctt.webp" className="absolute top-5 right-5" alt="The Cycling Time Trials logo" width="55" height="50" />
                         <button className="btn absolute bottom-5 right-5" aria-label="Enter now">Enter now</button>
                     </a>
                     <h3 className="text-base font-ropa block uppercase opacity-50">August</h3>

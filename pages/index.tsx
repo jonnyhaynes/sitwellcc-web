@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from 'next/future/image';
 
 import type { NextPage } from 'next';
 
@@ -15,7 +15,7 @@ const Index: NextPage = () => {
             <article className="club-rides block relative w-full lg:w-7/12 lg:pr-5 mb-10 h-96">
                 <Link href="/rides" >
                     <a className="block w-full h-full overflow-hidden relative">
-                        <Image src="/img/rides.webp" className="w-full h-full" layout="fill" objectFit="cover" objectPosition="right" priority={true} alt="A landscape photograph of a sunset over Whiston with two Club riders up front" />
+                        <Image src="/img/rides.webp" className="object-cover object-right w-full h-full" fill priority={true} alt="A landscape photograph of a sunset over Whiston with two Club riders up front" />
                         <div className="absolute left-0 bottom-0 text-white p-5">
                             <h3 className="font-ropa text-lg uppercase">Club rides</h3>
                             <h2 className="font-ropa text-3xl">We&apos;re here for the smiles, not&nbsp;the&nbsp;miles.</h2>
@@ -28,7 +28,7 @@ const Index: NextPage = () => {
             <article className="charity block relative w-full lg:w-5/12 lg:pl-5 mb-10 h-96">
                 <Link href="/charity">
                     <a className="block w-full h-full overflow-hidden relative">
-                        <Image src="/img/charity.webp" className="w-full h-full" layout="fill" objectFit="cover" objectPosition="right" priority={true} alt="A landscape photograph of Club members at Rotherham Hospice" />
+                        <Image src="/img/charity.webp" className="object-cover object-right w-full h-full" fill priority={true} alt="A landscape photograph of Club members at Rotherham Hospice" />
                         <div className="absolute bottom-0 left-0 text-white p-5">
                             <h3 className="font-ropa text-lg uppercase">Charity work</h3>
                             <h2 className="font-ropa text-3xl">We raise vital funds for&nbsp;local&nbsp;charities</h2>
@@ -41,7 +41,7 @@ const Index: NextPage = () => {
             <article className="races block relative w-full lg:w-5/12 lg:pr-5 mb-10 h-96">
                 <Link href="/races">
                     <a className="block w-full h-full overflow-hidden relative">
-                        <Image src="/img/racing.webp" className="w-full h-full" layout="fill" objectFit="cover" objectPosition="right" priority={true} alt="A photograph of Club member Joe Srike racing up Ulley Lane" />
+                        <Image src="/img/racing.webp" className="object-cover object-right w-full h-full" fill priority={true} alt="A photograph of Club member Joe Srike racing up Ulley Lane" />
                         <div className="absolute top-0 right-0 text-white text-right p-5 flex flex-col items-end">
                             <h3 className="font-ropa text-lg uppercase">Races</h3>
                             <h2 className="font-ropa text-3xl">
@@ -50,16 +50,16 @@ const Index: NextPage = () => {
                                 We race.
                             </h2>
                             <p className="w-3/5 lg:w-2/5 mb-2.5 self-end">Up hills, down hills, round tracks, circuits, and off road.</p>
-                            <Image src="/img/epic-kitemark--white.webp" layout="fixed" alt="Equality and Parity In Cycling" width="40" height="55" />
+                            <Image src="/img/epic-kitemark--white.webp" alt="Equality and Parity In Cycling" width="40" height="55" />
                         </div>
-                        <button className="btn absolute right-5 lg:right-10 bottom-5" aria-label="Find out more">Find out more</button>
+                        <button className="btn absolute right-5 bottom-5" aria-label="Find out more">Find out more</button>
                     </a>
                 </Link>
             </article>
             <article className="coaching block relative w-full lg:w-7/12 lg:pl-5 mb-10 h-96">
                 <Link href="/coaching">
                     <a className="block w-full h-full overflow-hidden relative">
-                        <Image src="/img/coaching.webp" className="w-full h-full" layout="fill" objectFit="cover" objectPosition="right" priority={true} alt="A photograph of Club Coach Chris Habershon with a group of children sat on the floor in front of him" />
+                        <Image src="/img/coaching.webp" className="object-cover object-right w-full h-full" fill priority={true} alt="A photograph of Club Coach Chris Habershon with a group of children sat on the floor in front of him" />
                         <div className="absolute top-0 left-0 text-white p-5">
                             <h3 className="font-ropa text-lg uppercase">Go-ride coaching</h3>
                             <h2 className="font-ropa text-3xl">We&apos;re coaching the&nbsp;next&nbsp;generation.</h2>

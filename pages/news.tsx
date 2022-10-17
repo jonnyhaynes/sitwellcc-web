@@ -10,7 +10,7 @@ type Props = {
     posts: [];
 };
 
-const News: NextPage = ({ posts } : Props) => {
+const News: NextPage<Props> = ({ posts }) => {
     return (
       <>
         <Head>

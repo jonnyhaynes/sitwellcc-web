@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/inline-script-id */
 import Head from 'next/head';
-import Image from 'next/image';
+import Image from 'next/future/image';
 import Script from 'next/script';
 import base64 from 'base-64';
 import moment from 'moment';
@@ -101,7 +101,7 @@ const DATA = [
     }
 ];
 
-const Rides: NextPage = ({ events }) => {
+const Rides: NextPage<any> = ({ events }) => {
 
     return (
         <>
@@ -142,8 +142,8 @@ const Rides: NextPage = ({ events }) => {
             </svg>
             <section className="title w-full px-5 lg:px-10 mb-20">
                 <h1 className="text-6xl font-ropa-bold mb-5">Club rides</h1>
-                <h2 className="text-3xl font-ropa">We're here for the smiles, not the miles.</h2>
-                <p className="text-sm lg:w-3/4">Nine social rides a week on Wednesday evenings, and Saturday and Sunday mornings. All rides meet outside Brookside Pharmacy, Whiston (<a href="https://goo.gl/maps/b4GQ4U8fdRn6J8A97">S60 4HY - MAP</a>). Plenty of on-street parking if you wish to drive over. All of our rides are lead by an experienced member of the club who we call Ride Captains. All weekend rides include a cafe stop and aim to be back in the village for 1pm. Wednesday evening rides last 90 minutes and we usually pop in <a href="https://www.thesitwell.co.uk/">The Sitwell Arms</a> for a cheeky pop afterwards.</p>
+                <h2 className="text-3xl font-ropa">We&apos;re here for the smiles, not the miles.</h2>
+                <p className="lg:w-3/4">Nine social rides a week on Wednesday evenings, and Saturday and Sunday mornings. All rides meet outside Brookside Pharmacy, Whiston (<a href="https://goo.gl/maps/b4GQ4U8fdRn6J8A97">S60 4HY - MAP</a>). Plenty of on-street parking if you wish to drive over. All of our rides are lead by an experienced member of the club who we call Ride Captains. All weekend rides include a cafe stop and aim to be back in the village for 1pm. Wednesday evening rides last 90 minutes and we usually pop in <a href="https://www.thesitwell.co.uk/">The Sitwell Arms</a> for a cheeky pop afterwards.</p>
             </section>
             <section className="rides w-full px-5 lg:px-10 mb-20 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
                 <div>
@@ -281,7 +281,7 @@ const Rides: NextPage = ({ events }) => {
             <section className="w-full px-5 lg:px-10 mb-20 grid lg:grid-cols-2 lg:gap-5">
                 <section>
                     <h2 className="text-3xl font-ropa mb-1.5">Upcoming rides</h2>
-                    { events?.data?.sort((a, b) => a.start.unix - b.start.unix).map((event, index) => {
+                    { events?.data?.sort((a: any, b: any) => a.start.unix - b.start.unix).map((event: any, index: any) => {
                         let color = 'black';
 
                         switch (true) {
@@ -295,8 +295,8 @@ const Rides: NextPage = ({ events }) => {
                                 color = 'amber';
                                 break;
                             case event.name.includes('GREEN'):
-                                case event.name.includes('Fancy Dress'):
-                                    case event.name.includes('Birthday Ride'):
+                            case event.name.includes('Fancy Dress'):
+                            case event.name.includes('Birthday Ride'):
                                 color = 'green';
                                 break;
                             case event.name.includes('Off-Road'):
@@ -331,7 +331,7 @@ const Rides: NextPage = ({ events }) => {
                 </section>
                 <section>
                     <h2 className="text-3xl font-ropa">Thinking of joining us for a ride?</h2>
-                    <p className="mb-5">Great! Here's some top tips to make sure we all have a safe, enjoyable ride - click a point for futher information.</p>
+                    <p className="mb-5">Great! Here&apos;s some top tips to make sure we all have a safe, enjoyable ride - click a point for futher information.</p>
                     {DATA.map((item, index) => {
                         return (
                             <Accordion title={item.title} description={item.description} key={index} />
@@ -349,10 +349,6 @@ export async function getServerSideProps() {
 
     const start = moment().isoWeekday(1).hour(0).minute(0).second(0).unix();
     const end = moment().isoWeekday(7).hour(23).minute(59).second(59).unix();
-    console.log({
-        start,
-        end,
-    });
 
     const limit = 10;
 

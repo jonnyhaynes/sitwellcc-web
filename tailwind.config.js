@@ -3,7 +3,6 @@ const { colors } = defaultTheme;
 
 module.exports = {
     mode: 'jit',
-    purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
     content: [
         "./pages/**/*.{js,ts,jsx,tsx}",
         "./components/**/*.{js,ts,jsx,tsx}",
@@ -57,14 +56,6 @@ module.exports = {
                 '3xs': ['0.625rem', '0.75rem'],
                 '2xs': ['0.75rem', '1rem'],
             },
-        },
-    },
-    variants: {
-        filter: ['responsive'],
-        backdropFilter: ['responsive'],
-        extend: {
-            opacity: ['disabled'],
-            textColor: ['group-focus'],
         },
     },
     plugins: [

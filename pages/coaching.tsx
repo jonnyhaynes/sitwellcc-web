@@ -85,7 +85,7 @@ const Coaching: NextPage = () => {
                 </section>
                 <section className="mb-5 md:mb-0 md:col-span-2 border-t-8 border-blue pt-5 px-5 bg-blue bg-opacity-5">
                     <h2 className="text-3xl font-ropa">Talent Development</h2>
-                    <p className="mb-2">Using the British Cycling talent development pathways we teach your children the fundamentals of cycling before coaching them on their favoured discipline. We do fun activities and games using cones, bean bags, balance baords, limbo bars, ramps etc to enhance the cycling skills of your child and give them a good foundation for the future.</p>
+                    <p className="mb-2">Using the British Cycling talent development pathways we teach your children the fundamentals of cycling before coaching them on their favoured discipline. We do fun activities and games using cones, bean bags, balance boards, limbo bars, ramps etc to enhance the cycling skills of your child and give them a good foundation for the future.</p>
                     <p className="mb-2">Our more advanced students are using BMX style pump tracks, taking on trail centers and we&apos;re looking this year how to get some road cycling done on quiet lanes.</p>
                     <p className="mb-2"><strong>Pedal sessions</strong> are for children who no longer use stabilisers or a balance bike and are looking to increase their confidence. Pedal sessions are run 10-11:15.</p>
                     <p className="mb-5">Our <strong>Balance sessions</strong> are for children new to cycling, who may have just had their stabilisers taken off or who are still using a balance bike. Balance sessions are run 11:15-12.</p>

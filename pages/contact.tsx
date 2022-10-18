@@ -147,17 +147,17 @@ const Contact: NextPage = () => {
                     <h3 className="text-xl font-ropa mb-1">Follow us on the socials</h3>
                     <ul className="flex mb-10">
                         <li>
-                            <a href="https://www.instgram.com/sitwellcc" className="mr-2.5" >
+                            <a href="https://www.instgram.com/sitwellcc" className="inline-block mr-2.5" >
                                 <Image src="/img/instagram.svg" alt="Instagram icon" width="40" height="40" />
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.twitter.com/sitwellcc" className="mr-2.5" >
+                            <a href="https://www.twitter.com/sitwellcc" className="inline-block mr-2.5" >
                                 <Image src="/img/twitter.svg" alt="Twitter icon" width="40" height="40" />
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.strava.com/sitwellcc" className="mr-2.5" >
+                            <a href="https://www.strava.com/sitwellcc" className="inline-block mr-2.5" >
                                 <Image src="/img/strava.svg" alt="Strava icon" width="40" height="40" />
                             </a>
                         </li>

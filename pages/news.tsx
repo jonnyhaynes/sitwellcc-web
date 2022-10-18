@@ -27,7 +27,7 @@ const News: NextPage<Props> = ({ posts }) => {
         </section>
         <section className="races w-full px-5 lg:px-10 mb-20 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
         {posts.length > 0 && posts.map(
-                ({ _id, title = '', slug = '' as any, publishedAt = '', summary = '', announcement = false, mainImage }) => {
+                ({ _id, title = '', slug = '' as any, publishedAt = '', summary = '', announcement = false, mainImage }: any) => {
                     return slug && (
                         <article className={`border-t-8 ${announcement ? 'border-yellow' : 'border-black'} pt-5 flex flex-col`}  key={_id}>
                             <Link href="/news/[slug]" as={`/news/${slug.current}`}>

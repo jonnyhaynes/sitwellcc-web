@@ -18,10 +18,10 @@ const Coaching: NextPage = () => {
                 <a href="https://www.tickettailor.com/events/sitwellcyclingclub/674381" className="btn btn--large">Book now</a>
             </section>
             <section className="coaching w-full px-5 lg:px-10 mb-20 grid md:gap-5 md:grid-cols-2 lg:grid-cols-4">
-                <Image src="/img/coaching/one.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block mb-5 md:mb-0" />
-                <Image src="/img/coaching/seven.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block mb-5 md:mb-0" />
-                <Image src="/img/coaching/eight.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block mb-5 md:mb-0" />
-                <Image src="/img/coaching/two.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block mb-5 md:mb-0" />
+                <Image src="/img/coaching/one.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block w-full mb-5 md:mb-0" />
+                <Image src="/img/coaching/seven.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block w-full mb-5 md:mb-0" />
+                <Image src="/img/coaching/eight.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block w-full mb-5 md:mb-0" />
+                <Image src="/img/coaching/two.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block w-full mb-5 md:mb-0" />
                 <section className="mb-5 md:mb-0 md:col-span-2">
                     <h2 className="text-3xl font-ropa mb-2">Our Coaching Team</h2>
                     <section className="grid grid-cols-2 lg:grid-cols-3 gap-5 mb-5">
@@ -117,14 +117,14 @@ const Coaching: NextPage = () => {
                     <p className="mb-2">All coaches hold relevant qualifications and insurance through British Cycling. They are first aid trained, DBS checked and they&apos;ve done safeguarding training.</p>
                     <p className="mb-5">We also have <Link href="/welfare"><a>Club Welfare Officers</a></Link> and follow British Cycling&apos;s Safeguarding policies.</p>
                 </section>
-                <Image src="/img/coaching/nine.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block mb-5 md:mb-0" />
-                <Image src="/img/coaching/three.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block mb-5 md:mb-0" />
-                <Image src="/img/coaching/five.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block mb-5 md:mb-0" />
-                <Image src="/img/coaching/four.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block mb-5 md:mb-0" />
-                <Image src="/img/coaching/six.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block mb-5 md:mb-0" />
-                <Image src="/img/coaching/ten.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block mb-5 md:mb-0" />
-                <Image src="/img/coaching/eleven.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block mb-5 md:mb-0" />
-                <Image src="/img/coaching/twelve.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block mb-5 md:mb-0" />
+                <Image src="/img/coaching/nine.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block w-full mb-5 md:mb-0" />
+                <Image src="/img/coaching/three.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block w-full mb-5 md:mb-0" />
+                <Image src="/img/coaching/five.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block w-full mb-5 md:mb-0" />
+                <Image src="/img/coaching/four.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block w-full mb-5 md:mb-0" />
+                <Image src="/img/coaching/six.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block w-full mb-5 md:mb-0" />
+                <Image src="/img/coaching/ten.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block w-full mb-5 md:mb-0" />
+                <Image src="/img/coaching/eleven.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block w-full mb-5 md:mb-0" />
+                <Image src="/img/coaching/twelve.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" className="block w-full mb-5 md:mb-0" />
             </section>
         </>
     )

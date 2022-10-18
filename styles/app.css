@@ -13,6 +13,7 @@
 @import "components/header.css";
 @import "components/links.css";
 @import "components/strava.css";
+@import "components/wysiwyg.css";
 /* purgecss end ignore */
 
 @import "tw_utilities.css";

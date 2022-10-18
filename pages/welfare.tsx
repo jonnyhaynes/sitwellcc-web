@@ -22,7 +22,6 @@ const Welfare: NextPage = () => {
                     <p className="mb-2">All young people and adults at risk are entitled to a duty of care and be protected from abuse. Sitwell Cycling Club is committed to implementing policies and procedures to ensure everyone in the Club accepts their responsibilities to safeguard children and adults at risk from harm and abuse. This means taking action to safeguard and report any concerns about their welfare in accordance with the British Cycling Safeguarding Children and Young People Policy and Safeguarding Adults Policy.</p>
                     <p><a href="https://www.britishcycling.org.uk/safeguarding">More information on Safeguarding in general can be found here</a>.</p>
                 </section>
-                <section></section>
                 <section className="lg:col-span-2">
                     <h2 className="text-2xl font-ropa">Welfare Officers</h2>
                     <p className="mb-2">Sitwell Cycling Club has Welfare Officers who are responsible for ensuring that we meet British Cycling&apos;s requirements and making sure they are communicated to Members, Coaches, Parents, and Children. Our Welfare Officers will also advise Sitwell Cycling Club Committee on how best to safeguard the welfare of children and adults at risk who are participating in Club activities.</p>

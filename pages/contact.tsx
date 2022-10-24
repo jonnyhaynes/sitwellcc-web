@@ -110,7 +110,7 @@ const Contact: NextPage = () => {
         <>
             <Head>
                 <title>Contact // Sitwell Cycling Club</title>
-                <meta name="description" content="Founded 2016. Rotherham Advertiser Sports Awards Club of the Year 2018. 9 social rides a week. Go-Ride Coaching. Meet Brookside Pharmacy, Whiston." />
+                <meta name="description" content="Founded 2016. Rotherham Advertiser Sports Awards Club of the Year 2018. 10 social rides a week. Go-Ride Coaching. Meet Brookside Pharmacy, Whiston." />
             </Head>
             <section className="title w-full px-5 lg:px-10 mb-20">
                 <h1 className="text-6xl font-ropa-bold mb-5">Get in touch</h1>

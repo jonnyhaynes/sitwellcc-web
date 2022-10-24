@@ -39,7 +39,7 @@ const Index: NextPage<Props> = ({announcement, news}) => {
       <>
         <Head>
             <title>Sitwell Cycling Club</title>
-            <meta name="description" content="Founded 2016. Rotherham Advertiser Sports Awards Club of the Year 2018. 9 social rides a week. Go-Ride Coaching. Meet Brookside Pharmacy, Whiston." />
+            <meta name="description" content="Founded 2016. Rotherham Advertiser Sports Awards Club of the Year 2018. 10 social rides a week. Go-Ride Coaching. Meet Brookside Pharmacy, Whiston." />
         </Head>
 
         <section className="updates grid gap-5 lg:grid-cols-4 px-5 lg:px-10 mb-20">

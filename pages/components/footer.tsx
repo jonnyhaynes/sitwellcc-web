@@ -7,7 +7,7 @@ const Footer = () => {
         <footer className="page-footer flex-shrink-0 w-full max-w-screen-xl mx-auto">
             <div className="flex flex-row justify-center flex-wrap mb-20 px-5 lg:px-10">
                 <section className="stats grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-y-0.5 md:gap-x-5 w-full mb-20">
-                    <Image src="/img/stat-1.svg" alt="9 social rides a week" className="order-1" width="285" height="104" />
+                    <Image src="/img/stat-1.svg" alt="10 social rides a week" className="order-1" width="285" height="104" />
                     <Image src="/img/stat-2.svg" alt="200+ members" className="order-2" width="285" height="104" />
                     <Image src="/img/stat-3.svg" alt="2 overseas trips" className="order-3 md:order-4 lg:order-3" width="285" height="104" />
                     <Image src="/img/stat-4.svg" alt="6 British Cycling coaches" className="order-4 md:order-3 lg:order-4" width="285" height="104" />

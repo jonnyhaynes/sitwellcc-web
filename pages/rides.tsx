@@ -300,6 +300,7 @@ const Rides: NextPage<any> = ({ events }) => {
                                 color = 'green';
                                 break;
                             case event.name.includes('Off-Road'):
+                            case event.name.includes('GRAVEL'):
                                 color = 'brown';
                                 break;
                             case event.name.includes('Coaching'):
@@ -347,8 +348,8 @@ export async function getServerSideProps() {
     const baseURL = process.env.TICKET_TAILOR_BASE_URL || '';
     const apiKey = process.env.TICKET_TAILOR_API_KEY || '';
 
-    const start = moment().isoWeekday(1).hour(0).minute(0).second(0).unix();
-    const end = moment().isoWeekday(7).hour(23).minute(59).second(59).unix();
+    const start = moment().hour(0).minute(0).second(0).unix();
+    const end = moment().add(7, 'd').hour(23).minute(59).second(59).unix();
 
     const limit = 10;
 

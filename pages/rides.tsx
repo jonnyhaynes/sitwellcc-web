@@ -143,7 +143,7 @@ const Rides: NextPage<any> = ({ events }) => {
             <section className="title w-full px-5 lg:px-10 mb-20">
                 <h1 className="text-6xl font-ropa-bold mb-5">Club rides</h1>
                 <h2 className="text-3xl font-ropa">We&apos;re here for the smiles, not the miles.</h2>
-                <p className="lg:w-3/4">Nine social rides a week on Wednesday evenings, and Saturday and Sunday mornings. All rides meet outside Brookside Pharmacy, Whiston (<a href="https://goo.gl/maps/b4GQ4U8fdRn6J8A97">S60 4HY - MAP</a>). Plenty of on-street parking if you wish to drive over. All of our rides are lead by an experienced member of the club who we call Ride Captains. All weekend rides include a cafe stop and aim to be back in the village for 1pm. Wednesday evening rides last 90 minutes and we usually pop in <a href="https://www.thesitwell.co.uk/">The Sitwell Arms</a> for a cheeky pop afterwards.</p>
+                <p className="lg:w-3/4">Ten social rides a week on Wednesday evenings, and Saturday and Sunday mornings. All rides meet outside Brookside Pharmacy, Whiston (<a href="https://goo.gl/maps/b4GQ4U8fdRn6J8A97">S60 4HY - MAP</a>). Plenty of on-street parking if you wish to drive over. All of our rides are lead by an experienced member of the club who we call Ride Captains. All weekend rides include a cafe stop and aim to be back in the village for 1pm. Wednesday evening rides last 90 minutes and we usually pop in <a href="https://www.thesitwell.co.uk/">The Sitwell Arms</a> for a cheeky pop afterwards.</p>
             </section>
             <section className="rides w-full px-5 lg:px-10 mb-20 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
                 <div>

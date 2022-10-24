@@ -72,7 +72,7 @@ const Index: NextPage<Props> = ({announcement, news}) => {
                         <div className="absolute left-0 bottom-0 text-white p-5">
                             <h3 className="font-ropa text-lg uppercase">Club rides</h3>
                             <h2 className="font-ropa text-3xl">We&apos;re here for the smiles, not&nbsp;the&nbsp;miles.</h2>
-                            <p>Nine social rides a week on Wednesday evenings, and Saturday and Sunday mornings.</p>
+                            <p>Ten social rides a week on Wednesday evenings, and Saturday and Sunday mornings.</p>
                         </div>
                         <button className="btn absolute top-5 left-5" aria-label="Find out more">Find out more</button>
                     </a>

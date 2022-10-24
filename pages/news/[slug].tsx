@@ -22,7 +22,7 @@ const ptComponents = {
                 return null
             }
             return (
-                <Image src={urlFor(value).width(320).height(240).fit('max').auto('format').url() as any} className="block p-5 bg-black bg-opacity-5 mr-5 max-w-full h-auto float-left" alt={value.alt || ' '} width="285" height="285" />
+                <Image src={urlFor(value).url() as any} className="block mt-2.5 mb-2.5 p-5 bg-black bg-opacity-5 mr-5 max-w-full h-auto float-left" alt={value.alt || ' '} width="285" height="285" />
             )
         }
     }

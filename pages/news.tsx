@@ -32,7 +32,7 @@ const News: NextPage<Props> = ({ posts }) => {
                         <article className={`border-t-8 ${announcement ? 'border-yellow' : 'border-black'} pt-5 flex flex-col`}  key={_id}>
                             <Link href="/news/[slug]" as={`/news/${slug.current}`}>
                                 <a className="relative block w-full mb-5">
-                                    {mainImage && <Image src={urlFor(mainImage.asset).width(285).url()} className="block w-full" alt="" width="285" height="285" />}
+                                    {mainImage && <Image src={urlFor(mainImage.asset).width(285).height(285).url()} className="block w-full" alt="" width="285" height="285" />}
                                     {!mainImage && <Image src="/img/coaching/placeholder.webp" className="block w-full" alt="" width="285" height="285" />}
                                     <button className="btn absolute bottom-5 right-5" aria-label="View article">View article</button>
                                 </a>

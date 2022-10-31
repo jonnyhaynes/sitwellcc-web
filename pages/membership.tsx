@@ -47,7 +47,7 @@ const Membership: NextPage = () => {
                             <h2 className="text-2xl font-ropa">Junior</h2>
                             <h3 className="text-large font-ropa block uppercase opacity-75">£15</h3>
                             <p className="text-xs"><del>Go-Ride Coaching</del></p>
-                            <p className="text-xs mb-5">Club rides</p>
+                            <p className="text-xs mb-5">Club rides with parent/guardian</p>
                             <a className="btn self-start" href="https://www.britishcycling.org.uk/club/subscriptions/buy?club_id=7596&subscription_id=2930">Buy now</a>
                         </div>
                     </div>

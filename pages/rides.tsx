@@ -311,7 +311,7 @@ const Rides: NextPage<any> = ({ events }) => {
                                 color = 'black';
                         }
 
-                        const regex = /(Saturday|Sunday|) (RED|AMBER|GREEN|AMBER GRAVEL\/MTB) Ride( |)(-|–|:)/m;
+                        const regex = /(Saturday|Sunday|) (RED|AMBER|GREEN|GRAVEL) Ride( |)(-|–|:)/m;
                         const eventName = event.name.replace(regex, '');
 
                         return (

@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-script-component-in-head */
 import Head from 'next/head';
 import Script from 'next/script';
+import {Analytics} from '@vercel/analytics/react';
 
 import Layout from './components/layout';
 
@@ -81,6 +82,7 @@ const App = ({ Component, pageProps} : AppProps) => {
             <Layout>
                 <Component {...pageProps} />
             </Layout>
+            <Analytics />
         </>
     );
 }

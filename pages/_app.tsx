@@ -17,9 +17,6 @@ const App = ({ Component, pageProps} : AppProps) => {
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-                {/* <title>@yield('title')</title>
-                <meta name="description" content="@yield('description')">*/}
-
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
                 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
                 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -31,11 +28,7 @@ const App = ({ Component, pageProps} : AppProps) => {
                 <meta name="theme-color" content="#ffffff" />
 
                 {/* Styles  */}
-
                 {/* Scripts */}
-                {/* <script src="{{ mix('js/app.js') }}" defer></script>
-                <script type="module" src="{{ asset('js/alpine@2.8.0.min.js') }}"></script>
-                <script nomodule src="{{ asset('js/alpine@2.8.0-ie11.min.js') }}" defer></script> */}
 
                 {/* Global site tag (gtag.js) - Google Analytics */}
                 <Script async src="https://www.googletagmanager.com/gtag/js?id=G-BTC2TSVGSD"></Script>
@@ -48,7 +41,6 @@ const App = ({ Component, pageProps} : AppProps) => {
                         gtag('config', 'G-BTC2TSVGSD');
                     `}
                 </Script>
-
                 <Script type="application/ld+json">
                     {`
                         {

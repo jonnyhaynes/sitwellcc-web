@@ -11,7 +11,6 @@ class MyDocument extends Document {
         return (
             <Html>
                 <Head />
-                {/* <body className="font-arial antialiased h-screen bg-white flex flex-col text-black" :class="{ 'overflow-y-hidden': openmodal }" x-data="{ openmodal: false }"></Html> */}
                 <body className="font-arial antialiased h-screen bg-white flex flex-col text-black">
                     <Main />
                     <NextScript />

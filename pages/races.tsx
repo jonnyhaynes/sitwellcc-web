@@ -54,7 +54,7 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2">Fee: <strong>TBA</strong></p>
                 </div>
                 <div className="border-t-8 border-amber pt-5">
-                    <a href="https://www.britishcycling.org.uk/events/details/256749/Ranskill-Gold" className="relative block w-full mb-5">
+                    <a href="https://www.britishcycling.org.uk/events/details/277009/Ranskill-Gold" className="relative block w-full mb-5">
                         <Image src="/img/ranskill.webp" className="block w-full" alt="A photograph of members at Ranskill" width="285" height="285" />
                         <Image src="/img/bc.webp" className="absolute bottom-5 right-5" alt="The British Cycling logo" width="88" height="50" />
                         <button className="btn absolute top-5 left-5" aria-label="Enter now">Enter now</button>
@@ -62,11 +62,11 @@ const Races: NextPage = () => {
                     <h3 className="text-base font-ropa block uppercase opacity-50">March</h3>
                     <h2 className="text-2xl font-ropa text-amber">Ranskill Gold</h2>
                     <p className="text-sm mb-2">Three routes to choose from (40/60/80 miles) using familiar roads out east. Money raised goes to Bluebell Wood Children&apos;s Hospice.</p>
-                    <p className="text-sm mb-1">Sign on: <strong>Ulley Village Hall, S66 2DD</strong></p>
+                    <p className="text-sm mb-1">Sign on: <strong>The Gordon Bennett Memorial Hall, S66 9AA</strong></p>
                     <p className="text-sm mb-2">Fee: <strong>£10</strong></p>
                 </div>
-                {/* <div className="border-t-8 border-red pt-5">
-                    <a href="https://www.britishcycling.org.uk/events/details/255819/Team-Pursuit-Open-Event" className="relative block w-full mb-5">
+                <div className="border-t-8 border-red pt-5">
+                    <a href="https://www.britishcycling.org.uk/events/details/274539/Team-Pursuit-Open-Event-2023" className="relative block w-full mb-5">
                         <Image src="/img/winter-series.webp" className="block w-full" alt="A photograph of club member Jonny Haynes racing at York" width="285" height="285" />
                         <Image src="/img/bc.webp" className="absolute bottom-5 right-5" alt="The British Cycling logo" width="88" height="50" />
                         <button className="btn absolute bottom-5 left-5" aria-label="Enter now">Enter now</button>
@@ -76,7 +76,7 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2">An afternoon of track racing at Derby Arena. Seniors, masters, all-male, all-female or mixed teams. Paracyclists and tandems welcomed.</p>
                     <p className="text-sm mb-1">Sign on: <strong>Derby Arena, DE24 8JB</strong></p>
                     <p className="text-sm">Fee: <strong>£100</strong> (Four person team)</p>
-                </div> */}
+                </div>
                 {/* <div className="border-t-8 border-red pt-5">
                     <a href="https://www.facebook.com/groups/418279868887120" className="relative block w-full">
                         <picture className="block w-full mb-5">
@@ -141,7 +141,7 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2"><em>Club members only</em>.</p>
                     {/* <p className="text-sm text-green cursor-pointer" @click="fetch('/hc-results').then(response => response.text()).then(html => { $refs.modal.innerHTML = html; openmodal = true; })">View records and results</p> */}
                 </div>
-                <div className="border-t-8 border-red pt-5">
+                {/* <div className="border-t-8 border-red pt-5">
                     <a href="https://www.britishcycling.org.uk/events/details/258843/SCC-Presents--The-Dinnington-Dynamo" className="relative block w-full mb-5">
                         <Image src="/img/firbeck.webp" className="block w-full" alt="A photograph of club member Tom George racing at Firbeck" width="285" height="285" />
                         <Image src="/img/bc.webp" className="absolute bottom-5 right-5" alt="The British Cycling logo" width="88" height="50" />
@@ -152,7 +152,7 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2">11 laps of the 4.9 miles undulating course around the sleepy market town of Dinnington on the South Yorkshire and Nottinghamshire border.</p>
                     <p className="text-sm mb-1">Sign on: <strong>Dinnington RUFC, S25 2PB</strong></p>
                     <p className="text-sm mb-2">Fee: <strong>25</strong></p>
-                </div>
+                </div> */}
                 <div className="border-t-8 border-red pt-5">
                     <a href="https://www.cyclingtimetrials.org.uk/race-details/23260" className="relative block w-full mb-5">
                         <Image src="/img/open.webp" className="block w-full" alt="A photograph of club member Joe Strike racing at Ulley" width="285" height="285" />

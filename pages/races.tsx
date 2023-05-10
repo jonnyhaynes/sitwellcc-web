@@ -154,15 +154,15 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2">Fee: <strong>25</strong></p>
                 </div>
                 <div className="border-t-8 border-red pt-5">
-                    <a href="https://www.cyclingtimetrials.org.uk/race-details/23260" className="relative block w-full mb-5">
+                    <a href="https://www.cyclingtimetrials.org.uk/race-details/24951" className="relative block w-full mb-5">
                         <Image src="/img/open.webp" className="block w-full" alt="A photograph of club member Joe Strike racing at Ulley" width="285" height="285" />
                         <Image src="/img/ctt.webp" className="absolute top-5 right-5" alt="The Cycling Time Trials logo" width="55" height="50" />
                         <button className="btn absolute bottom-5 right-5" aria-label="Enter now">Enter now</button>
                     </a>
                     <h3 className="text-base font-ropa block uppercase opacity-50">August</h3>
                     <h2 className="text-2xl font-ropa text-red">Open Hill Climb</h2>
-                        <p className="text-sm mb-2">621m of pure unadulterated climbing in the natural ampitheatre surrounding Ulley Resevoir.</p>
-                        <p className="text-sm mb-1">Course: <strong>OHC19</strong></p>
+                        <p className="text-sm mb-2">692m of pure unadulterated climbing in the natural ampitheatre surrounding Ulley Resevoir.</p>
+                        <p className="text-sm mb-1">Course: <strong>OHC24</strong></p>
                         <p className="text-sm mb-1">Sign on: <strong>Ulley Village Hall, S66 2DD</strong></p>
                         <p className="text-sm mb-2">Fee: <strong>£12</strong></p>
                         {/* <p className="text-sm text-green cursor-pointer" @click="fetch('/open-results').then(response => response.text()).then(html => { $refs.modal.innerHTML = html; openmodal = true; })">View records and results</p> */}

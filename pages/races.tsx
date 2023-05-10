@@ -100,7 +100,7 @@ const Races: NextPage = () => {
                         <Image src="/img/kilo.webp" className="block w-full" alt="A photograph of James Fox racing at Thurcroft" width="285" height="285" />
                         <Image src="/img/ctt.webp" className="absolute bottom-5 left-5" alt="The Cycling Time Trials logo" width="55" height="50" />
                     </div>
-                    <h3 className="text-base font-ropa block uppercase opacity-50">May</h3>
+                    <h3 className="text-base font-ropa block uppercase opacity-50">July</h3>
                     <h2 className="text-2xl font-ropa text-red">Club Kilo</h2>
                     <p className="text-sm mb-2">A flat kilometer to test yourself on. Beware of the sting in the tail.</p>
                     <p className="text-sm mb-1">Course: <strong>OC1kmHH</strong></p>
@@ -141,18 +141,18 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2"><em>Club members only</em>.</p>
                     {/* <p className="text-sm text-green cursor-pointer" @click="fetch('/hc-results').then(response => response.text()).then(html => { $refs.modal.innerHTML = html; openmodal = true; })">View records and results</p> */}
                 </div>
-                {/* <div className="border-t-8 border-red pt-5">
-                    <a href="https://www.britishcycling.org.uk/events/details/258843/SCC-Presents--The-Dinnington-Dynamo" className="relative block w-full mb-5">
+                <div className="border-t-8 border-red pt-5">
+                    <a href="https://www.britishcycling.org.uk/events/details/281410/SCC-Presents--The-Dinnington-Dynamo" className="relative block w-full mb-5">
                         <Image src="/img/firbeck.webp" className="block w-full" alt="A photograph of club member Tom George racing at Firbeck" width="285" height="285" />
                         <Image src="/img/bc.webp" className="absolute bottom-5 right-5" alt="The British Cycling logo" width="88" height="50" />
                         <button className="btn absolute top-5 left-5" aria-label="Enter now">Enter now</button>
                     </a>
                     <h3 className="text-base font-ropa block uppercase opacity-50">July</h3>
                     <h2 className="text-2xl font-ropa text-red">The Dinnington Dynamo</h2>
-                    <p className="text-sm mb-2">11 laps of the 4.9 miles undulating course around the sleepy market town of Dinnington on the South Yorkshire and Nottinghamshire border.</p>
+                    <p className="text-sm mb-2">A Mens and Womens 3/4 race on the undulating course around the sleepy market town of Dinnington on the South Yorkshire and Nottinghamshire border.</p>
                     <p className="text-sm mb-1">Sign on: <strong>Dinnington RUFC, S25 2PB</strong></p>
                     <p className="text-sm mb-2">Fee: <strong>25</strong></p>
-                </div> */}
+                </div>
                 <div className="border-t-8 border-red pt-5">
                     <a href="https://www.cyclingtimetrials.org.uk/race-details/23260" className="relative block w-full mb-5">
                         <Image src="/img/open.webp" className="block w-full" alt="A photograph of club member Joe Strike racing at Ulley" width="285" height="285" />

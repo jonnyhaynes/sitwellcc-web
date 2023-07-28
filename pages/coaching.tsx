@@ -34,12 +34,12 @@ const Coaching: NextPage = () => {
                         <article>
                             <Image src="/img/coaching/placeholder.webp" alt="A portrait photograph of Karen Avill" width="183" height="183" className="block mb-2.5" />
                             <h3 className="text-xl font-ropa">Karen Avill</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Volunteer</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 1 Coach</h3>
                         </article>
                         <article>
                             <Image src="/img/coaching/placeholder.webp" alt="A portrait photograph of Pete Chester" width="183" height="183" className="block mb-2.5" />
                             <h3 className="text-xl font-ropa">Pete Chester</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50">Level 2 Trainee</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50">Level 2 MTB Coach</h3>
                         </article>
                         <article>
                             <Image src="/img/coaching/george.webp" alt="A portrait photograph of George Daly" width="183" height="183" className="block mb-2.5" />
@@ -62,7 +62,7 @@ const Coaching: NextPage = () => {
                         <article>
                             <Image src="/img/coaching/jonny.webp" alt="A portrait photograph of Jonny Haynes" width="183" height="183" className="block mb-2.5" />
                             <h3 className="text-xl font-ropa">Jonny Haynes</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 2 Coach</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 2 MTB Coach</h3>
                             <a href="mailto:coaching@sitwell.cc" className="btn">Contact Jonny</a>
                         </article>
                         <article>
@@ -73,7 +73,7 @@ const Coaching: NextPage = () => {
                         <article>
                             <Image src="/img/coaching/placeholder.webp" alt="A portrait photograph of Julie Skubala" width="183" height="183" className="block mb-2.5" />
                             <h3 className="text-xl font-ropa">Julie Skubala</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 2 Coach</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 2 MTB Coach</h3>
                             <a href="mailto:coaching@sitwell.cc" className="btn">Contact Julie</a>
                         </article>
                         <article className="relative pb-8">

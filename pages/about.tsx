@@ -88,11 +88,6 @@ const About: NextPage = () => {
                             <a href="mailto:travel@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Janice</a>
                         </article>
                         <article className="relative pb-8">
-                            <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Sarah Morton" width="285" height="285" />
-                            <h3 className="text-xl font-ropa">Sarah Morton</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50">Member</h3>
-                        </article>
-                        <article className="relative pb-8">
                             <Image className="block w-full mb-2.5" src="/img/committee/rob.webp" alt="A portrait photograph of Rob O'Reilly" width="285" height="285" />
                             <h3 className="text-xl font-ropa">Rob O&apos;Reilly</h3>
                             <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Membership Officer</h3>
@@ -103,11 +98,6 @@ const About: NextPage = () => {
                             <h3 className="text-xl font-ropa">Phil Smith</h3>
                             <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Kit Officer</h3>
                             <a href="mailto:kit@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Phil</a>
-                        </article>
-                        <article className="relative pb-8">
-                            <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of David Southwood" width="285" height="285" />
-                            <h3 className="text-xl font-ropa">David Southwood</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50">Member</h3>
                         </article>
                         <article className="relative pb-8">
                             <Image className="block w-full mb-2.5" src="/img/coaching/claire.webp" alt="A portrait photograph of Claire Wardle" width="285" height="285" />

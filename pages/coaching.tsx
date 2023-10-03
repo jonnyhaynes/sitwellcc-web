@@ -28,7 +28,7 @@ const Coaching: NextPage = () => {
                         <article>
                             <Image src="/img/coaching/placeholder.webp" alt="A portrait photograph of Erin Avill" width="183" height="183" className="block mb-2.5" />
                             <h3 className="text-xl font-ropa">Erin Avill</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 1 Coach</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 2 Coach</h3>
                             <a href="mailto:coaching@sitwell.cc" className="btn">Contact Erin</a>
                         </article>
                         <article>
@@ -52,12 +52,6 @@ const Coaching: NextPage = () => {
                             <h3 className="text-xl font-ropa">Jude Daly</h3>
                             <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 2 Coach</h3>
                             <a href="mailto:coaching@sitwell.cc" className="btn">Contact Jude</a>
-                        </article>
-                        <article>
-                            <Image src="/img/coaching/placeholder.webp" alt="A portrait photograph of Chris Gauntlett" width="183" height="183" className="block mb-2.5" />
-                            <h3 className="text-xl font-ropa">Chris Gauntlett</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 1 Coach</h3>
-                            <a href="mailto:coaching@sitwell.cc" className="btn">Contact Chris</a>
                         </article>
                         <article>
                             <Image src="/img/coaching/jonny.webp" alt="A portrait photograph of Jonny Haynes" width="183" height="183" className="block mb-2.5" />

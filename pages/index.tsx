@@ -112,7 +112,7 @@ const Index: NextPage<Props> = ({announcement, news}) => {
             <article className="coaching block relative w-full lg:w-7/12 lg:pl-5 mb-10 h-96">
                 <Link href="/coaching">
                     <a className="block w-full h-full overflow-hidden relative">
-                        <Image src="/img/coaching.webp" className="object-cover object-right w-full h-full" fill priority={true} alt="A photograph of Club Coach Chris Habershon with a group of children sat on the floor in front of him" />
+                        <Image src="/img/coaching.webp" className="object-cover w-full h-full" fill priority={true} alt="A photograph of our Go-Ride coaching group listneing to intructions from a mix of club coaches" />
                         <div className="absolute top-0 left-0 text-white p-5">
                             <h3 className="font-ropa text-lg uppercase">Go-ride coaching</h3>
                             <h2 className="font-ropa text-3xl">We&apos;re coaching the&nbsp;next&nbsp;generation.</h2>

@@ -53,18 +53,6 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-1">Sign on: <strong>Herringthorpe Playing Fields, S65 2HR</strong></p>
                     <p className="text-sm mb-2">Fee: <strong>TBA</strong></p>
                 </div>
-                <div className="border-t-8 border-amber pt-5">
-                    <a href="https://www.britishcycling.org.uk/events/details/277009/Ranskill-Gold" className="relative block w-full mb-5">
-                        <Image src="/img/ranskill.webp" className="block w-full" alt="A photograph of members at Ranskill" width="285" height="285" />
-                        <Image src="/img/bc.webp" className="absolute bottom-5 right-5" alt="The British Cycling logo" width="88" height="50" />
-                        <button className="btn absolute top-5 left-5" aria-label="Enter now">Enter now</button>
-                    </a>
-                    <h3 className="text-base font-ropa block uppercase opacity-50">March</h3>
-                    <h2 className="text-2xl font-ropa text-amber">Ranskill Gold</h2>
-                    <p className="text-sm mb-2">Three routes to choose from (40/60/80 miles) using familiar roads out east. Money raised goes to Bluebell Wood Children&apos;s Hospice.</p>
-                    <p className="text-sm mb-1">Sign on: <strong>The Gordon Bennett Memorial Hall, S66 9AA</strong></p>
-                    <p className="text-sm mb-2">Fee: <strong>£10</strong></p>
-                </div>
                 <div className="border-t-8 border-red pt-5">
                     <a href="https://www.britishcycling.org.uk/events/details/274539/Team-Pursuit-Open-Event-2023" className="relative block w-full mb-5">
                         <Image src="/img/winter-series.webp" className="block w-full" alt="A photograph of club member Jonny Haynes racing at York" width="285" height="285" />
@@ -166,6 +154,18 @@ const Races: NextPage = () => {
                         <p className="text-sm mb-1">Sign on: <strong>Ulley Village Hall, S66 2DD</strong></p>
                         <p className="text-sm mb-2">Fee: <strong>£12</strong></p>
                         {/* <p className="text-sm text-green cursor-pointer" @click="fetch('/open-results').then(response => response.text()).then(html => { $refs.modal.innerHTML = html; openmodal = true; })">View records and results</p> */}
+                </div>
+                <div className="border-t-8 border-amber pt-5">
+                    <a href="https://www.britishcycling.org.uk/events/details/277009/Ranskill-Gold" className="relative block w-full mb-5">
+                        <Image src="/img/ranskill.webp" className="block w-full" alt="A photograph of members at Ranskill" width="285" height="285" />
+                        <Image src="/img/bc.webp" className="absolute bottom-5 right-5" alt="The British Cycling logo" width="88" height="50" />
+                        <button className="btn absolute top-5 left-5" aria-label="Enter now">Enter now</button>
+                    </a>
+                    <h3 className="text-base font-ropa block uppercase opacity-50">October</h3>
+                    <h2 className="text-2xl font-ropa text-amber">Ranskill Gold</h2>
+                    <p className="text-sm mb-2">Three routes to choose from (40/60/80 miles) using familiar roads out east. Money raised goes to Bluebell Wood Children&apos;s Hospice.</p>
+                    <p className="text-sm mb-1">Sign on: <strong>Ulley Village Hall, S26 3YD</strong></p>
+                    <p className="text-sm mb-2">Fee: <strong>£10</strong></p>
                 </div>
             </section>
 

@@ -12,7 +12,7 @@ const Footer = () => {
                     <Image src="/img/stat-3.svg" alt="2 overseas trips" className="order-3 md:order-4 lg:order-3" width="285" height="104" />
                     <Image src="/img/stat-4.svg" alt="6 British Cycling coaches" className="order-4 md:order-3 lg:order-4" width="285" height="104" />
                 </section>
-                <section className="sponsors grid grid-cols-2 md:grid-cols-4 gap-10 w-full text-sm text-center mb-20">
+                <section className="sponsors grid grid-cols-2 gap-10 w-full md:w-1/2 text-sm text-center mb-20">
                     <a href="https://www.expertbikerepair.co.uk/" className="flex content-center relative pb-7">
                         <Image src="/img/expert-bike-repair.svg" alt="Expert Bike Repair" className="w-full" width="270" height="70" />
                         <p className="opacity-50 absolute bottom-0 left-0 w-full text-black">Club Sponsor</p>
@@ -20,14 +20,6 @@ const Footer = () => {
                     <a href="https://www.facebook.com/andybishopbikefit/" className="flex content-center relative pb-7">
                         <Image src="/img/andy-bishop.svg" alt="Andy Bishop Cycling Performance Centre" className="w-full" width="270" height="70" />
                         <p className="opacity-50 absolute bottom-0 left-0 w-full text-black">Club Sponsor</p>
-                    </a>
-                    <a href="https://www.thesitwell.co.uk/" className="flex content-center relative pb-7">
-                        <Image src="/img/the-sitwell-arms.svg" alt="The Sitwell Arms" className="w-full" width="270" height="70" />
-                        <p className="opacity-50 absolute bottom-0 left-0 w-full text-black">Club Sponsor</p>
-                    </a>
-                    <a href="https://aswift.com/" className="flex content-center relative pb-7">
-                        <Image src="/img/aardvark-swift.svg" alt="Aardvark Swift" className="w-full" width="270" height="70" />
-                        <p className="opacity-50 absolute bottom-0 left-0 w-full text-black">Member of the Year Sponsor</p>
                     </a>
                 </section>
                 <section className="copyright">

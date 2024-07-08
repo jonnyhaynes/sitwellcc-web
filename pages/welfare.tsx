@@ -29,19 +29,19 @@ const Welfare: NextPage = () => {
                     <p className="mb-2"><strong>The role of a Club Welfare Officer is an advisory role and is not intended to replace, even on a temporary basis, the roles and responsibilities of Parents, Guardians, Responsible Adults or Carers. The final decision as to whether an activity or event which involves young people or adults at risk receives approval remains at all times with the Committee of the Club.</strong></p>
                     <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 pt-5 mb-5">
                         <article>
-                            <Image className="block w-full mb-2.5" src="/img/david.webp" alt="A portrait photograph of David Hush" width="285" height="285" />
-                            <h3 className="text-xl font-ropa">David Hush</h3>
+                            <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Craig Wright" width="285" height="285" />
+                            <h3 className="text-xl font-ropa">Craig Wright</h3>
                             <p className="text-sm"><a href="https://www.nspcc.org.uk/what-you-can-do/get-expert-training/child-protection-sport-online-course/">Child Protection in Sport Certified</a></p>
                             <p className="text-sm mb-2.5"><a href="https://www.dbscheck.org/">DBS Checked</a></p>
-                            <a href="mailto:david.hush@sitwell.cc" className="btn">Contact David</a>
+                            <a href="mailto:craig.wright@sitwell.cc" className="btn">Contact Craig</a>
                         </article>
-                        <article>
+                        {/* <article>
                             <Image className="block w-full mb-2.5" src="/img/coaching/claire.webp" alt="A portrait photograph of Clarie Wardle" width="285" height="285" />
                             <h3 className="text-xl font-ropa">Claire Wardle</h3>
                             <p className="text-sm"><a href="https://www.nspcc.org.uk/what-you-can-do/get-expert-training/child-protection-sport-online-course/">Child Protection in Sport Certified</a></p>
                             <p className="text-sm mb-2.5"><a href="https://www.dbscheck.org/">DBS Checked</a></p>
                             <a href="mailto:claire.wardle@sitwell.cc" className="btn">Contact Claire</a>
-                        </article>
+                        </article> */}
                     </section>
                     <p><strong>British Cycling&apos;s Safeguarding Liaison Officer:</strong> <a href="tel:01612742000">0161 274 2000</a>.</p>
                     <p><strong>Rotherham Safeguarding Children Partnership:</strong> <a href="http://www.rscp.org.uk/">www.rscp.org.uk</a>.</p>

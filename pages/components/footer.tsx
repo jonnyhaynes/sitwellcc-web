@@ -12,16 +12,6 @@ const Footer = () => {
                     <Image src="/img/stat-3.svg" alt="2 overseas trips" className="order-3 md:order-4 lg:order-3" width="285" height="104" />
                     <Image src="/img/stat-4.svg" alt="6 British Cycling coaches" className="order-4 md:order-3 lg:order-4" width="285" height="104" />
                 </section>
-                <section className="sponsors grid grid-cols-2 gap-10 w-full md:w-1/2 text-sm text-center mb-20">
-                    <a href="https://www.expertbikerepair.co.uk/" className="flex content-center relative pb-7">
-                        <Image src="/img/expert-bike-repair.svg" alt="Expert Bike Repair" className="w-full" width="270" height="70" />
-                        <p className="opacity-50 absolute bottom-0 left-0 w-full text-black">Club Sponsor</p>
-                    </a>
-                    <a href="https://www.facebook.com/andybishopbikefit/" className="flex content-center relative pb-7">
-                        <Image src="/img/andy-bishop.svg" alt="Andy Bishop Cycling Performance Centre" className="w-full" width="270" height="70" />
-                        <p className="opacity-50 absolute bottom-0 left-0 w-full text-black">Club Sponsor</p>
-                    </a>
-                </section>
                 <section className="copyright">
                     <p className="w-full text-sm text-center">&copy; { date } Sitwell Cycling Club and its members. Sitwell Cycling Club is a British Cycling Affiliated Go-Ride Club, and is affiliated to Cycling Time Trials.</p>
                     <p className="w-full text-sm text-center mb-10">A <a href="https://www.colouringcode.com">Colouring Code</a> design and build. Powered by <a href="https://nextjs.org/">Next.js</a> and <a href="https://vercel.com/">Vercel</a>. Sitwell CC Crest expertly crafted by <a href="https://stvsmth.co.uk/">Steve Smith</a>.</p>

@@ -38,10 +38,9 @@ const Coaching: NextPage = () => {
                             <a href="mailto:coaching@sitwell.cc" className="btn">Contact Karen</a>
                         </article>
                         <article>
-                            <Image src="/img/coaching/placeholder.webp" alt="A portrait photograph of Pete Chester" width="183" height="183" className="block mb-2.5" />
-                            <h3 className="text-xl font-ropa">Pete Chester</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50">Level 2 MTB Coach</h3>
-                            <a href="mailto:coaching@sitwell.cc" className="btn">Contact Pete</a>
+                            <Image src="/img/coaching/placeholder.webp" alt="A portrait photograph of Danni Cunningham" width="183" height="183" className="block mb-2.5" />
+                            <h3 className="text-xl font-ropa">Danni Cunningham</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Volunteer Helper</h3>
                         </article>
                         <article>
                             <Image src="/img/coaching/george.webp" alt="A portrait photograph of George Daly" width="183" height="183" className="block mb-2.5" />
@@ -56,15 +55,21 @@ const Coaching: NextPage = () => {
                             <a href="mailto:coaching@sitwell.cc" className="btn">Contact Jude</a>
                         </article>
                         <article>
+                            <Image src="/img/coaching/placeholder.webp" alt="A portrait photograph of Ted Daly" width="183" height="183" className="block mb-2.5" />
+                            <h3 className="text-xl font-ropa">Ted Daly</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Activity Coach - Off Road</h3>
+                            <a href="mailto:coaching@sitwell.cc" className="btn">Contact Ted</a>
+                        </article>
+                        <article>
                             <Image src="/img/coaching/jonny.webp" alt="A portrait photograph of Jonny Haynes" width="183" height="183" className="block mb-2.5" />
                             <h3 className="text-xl font-ropa">Jonny Haynes</h3>
                             <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 2 MTB Coach</h3>
                             <a href="mailto:coaching@sitwell.cc" className="btn">Contact Jonny</a>
                         </article>
                         <article>
-                            <Image src="/img/david.webp" alt="A portrait photograph of David Hush" width="183" height="183" className="block mb-2.5" />
-                            <h3 className="text-xl font-ropa">David Hush</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50">Welfare Officer</h3>
+                            <Image src="/img/coaching/placeholder.webp" alt="A portrait photograph of Sam Poce" width="183" height="183" className="block mb-2.5" />
+                            <h3 className="text-xl font-ropa">Sam Poce</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Volunteer Helper</h3>
                         </article>
                         <article>
                             <Image src="/img/coaching/placeholder.webp" alt="A portrait photograph of Julie Skubala" width="183" height="183" className="block mb-2.5" />
@@ -72,19 +77,24 @@ const Coaching: NextPage = () => {
                             <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 2 MTB Coach</h3>
                             <a href="mailto:coaching@sitwell.cc" className="btn">Contact Julie</a>
                         </article>
+                        <article>
+                            <Image src="/img/coaching/placeholder.webp" alt="A portrait photograph of Aaron Thomas" width="183" height="183" className="block mb-2.5" />
+                            <h3 className="text-xl font-ropa">Aaron Thomas</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Volunteer Helper</h3>
+                        </article>
                         <article className="relative pb-8">
-                            <Image className="block mb-2.5" src="/img/coaching/claire.webp" alt="A portrait photograph of Claire Wardle" width="285" height="285" />
-                            <h3 className="text-xl font-ropa">Claire Wardle</h3>
+                            <Image src="/img/coaching/placeholder.webp" alt="A portrait photograph of Craig Wright" width="183" height="183" className="block mb-2.5" />
+                            <h3 className="text-xl font-ropa">Craig Wright</h3>
                             <h3 className="text-base font-ropa block uppercase opacity-50">Welfare Officer</h3>
                         </article>
                     </section>
                 </section>
                 <section className="mb-5 md:mb-0 md:col-span-2 border-t-8 border-blue pt-5 px-5 bg-blue bg-opacity-5">
-                    <h2 className="text-3xl font-ropa">Talent Development</h2>
-                    <p className="mb-2">Using the British Cycling talent development pathways we teach your children the fundamentals of cycling before coaching them on more advanced mountain biking techniques. We do fun activities and games using cones, bean bags, balance boards, limbo bars, ramps etc to enhance the cycling skills of your child and give them a good foundation for the future.</p>
-                    <p className="mb-2">Our more advanced students are using BMX style pump tracks, taking on trail centers and this year we are looking to get some off road cycling done on trails through local woods with our new Skills sessions.</p>
+                    <h2 className="text-3xl font-ropa">Youth Development Framework</h2>
+                    <p className="mb-2">Using the British Cycling Youth Development Framework we teach your children the fundamentals of cycling before coaching them on more advanced mountain biking techniques. We do fun activities and games using cones, bean bags, balance boards, limbo bars, ramps etc to enhance the cycling skills of your child and give them a good foundation for the future.</p>
+                    <p className="mb-2">Riders are given an opportunity to experience riding on local pump tracks and mountain bike trails including Canklow Woods, Parkwood Springs in Sheffield and Sherwood Pines.</p>
                     <p className="mb-2"><strong>Pedal sessions</strong> are for children who no longer use stabilisers or a balance bike and are looking to increase their confidence. Pedal sessions are run 10-11:15.</p>
-                    <p className="mb-2">The <strong>Skills sessions</strong> are for children looking to increase their skills in a more technical environment. Skills sessions are run 10:30-11:45.</p>
+                    <p className="mb-2">The <strong>Skills sessions</strong> are for children looking to increase their skills in a more technical environment. Skills sessions are run 10-11:15.</p>
                     <p className="mb-5">Our <strong>Balance sessions</strong> are for children new to cycling, who may have just had their stabilisers taken off or who are still using a balance bike. Balance sessions are run 11:15-12.</p>
                     <h2 className="text-3xl font-ropa">Cost</h2>
                     <p className="mb-2">Sessions cost £3 for non-members and £2 for club members. Book a place through Ticket Tailor using the button below. When booking, please let us know your child&apos;s name for the booking.</p>
@@ -98,12 +108,14 @@ const Coaching: NextPage = () => {
                         </a>
                     </section>
                     <h2 className="text-3xl font-ropa">Herringthorpe</h2>
-                    <p className="mb-2">Usually meeting on the car park unless there is an event at the stadium. Please look out for the SCC tent or flag.</p>
-                    <p className="mb-2">There is also free off street parking available just off Middle Lane South towards the junction with Dryden Road.</p>
-                    <p className="mb-5">We announce the week before on social media and our Slack channels where we&apos;ll be on Herringthorpe.</p>
+                    <p className="mb-2">Usually meeting on the car park unless there is an event at the stadium. Please look out for the SCC signs on barriers, tent or flag.</p>
+                    <p className="mb-2">There is normally plenty of space on the car park, but if the car park is busy. There is also free off street parking available just off Middle Lane South towards the junction with Dryden Road.</p>
+                    <p className="mb-5">We announce the week before on social media and our WhatsApp group where we&apos;ll be on Herringthorpe.</p>
                     <h2 className="text-3xl font-ropa">Requirements</h2>
-                    <p className="mb-2">There&apos;s no minimum age requirement for these sessions other than can your child follow instructions. Our youngest member is three years old. These aren&apos;t sessions for teaching your child to ride a bike, but to enhance their skills and grow their confidence. If you&apos;re not sure, bring them along. We can provide advice and guidance no matter what their cycling ability. <em>Our aim is to enhance your child&apos;s riding skills and grow their confidence.</em></p>
+                    <p className="mb-2">There's no minimum age requirement for these sessions, however your child needs to be able to follow instructions and maintain focus during a 45 minute session. Our youngest member is three years old. If you&apos;re not sure, bring them along. We can provide advice and guidance no matter what their cycling ability. <em>Our aim is to enhance your child&apos;s riding skills and grow their confidence.</em></p>
                     <p className="mb-5">They will need a bike with working brakes (if a pedal bike) and the bar ends need to be plugged. As well as a correctly fitting helmet. We are building a small library of bikes, available for loan during coaching sessions to children who don&apos;t have a suitable bike of their own. Please contact us if you need to borrow a bike and hopefully we can help.</p>
+                    <h2 className="text-3xl font-ropa">Limitless Champion Club</h2>
+                    <p className="mb-5">Limitless is British Cycling’s disability and para-cycling programme. Sitwell Cycling Club has been approved by British Cycling as a Limitless Champion Club. Where possible we aim to create a positive, inclusive and welcoming environment for disabled riders. We do not have adapted bikes and may have to signpost riders to Limitless Focus Clubs as appropriate. Children with autism, ADHD and coordination disorders have thrived attending our Go-Ride coaching sessions.</p>
                     <h2 className="text-3xl font-ropa">Rotherham Children&apos;s University</h2>
                     <p className="mb-5">We are proud to be a validated Learning Destination. Collect CU credits at our activities with your Passport to Learning. There is more on <a href="https://www.childrensuniversity.co.uk/universities/rotherham-childrens-university/">Rotherham Children&apos;s University</a> here.</p>
                     <h2 className="text-3xl font-ropa">The Coalfields Regeneration Trust</h2>

@@ -142,7 +142,7 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2">Fee: <strong>25</strong></p>
                 </div>
                 <div className="border-t-8 border-red pt-5">
-                    <a href="https://www.cyclingtimetrials.org.uk/race-details/26190" className="relative block w-full mb-5">
+                    <a href="https://www.cyclingtimetrials.org.uk/events/31331-reservoir-road-ulley-hill-climb" className="relative block w-full mb-5">
                         <Image src="/img/open.webp" className="block w-full" alt="A photograph of club member Joe Strike racing at Ulley" width="285" height="285" />
                         <Image src="/img/ctt.webp" className="absolute top-5 right-5" alt="The Cycling Time Trials logo" width="55" height="50" />
                         <button className="btn absolute bottom-5 right-5" aria-label="Enter now">Enter now</button>

@@ -53,7 +53,7 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-1">Sign on: <strong>Herringthorpe Playing Fields, S65 2HR</strong></p>
                     <p className="text-sm mb-2">Fee: <strong>TBA</strong></p>
                 </div> */}
-                <div className="border-t-8 border-red pt-5">
+                {/* <div className="border-t-8 border-red pt-5">
                     <a href="https://www.britishcycling.org.uk/events/details/312205/Team-Pursuit-Open-Event-2025" className="relative block w-full mb-5">
                         <Image src="/img/winter-series.webp" className="block w-full" alt="A photograph of club member Jonny Haynes racing at York" width="285" height="285" />
                         <Image src="/img/bc.webp" className="absolute bottom-5 right-5" alt="The British Cycling logo" width="88" height="50" />
@@ -64,7 +64,7 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2">An afternoon of track racing at Derby Arena. Seniors, masters, all-male, all-female or mixed teams. Paracyclists and tandems welcomed.</p>
                     <p className="text-sm mb-1">Sign on: <strong>Derby Arena, DE24 8JB</strong></p>
                     <p className="text-sm">Fee: <strong>£130</strong> (Four person team)</p>
-                </div>
+                </div> */}
                 {/* <div className="border-t-8 border-red pt-5">
                     <a href="https://www.facebook.com/groups/418279868887120" className="relative block w-full">
                         <picture className="block w-full mb-5">
@@ -129,7 +129,7 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2"><em>Club members only</em>.</p>
                     <p className="text-sm text-green cursor-pointer" @click="fetch('/hc-results').then(response => response.text()).then(html => { $refs.modal.innerHTML = html; openmodal = true; })">View records and results</p>
                 </div> */}
-                <div className="border-t-8 border-red pt-5">
+                {/* <div className="border-t-8 border-red pt-5">
                     <a href="https://www.britishcycling.org.uk/events/details/315714/SCC-Presents--The-Dinnington-Dynamo" className="relative block w-full mb-5">
                         <Image src="/img/firbeck.webp" className="block w-full" alt="A photograph of club member Tom George racing at Firbeck" width="285" height="285" />
                         <Image src="/img/bc.webp" className="absolute bottom-5 right-5" alt="The British Cycling logo" width="88" height="50" />
@@ -140,8 +140,8 @@ const Races: NextPage = () => {
                     <p className="text-sm mb-2">A Open 3/4 and Womens 2/3/4 race on the undulating course around the sleepy market town of Dinnington on the South Yorkshire and Nottinghamshire border.</p>
                     <p className="text-sm mb-1">Sign on: <strong>Dinnington RUFC, S25 2PB</strong></p>
                     <p className="text-sm mb-2">Fee: <strong>25</strong></p>
-                </div>
-                <div className="border-t-8 border-red pt-5">
+                </div> */}
+                {/* <div className="border-t-8 border-red pt-5">
                     <a href="https://www.cyclingtimetrials.org.uk/events/31331-reservoir-road-ulley-hill-climb" className="relative block w-full mb-5">
                         <Image src="/img/open.webp" className="block w-full" alt="A photograph of club member Joe Strike racing at Ulley" width="285" height="285" />
                         <Image src="/img/ctt.webp" className="absolute top-5 right-5" alt="The Cycling Time Trials logo" width="55" height="50" />
@@ -153,20 +153,20 @@ const Races: NextPage = () => {
                         <p className="text-sm mb-1">Course: <strong>OHC24</strong></p>
                         <p className="text-sm mb-1">Sign on: <strong>Ulley Village Hall, S66 2DD</strong></p>
                         <p className="text-sm mb-2">Fee: <strong>£12</strong></p>
-                        {/* <p className="text-sm text-green cursor-pointer" @click="fetch('/open-results').then(response => response.text()).then(html => { $refs.modal.innerHTML = html; openmodal = true; })">View records and results</p> */}
-                </div>
-                {/* <div className="border-t-8 border-amber pt-5">
-                    <a href="https://www.britishcycling.org.uk/events/details/302401/Ranskill-Gold-2024" className="relative block w-full mb-5">
+                        <p className="text-sm text-green cursor-pointer" @click="fetch('/open-results').then(response => response.text()).then(html => { $refs.modal.innerHTML = html; openmodal = true; })">View records and results</p>
+                </div> */}
+                <div className="border-t-8 border-amber pt-5">
+                    <a href="https://www.britishcycling.org.uk/events/details/326708/Ranskill-Gold-2025---Ride-of-the-Falling-Leaves-Edition" className="relative block w-full mb-5">
                         <Image src="/img/ranskill.webp" className="block w-full" alt="A photograph of members at Ranskill" width="285" height="285" />
                         <Image src="/img/bc.webp" className="absolute bottom-5 right-5" alt="The British Cycling logo" width="88" height="50" />
                         <button className="btn absolute top-5 left-5" aria-label="Enter now">Enter now</button>
                     </a>
                     <h3 className="text-base font-ropa block uppercase opacity-50">October</h3>
-                    <h2 className="text-2xl font-ropa text-amber">Ranskill Gold</h2>
+                    <h2 className="text-2xl font-ropa text-amber">Ranskill Gold - Ride of the Falling Leaves Edition</h2>
                     <p className="text-sm mb-2">Three routes to choose from (40/60/80 miles) using familiar roads out east. Money raised goes to Bluebell Wood Children&apos;s Hospice.</p>
                     <p className="text-sm mb-1">Sign on: <strong>Ulley Village Hall, S26 3YD</strong></p>
                     <p className="text-sm mb-2">Fee: <strong>£10</strong></p>
-                </div> */}
+                </div>
             </section>
 
             {open && (

@@ -11,7 +11,7 @@ const Coaching: NextPage = () => {
             </Head>
             <section className="title w-full px-5 lg:px-10 mb-20">
                 <h1 className="text-6xl font-ropa-bold mb-5">Constitution</h1>
-                <h2 className="text-3xl font-ropa">Effective from <em>1st April 2022</em>.</h2>
+                <h2 className="text-3xl font-ropa">Effective from <em>20th May 2026</em>.</h2>
             </section>
             <section className="w-full px-5 lg:px-10 mb-20 grid lg:grid-cols-3 lg:gap-5">
                 <section className="lg:col-span-2 mb-10 lg:mb-0">
@@ -94,7 +94,7 @@ const Coaching: NextPage = () => {
                     <h3 className="text-2xl font-ropa">6. Annual General Meetings (AGM)</h3>
                     <p>The Club will hold an AGM once in every calendar year and not more than 15 months after the last AGM. At every AGM:</p>
                     <ol className="list-alpha ml-5 mb-5">
-                        <li>The Members will elect a Committee consisting of a Chair, two Vice Chairs and Treasurer to serve until the next AGM;</li>
+                        <li>The Members will elect a Committee to serve until the next AGM;</li>
                         <li>The Treasurer will produce accounts of the Club for the latest financial year audited as the Committee shall decide;</li>
                         <li>The Committee will present a report on the Club&apos;s activities since the previous AGM;</li>
                         <li>The Members will appoint a suitable person to audit the accounts; and</li>
@@ -125,7 +125,7 @@ const Coaching: NextPage = () => {
                         </li>
                         <li>Composition etc -
                             <ol className="list-roman ml-5">
-                                <li>The Committee shall consist of at least 10 members or 10% of the Club&apos;s Membership, whichever is fewer.</li>
+                                <li>The Committee shall consist of at least 5 members or 10% of the Club&apos;s Membership, whichever is fewer.</li>
                                 <li>The diverse make-up of the Committee should represent where possible the make-up of the Club.</li>
                                 <li>The Committee members may co-opt club members as Officers to serve until the end of the next AGM.</li>
                                 <li>Any Committee member may be re-elected or re-co-opted without limit.</li>
@@ -173,10 +173,10 @@ const Coaching: NextPage = () => {
                 </section>
                 <section>
                     <section className="p-5 bg-black bg-opacity-5">
-                        <p className="mb-5"><strong className="block">Constitution adopted via an online poll.</strong></p>
-                        <p className="mb-5"><strong className="block">On:</strong> Tuesday 15th March 2022</p>
+                        <p className="mb-5"><strong className="block">Constitution adopted at an EGM.</strong></p>
+                        <p className="mb-5"><strong className="block">On:</strong> Wenesday 20th May 2026</p>
                         <p className="mb-5"><strong className="block">Proposed by:</strong> The Committee</p>
-                        <p><strong className="block">Accepted by:</strong> 97.6% of respondents. 83 from 85 respondents.</p>
+                        <p><strong className="block">Accepted unanimously by all attendees.</p>
                     </section>
                 </section>
             </section>

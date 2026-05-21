@@ -176,7 +176,7 @@ const Coaching: NextPage = () => {
                         <p className="mb-5"><strong className="block">Constitution adopted at an EGM.</strong></p>
                         <p className="mb-5"><strong className="block">On:</strong> Wenesday 20th May 2026</p>
                         <p className="mb-5"><strong className="block">Proposed by:</strong> The Committee</p>
-                        <p><strong className="block">Accepted unanimously by all attendees.</p>
+                        <p><strong className="block">Accepted unanimously by all attendees.</strong></p>
                     </section>
                 </section>
             </section>

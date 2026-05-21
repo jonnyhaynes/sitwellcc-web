@@ -35,64 +35,28 @@ const About: NextPage = () => {
                             <a href="mailto:coach@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Jude</a>
                         </article>
                         <article className="relative pb-8">
-                            <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Phil Daly" width="285" height="285" />
-                            <h3 className="text-xl font-ropa">Phil Daly</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Club Vice Captain</h3>
-                            <a href="mailto:vice.captain@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Phil</a>
-                        </article>
-                        <article className="relative pb-8">
                             <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Ted Daly" width="285" height="285" />
                             <h3 className="text-xl font-ropa">Ted Daly</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Membership Officer</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Treasurer and <br /> Membership Officer</h3>
                             <a href="mailto:membership@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Ted</a>
-                        </article>
-                        <article className="relative pb-8">
-                            <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of David Gazda" width="285" height="285" />
-                            <h3 className="text-xl font-ropa">David Gazda</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Club Captain</h3>
-                            <a href="mailto:captain@sitwell.cc" className="btn absolute left-0 bottom-0">Contact David</a>
-                        </article>
-                        <article className="relative pb-8">
-                            <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of James Fox" width="285" height="285" />
-                            <h3 className="text-xl font-ropa">James Fox</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Vice Chair <br /> Community Liaison Officer</h3>
-                            <a href="mailto:community@sitwell.cc" className="btn absolute left-0 bottom-0">Contact James</a>
-                        </article>
-                        <article className="relative pb-8">
-                            <Image className="block w-full mb-2.5" src="/img/coaching/jonny.webp" alt="A portrait photograph of Jonny Haynes" width="285" height="285" />
-                            <h3 className="text-xl font-ropa">Jonny Haynes</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Chair <br/> BC Racing Officer</h3>
-                            <a href="mailto:bc.racing@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Jonny</a>
-                        </article>
-                        <article className="relative pb-8">
-                            <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Andy Laidler" width="285" height="285" />
-                            <h3 className="text-xl font-ropa">Andy Laidler</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Vice Chair <br /> CTT Racing Officer</h3>
-                            <a href="mailto:ctt.racing@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Andy</a>
-                        </article>
-                        <article className="relative pb-8">
-                            <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Rebecca Laidler" width="285" height="285" />
-                            <h3 className="text-xl font-ropa">Rebecca Laidler</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Socials Officer</h3>
-                            <a href="mailto:socials@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Rebecca</a>
                         </article>
                         <article className="relative pb-8">
                             <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Janice McWillliam" width="285" height="285" />
                             <h3 className="text-xl font-ropa">Janice McWilliam</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Travel Officer</h3>
-                            <a href="mailto:travel@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Janice</a>
+                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Chair</h3>
+                            <a href="mailto:chair@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Janice</a>
+                        </article>
+                        <article className="relative pb-8">
+                            <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Andy Moulster" width="285" height="285" />
+                            <h3 className="text-xl font-ropa">Andy Moulster</h3>
+                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Club Captain</h3>
+                            <a href="mailto:captain@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Andy</a>
                         </article>
                         <article className="relative pb-8">
                             <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Phil Smith" width="285" height="285" />
                             <h3 className="text-xl font-ropa">Phil Smith</h3>
                             <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Kit Officer</h3>
                             <a href="mailto:kit@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Phil</a>
-                        </article>
-                        <article className="relative pb-8">
-                            <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Mark Weston" width="285" height="285" />
-                            <h3 className="text-xl font-ropa">Mark Weston</h3>
-                            <h3 className="text-base font-ropa block uppercase opacity-50 mb-2.5">Treasurer</h3>
-                            <a href="mailto:treasurer@sitwell.cc" className="btn absolute left-0 bottom-0">Contact Mark</a>
                         </article>
                         <article className="relative pb-8">
                             <Image className="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Craig Wright" width="285" height="285" />

@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: true,
     images: {
-        domains: ['uploads.tickettailor.com', 'cdn.discordapp.com', 'media.discordapp.net', 'cdn.sanity.io'],
+        domains: ['uploads.tickettailorassets.com', 'cdn.discordapp.com', 'media.discordapp.net', 'cdn.sanity.io'],
     },
   }
 

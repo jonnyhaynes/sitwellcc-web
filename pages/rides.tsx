@@ -470,25 +470,28 @@ async function fetchTickettailorRides(start: number, end: number): Promise<Ride[
 
         const body = await res.json();
 
-        return (body?.data ?? []).map((event: any): Ride => {
-            const startTime: string = event.start.iso;
-            // Ticket Tailor events on a Saturday are always blue; otherwise keyword-derived.
-            const isSaturday = new Date(startTime).toLocaleString('en-GB', {
-                weekday: 'long',
-                timeZone: 'Europe/London',
-            }) === 'Saturday';
-            const color: RideColor = isSaturday ? 'blue' : tickettailorColor(event.name);
+        return (body?.data ?? [])
+            // Only show published events; the API also returns drafts.
+            .filter((event: any) => event.status === 'published')
+            .map((event: any): Ride => {
+                const startTime: string = event.start.iso;
+                // Ticket Tailor events on a Saturday are always blue; otherwise keyword-derived.
+                const isSaturday = new Date(startTime).toLocaleString('en-GB', {
+                    weekday: 'long',
+                    timeZone: 'Europe/London',
+                }) === 'Saturday';
+                const color: RideColor = isSaturday ? 'blue' : tickettailorColor(event.name);
 
-            return {
-                id: `tt-${event.id}`,
-                title: cleanTickettailorName(event.name),
-                startTime,
-                url: event.url,
-                color,
-                image: event.images?.thumbnail ?? null,
-                goingCount: null,
-            };
-        });
+                return {
+                    id: `tt-${event.id}`,
+                    title: cleanTickettailorName(event.name),
+                    startTime,
+                    url: event.checkout_url,
+                    color,
+                    image: event.images?.thumbnail ?? null,
+                    goingCount: null,
+                };
+            });
     } catch (error) {
         console.error('Failed to fetch Ticket Tailor events', error);
         return [];

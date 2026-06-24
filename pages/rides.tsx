@@ -459,7 +459,9 @@ const Rides: NextPage<{events: EventsResponse}> = ({events}) => {
                                 className={`mb-5 border-t-8 border-${color} p-5 bg-${color} bg-opacity-25 flex flex-row`}
                                 key={event.id}>
                                 {image ? (
-                                    <picture className="block w-28 h-28 mr-5 overflow-hidden flex-shrink-0">
+                                    <a
+                                        href={event.url}
+                                        className="block w-28 h-28 mr-5 overflow-hidden flex-shrink-0">
                                         <Image
                                             src={image}
                                             className="object-cover w-full h-full"
@@ -467,11 +469,12 @@ const Rides: NextPage<{events: EventsResponse}> = ({events}) => {
                                             width="108"
                                             height="108"
                                         />
-                                    </picture>
+                                    </a>
                                 ) : (
-                                    <div
-                                        className={`block w-28 h-28 mr-5 flex-shrink-0 bg-${color} bg-opacity-25`}
-                                        aria-hidden="true"></div>
+                                    <a
+                                        href={event.url}
+                                        aria-label={event.title}
+                                        className={`block w-28 h-28 mr-5 flex-shrink-0 bg-${color} bg-opacity-25`}></a>
                                 )}
                                 <div className="flex flex-col flex-grow justify-between">
                                     <div className="w-full">
@@ -487,7 +490,14 @@ const Rides: NextPage<{events: EventsResponse}> = ({events}) => {
                                                 {event.title}
                                             </a>
                                         </h4>
-                                        <p className="text-sm mt-1.5">
+                                    </div>
+                                    <div className="flex flex-row items-center w-full">
+                                        <a
+                                            href={event.url}
+                                            className="btn self-start">
+                                            View event
+                                        </a>
+                                        <p className="text-sm ml-5">
                                             {goingCount}{' '}
                                             {goingCount === 1
                                                 ? 'rider'
@@ -495,11 +505,6 @@ const Rides: NextPage<{events: EventsResponse}> = ({events}) => {
                                             going
                                         </p>
                                     </div>
-                                    <a
-                                        href={event.url}
-                                        className="btn self-start">
-                                        View event
-                                    </a>
                                 </div>
                             </article>
                         );

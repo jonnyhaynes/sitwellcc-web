@@ -17,6 +17,12 @@ type Props = {
 };
 
 
+// Crop a summary to its first sentence (up to and including the first full stop).
+const firstSentence = (text: string) => {
+    const end = text.indexOf('.');
+    return end === -1 ? text : text.slice(0, end + 1);
+};
+
 const Index: NextPage<Props> = ({announcement, news}) => {
 
     const Announcement = () => {
@@ -30,7 +36,7 @@ const Index: NextPage<Props> = ({announcement, news}) => {
         return slug && (
             <article key={_id}>
                 <h2 className="text-3xl font-ropa-bold"><Link href="/news/[slug]" as={`/news/${slug.current}`}><a className="text-black">{title}</a></Link></h2>
-                <p className="opacity-75">{ summary }</p>
+                <p className="opacity-75">{ firstSentence(summary) }</p>
             </article>
         )
     };
@@ -55,7 +61,7 @@ const Index: NextPage<Props> = ({announcement, news}) => {
                         return slug && (
                             <article key={_id}>
                                 <h2 className="text-3xl font-ropa-bold"><Link href="/news/[slug]" as={`/news/${slug.current}`}><a className="text-black">{title}</a></Link></h2>
-                                <p className="opacity-75">{ summary }</p>
+                                <p className="opacity-75">{ firstSentence(summary) }</p>
                             </article>
                         )
                     }

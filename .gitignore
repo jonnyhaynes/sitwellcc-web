@@ -1,10 +1,10 @@
 node_modules
 dist
-.next
-out
+.astro
+.output
+.vercel
 .DS_Store
 sanitytutorialblog
-.vercel
 .env
 .env.local
 .env.production

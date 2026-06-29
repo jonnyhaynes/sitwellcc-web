@@ -1,0 +1,74 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PortableTextContent from '../../components/PortableTextContent.tsx';
+import groq from 'groq';
+import { client } from '../../lib/sanity';
+
+type Post = {
+  _id?: string;
+  title?: string;
+  author?: string;
+  body?: import('@portabletext/types').PortableTextBlock[];
+  publishedAt?: string;
+  slug?: { current: string };
+  summary?: string;
+  announcement?: boolean;
+};
+
+export async function getStaticPaths() {
+  const slugs = await client.fetch<string[]>(
+    groq`*[_type == "post" && defined(slug.current)][].slug.current`,
+  );
+  return slugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+
+const post = await client.fetch<Post>(
+  groq`*[_type == "post" && slug.current == $slug][0]{
+    title,
+    "author": author->name,
+    "categories": categories[]->title,
+    "authorImage": author->image,
+    body,
+    publishedAt,
+  }`,
+  { slug },
+);
+
+const posts = await client.fetch<Post[]>(
+  groq`*[_type == "post" && publishedAt < now()] | order(publishedAt desc) [0...10]`,
+);
+---
+
+<Layout
+  title={`${post?.title ?? 'News'} // News // Sitwell Cycling Club`}
+  description="Founded 2016. Rotherham Advertiser Sports Awards Club of the Year 2018. 10 social rides a week. Go-Ride Coaching. Meet Brookside Pharmacy, Whiston."
+>
+  {post && (
+    <>
+      <section class="title w-full px-5 lg:px-10 mb-20">
+        <h1 class="text-6xl font-ropa-bold">{post.title}</h1>
+        <h2 class="text-3xl font-ropa">By {post.author} on {post.publishedAt ? new Date(post.publishedAt).toDateString() : ''}.</h2>
+      </section>
+      <section class="w-full px-5 lg:px-10 mb-20 grid lg:grid-cols-3 lg:gap-5">
+        <article class="wysiwyg lg:col-span-2 mb-10 lg:mb-0">
+          <PortableTextContent value={post.body ?? []} />
+        </article>
+        <section>
+          <h3 class="text-2xl font-ropa p-5 bg-black/5 border-b-2 border-white">News</h3>
+          <ul>
+            {posts?.map((item) => item.slug && (
+              <li>
+                <a href={`/news/${item.slug.current}`} class="p-5 block bg-black/5 border-b border-white text-black">
+                  <h3 class="text-base font-ropa block uppercase opacity-50">{item.publishedAt ? new Date(item.publishedAt).toDateString() : ''}</h3>
+                  <h2 class="text-xl font-ropa text-black">{item.title}</h2>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </section>
+    </>
+  )}
+</Layout>

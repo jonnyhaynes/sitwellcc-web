@@ -1,0 +1,16 @@
+.page-footer {
+  &::after {
+    content: '';
+    display: block;
+    background: linear-gradient(
+      90deg,
+      var(--color-green) 0%,
+      var(--color-green) 50%,
+      var(--color-yellow) 50%,
+      var(--color-yellow) 100%
+    );
+    width: 100px;
+    height: 20px;
+    margin: 0 auto;
+  }
+}

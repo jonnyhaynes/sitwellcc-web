@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import groq from 'groq';
+import { client, urlFor } from '../lib/sanity';
+
+type Post = {
+  _id: string;
+  title?: string;
+  slug?: { current: string };
+  publishedAt?: string;
+  summary?: string;
+  announcement?: boolean;
+  mainImage?: { asset: import('@sanity/image-url/lib/types/types').SanityImageSource };
+};
+
+const posts = await client.fetch<Post[]>(
+  groq`*[_type == "post" && publishedAt < now()] | order(publishedAt desc)`,
+);
+---
+
+<Layout
+  title="News // Sitwell Cycling Club"
+  description="Founded 2016. Rotherham Advertiser Sports Awards Club of the Year 2018. 10 social rides a week. Go-Ride Coaching. Meet Brookside Pharmacy, Whiston."
+>
+  <section class="title w-full px-5 lg:px-10 mb-20">
+    <h1 class="text-6xl font-ropa-bold">News</h1>
+  </section>
+  <section class="races w-full px-5 lg:px-10 mb-20 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+    {posts?.map((post) => post.slug && (
+      <article class={`border-t-8 ${post.announcement ? 'border-yellow' : 'border-black'} pt-5 flex flex-col`}>
+        <a href={`/news/${post.slug.current}`} class="relative block w-full mb-5">
+          {post.mainImage
+            ? <img src={urlFor(post.mainImage.asset).width(285).height(285).url()} class="block w-full" alt="" width="285" height="285" />
+            : <img src="/img/coaching/placeholder.webp" class="block w-full" alt="" width="285" height="285" />}
+          <button class="btn absolute bottom-5 right-5" aria-label="View article">View article</button>
+        </a>
+        <div class={`p-5 ${post.announcement ? 'bg-yellow/25' : 'bg-black/5'} grow`}>
+          <h3 class="text-base font-ropa block uppercase opacity-50">{post.publishedAt ? new Date(post.publishedAt).toDateString() : ''}</h3>
+          <h2 class="text-2xl font-ropa text-black">{post.title}</h2>
+          <p class="text-sm mb-2">{post.summary}</p>
+        </div>
+      </article>
+    ))}
+  </section>
+</Layout>

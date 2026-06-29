@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm.tsx';
+---
+
+<Layout
+  title="Contact // Sitwell Cycling Club"
+  description="Founded 2016. Rotherham Advertiser Sports Awards Club of the Year 2018. 10 social rides a week. Go-Ride Coaching. Meet Brookside Pharmacy, Whiston."
+>
+  <section class="title w-full px-5 lg:px-10 mb-20">
+    <h1 class="text-6xl font-ropa-bold mb-5">Get in touch</h1>
+    <h2 class="text-3xl font-ropa">We love cycling</h2>
+    <p class="lg:w-3/4">We aim to respond to all enquiries as soon as possible, but there might be a slight delay if the weather is good.</p>
+  </section>
+  <section class="w-full px-5 lg:px-10 mb-5 grid lg:grid-cols-3 lg:gap-5">
+    <section class="lg:col-span-2 mb-5">
+      <ContactForm client:load />
+    </section>
+    <section class="lg:col-span-2">
+      <h3 class="text-xl font-ropa mb-1">Follow us on the socials</h3>
+      <ul class="flex mb-10">
+        <li>
+          <a href="https://www.instgram.com/sitwellcc" class="inline-block mr-2.5">
+            <img src="/img/instagram.svg" alt="Instagram icon" width="40" height="40" />
+          </a>
+        </li>
+        <li>
+          <a href="https://www.twitter.com/sitwellcc" class="inline-block mr-2.5">
+            <img src="/img/twitter.svg" alt="Twitter icon" width="40" height="40" />
+          </a>
+        </li>
+        <li>
+          <a href="https://www.strava.com/sitwellcc" class="inline-block mr-2.5">
+            <img src="/img/strava.svg" alt="Strava icon" width="40" height="40" />
+          </a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/sitwellcc">
+            <img src="/img/facebook.svg" alt="Facebook icon" width="40" height="40" />
+          </a>
+        </li>
+      </ul>
+    </section>
+  </section>
+
+  <section class="w-full px-5 lg:px-10 mb-20 grid lg:grid-cols-3 lg:gap-5">
+    <section class="mb-10 md:mb-0">
+      <h3 class="text-xl font-ropa">Club ride meet point</h3>
+      <p class="text-sm mb-2.5">Brookside Pharmacy, Whiston, S60 4HY</p>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d594.6325328356164!2d-1.3278540707379092!3d53.405344598749494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48797771ac7cb729%3A0xefaebacde08a4c54!2sSitwell%20Cycing%20Club!5e0!3m2!1sen!2suk!4v1615471881959!5m2!1sen!2suk" height="250" style="border: 0;" allowfullscreen loading="lazy" class="w-full"></iframe>
+    </section>
+    <section>
+      <h3 class="text-xl font-ropa">Go-Ride coaching meet point</h3>
+      <p class="text-sm mb-2.5">Herringthorpe Playing Fields, S65 2HR</p>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2377.577895390717!2d-1.3385427841369621!3d53.42237477999504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48797731c1c4e535%3A0xfa2acc1afb74ead5!2sSitwell%20Cycling%20Club%20%3A%20Go-Ride%20Coaching!5e0!3m2!1sen!2suk!4v1615472068476!5m2!1sen!2suk" height="250" style="border: 0;" allowfullscreen loading="lazy" class="w-full"></iframe>
+    </section>
+  </section>
+</Layout>

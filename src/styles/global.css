@@ -1,0 +1,50 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+/*
+ * Theme — migrated from the Tailwind v3 JS config.
+ * In v4 the theme is defined in CSS and exposed as CSS variables
+ * (e.g. --color-green is usable as both `text-green` and `var(--color-green)`).
+ */
+@theme {
+  /* Custom palette (replaces the v3 `colors` block; we intentionally do not
+     extend the default palette — these are the only colours the site uses). */
+  --color-green: #109a49;
+  --color-yellow: #fbdf08;
+  --color-amber: #ef9014;
+  --color-red: #d61e1e;
+  --color-brown: #a15433;
+  --color-blue: #1d5ee3;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-instagram: #e1306c;
+  --color-twitter: #1da1f2;
+  --color-facebook: #3a559f;
+  --color-strava: #fc4c02;
+
+  /* Fonts */
+  --font-arial: Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-ropa: 'Ropa Sans Pro Bold', ui-sans-serif, system-ui, sans-serif;
+  --font-ropa-bold: 'Ropa Sans Pro ExtraBold', ui-sans-serif, system-ui, sans-serif;
+
+  /* Extra font sizes (from theme.extend.fontSize) */
+  --text-3xs: 0.625rem;
+  --text-3xs--line-height: 0.75rem;
+  --text-2xs: 0.75rem;
+  --text-2xs--line-height: 1rem;
+}
+
+/* Custom list-style utilities (from the v3 `listStyleType` config). */
+@utility list-alpha {
+  list-style-type: upper-alpha;
+}
+@utility list-roman {
+  list-style-type: upper-roman;
+}
+
+@import './fonts.css';
+@import './components/buttons.css';
+@import './components/footer.css';
+@import './components/header.css';
+@import './components/links.css';
+@import './components/wysiwyg.css';

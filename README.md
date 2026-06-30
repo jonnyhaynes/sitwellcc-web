@@ -74,3 +74,8 @@ Text. Rebuild/redeploy to publish content changes.
 ## Deployment
 
 The site is deployed on Vercel. Pushes to `main` deploy to production automatically.
+
+## License
+
+This repository is publicly viewable for reference, but it is **not open source**.
+All rights reserved by Sitwell Cycling Club — see [LICENSE](LICENSE).

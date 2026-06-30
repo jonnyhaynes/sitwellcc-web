@@ -10,7 +10,7 @@ type Post = {
   publishedAt?: string;
   summary?: string;
   announcement?: boolean;
-  mainImage?: { asset: import('@sanity/image-url/lib/types/types').SanityImageSource };
+  mainImage?: { asset: import('@sanity/image-url').SanityImageSource };
 };
 
 const posts = await client.fetch<Post[]>(

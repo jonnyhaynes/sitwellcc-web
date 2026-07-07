@@ -30,6 +30,14 @@ describe('parseGpx', () => {
     const rte = '<gpx><rte><rtept lat="53.4" lon="-1.3"></rtept></rte></gpx>';
     expect(parseGpx(rte)).toEqual([{ lat: 53.4, lng: -1.3 }]);
   });
+  it('parses points regardless of lat/lon attribute order', () => {
+    const rev = '<gpx><trk><trkseg><trkpt lon="-1.3" lat="53.4"></trkpt></trkseg></trk></gpx>';
+    expect(parseGpx(rev)).toEqual([{ lat: 53.4, lng: -1.3 }]);
+  });
+  it('parses single-quoted attributes', () => {
+    const sq = "<gpx><rte><rtept lat='53.4' lon='-1.3'></rtept></rte></gpx>";
+    expect(parseGpx(sq)).toEqual([{ lat: 53.4, lng: -1.3 }]);
+  });
 });
 
 const gpx =
@@ -80,6 +88,35 @@ describe('getRoutes', () => {
     const routes = await getRoutes();
     expect(routes).toHaveLength(1);
     expect(routes[0].coords).toEqual([]);
+  });
+  it('maps a mixed batch positionally without cross-contamination', async () => {
+    fetchMock.mockResolvedValue([
+      {
+        _id: 'r1',
+        name: 'Good',
+        color: 'green',
+        distance: 34,
+        cafeStop: 'Cusworth',
+        gpxUrl: 'https://cdn/good.gpx',
+      },
+      {
+        _id: 'r2',
+        name: 'Bad',
+        color: 'red',
+        distance: 50,
+        cafeStop: '',
+        gpxUrl: 'https://cdn/bad.gpx',
+      },
+    ]);
+    vi.mocked(fetch).mockImplementation((input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url.includes('good')) return Promise.resolve(new Response(gpx, { status: 200 }));
+      return Promise.resolve(new Response('', { status: 500 }));
+    });
+    const routes = await getRoutes();
+    expect(routes).toHaveLength(2);
+    expect(routes[0].coords.length).toBeGreaterThan(0);
+    expect(routes[1].coords).toEqual([]);
   });
   it('drops docs with no gpxUrl', async () => {
     fetchMock.mockResolvedValue([

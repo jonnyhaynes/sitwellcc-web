@@ -26,14 +26,21 @@ export const ROUTE_HEX: Record<RouteColor, string> = {
 };
 
 // Parse GPX text to an ordered list of coordinates. Reads <trkpt>/<rtept>
-// lat/lon attributes. Returns [] if none found.
+// lat/lon attributes independently, so attribute order and quote style don't
+// matter (real exporters vary). Returns [] if none found; a malformed point
+// (missing lat or lon) is skipped rather than throwing.
 export function parseGpx(gpx: string): LatLng[] {
-  const pointRe =
-    /<(?:trkpt|rtept)\b[^>]*\blat="(-?\d+(?:\.\d+)?)"[^>]*\blon="(-?\d+(?:\.\d+)?)"/gi;
+  const tagRe = /<(?:\w+:)?(?:trkpt|rtept)\b([^>]*)>/gi;
+  const attr = (body: string, name: string): number | null => {
+    const m = body.match(new RegExp(`\\b${name}\\s*=\\s*["'](-?\\d+(?:\\.\\d+)?)["']`, 'i'));
+    return m ? Number(m[1]) : null;
+  };
   const coords: LatLng[] = [];
-  let m: RegExpExecArray | null;
-  while ((m = pointRe.exec(gpx)) !== null) {
-    coords.push({ lat: Number(m[1]), lng: Number(m[2]) });
+  let tag: RegExpExecArray | null;
+  while ((tag = tagRe.exec(gpx)) !== null) {
+    const lat = attr(tag[1], 'lat');
+    const lng = attr(tag[1], 'lon');
+    if (lat !== null && lng !== null) coords.push({ lat, lng });
   }
   return coords;
 }

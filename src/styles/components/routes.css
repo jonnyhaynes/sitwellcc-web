@@ -1,0 +1,70 @@
+/* Routes map: mobile = filter, map, detail stacked; desktop = panel left, map right.
+   Reorder via CSS grid areas (not `order:`) so DOM/reading/tab order stays
+   filter -> detail -> map. */
+.routes-layout {
+  display: grid;
+  gap: 1.25rem;
+  padding: 0 1.25rem;
+  grid-template-areas: 'filter' 'map' 'detail';
+}
+.routes-panel { display: contents; } /* let filter + detail place into the grid independently */
+.routes-filter { grid-area: filter; }
+.routes-map,
+.routes-map-fallback { grid-area: map; min-height: 60vh; }
+.routes-detail { grid-area: detail; }
+
+@media (min-width: 1024px) {
+  .routes-layout {
+    padding: 0 2.5rem;
+    grid-template-columns: 22rem 1fr;
+    grid-template-areas:
+      'filter map'
+      'detail map';
+    align-items: start;
+  }
+  .routes-map,
+  .routes-map-fallback { min-height: 75vh; }
+}
+
+/* Google Maps needs the map container to have an explicit height. */
+.routes-map :global(.gm-style),
+.routes-map > div { height: 100%; }
+
+.routes-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.routes-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-left: 6px solid var(--chip);
+  padding: 0.35rem 0.6rem;
+  font-family: 'Ropa Sans Pro Bold', ui-sans-serif, system-ui, sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+}
+.routes-map-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--color-black) 5%, transparent);
+}
+
+/* Accessible visually-hidden utility (the filter legend uses it). */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

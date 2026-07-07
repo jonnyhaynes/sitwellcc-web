@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import RoutesMap from '../components/RoutesMap.tsx';
+import { getRoutes } from '../lib/routes';
+
+// Static (build-time). Route data changes rarely; no request-time data.
+const routes = await getRoutes();
+const apiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY;
+---
+
+<Layout
+  title="Club routes // Sitwell Cycling Club"
+  description="Explore our club ride routes — plotted on the map, with GPX downloads."
+>
+  <section class="w-full px-5 lg:px-10 mb-10">
+    <h1 class="text-6xl font-ropa-bold mb-5">Club routes</h1>
+    <p class="lg:w-3/4">Every club route, plotted. Filter by ride colour, click a route for its distance, café stop and a GPX download for your Garmin, Wahoo or Strava.</p>
+  </section>
+  <RoutesMap routes={routes} apiKey={apiKey} client:only="react" />
+</Layout>

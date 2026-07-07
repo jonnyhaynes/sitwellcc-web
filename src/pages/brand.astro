@@ -12,8 +12,8 @@ const logos = [
 ];
 
 const primary = [
-  { name: 'Club Green', hex: '#109A49', text: 'text-white', extra: 'RGB 16 154 73 · CMYK 90 15 90 3 · Pantone 355 C' },
-  { name: 'Club Yellow', hex: '#FBDF08', text: 'text-black', extra: 'RGB 251 223 8 · CMYK 3 9 96 0 · Pantone 108 C' },
+  { name: 'Club Green', hex: '#109A49', text: 'text-white', extra: 'RGB 16 154 73 · CMYK 100 25 100 0 · Pantone 348' },
+  { name: 'Club Yellow', hex: '#FBDF08', text: 'text-black', extra: 'RGB 251 223 8 · CMYK 0 25 100 0 · Pantone 7408' },
 ];
 const extended = [
   { name: 'Amber', hex: '#EF9014' },
@@ -237,13 +237,18 @@ const principles = [
   <!-- ===== Downloads ===== -->
   <section id="downloads" class="w-full px-5 lg:px-10 mb-20">
     <h2 class="text-4xl font-ropa-bold mb-5">Downloads</h2>
-    <p class="lg:w-3/4 mb-10">Everything you need to represent Sitwell CC correctly. Prefer SVG wherever possible — it stays crisp at any size.</p>
+    <p class="lg:w-3/4 mb-10">Everything you need to represent Sitwell CC correctly. Use the <strong>RGB</strong> files for screen and the <strong>print</strong> (vector PDF) files for anything going to a printer — and set the exact CMYK / Pantone values below.</p>
 
-    <div class="grid md:grid-cols-2 gap-5 mb-10">
+    <div class="grid md:grid-cols-3 gap-5 mb-10">
       <div class="p-5 bg-black/5">
-        <h3 class="text-2xl font-ropa mb-2">Logo pack</h3>
-        <p class="text-sm mb-5">Crest, wordmark and stripes lock-up in every variant (black, white, green), as SVG and high-res PNG.</p>
-        <a class="btn" href="/brand/assets/downloads/sitwell-cc-logos.zip" download>Download logos (.zip)</a>
+        <h3 class="text-2xl font-ropa mb-2">Logo pack — RGB</h3>
+        <p class="text-sm mb-5">For screen &amp; web. Crest, wordmark (black &amp; white) and stripes lock-up as SVG and high-res PNG, plus the colour spec.</p>
+        <a class="btn" href="/brand/assets/downloads/sitwell-cc-logos-rgb.zip" download>Download RGB (.zip)</a>
+      </div>
+      <div class="p-5 bg-black/5">
+        <h3 class="text-2xl font-ropa mb-2">Logo pack — Print</h3>
+        <p class="text-sm mb-5">For print. Vector PDFs of every logo, plus the CMYK / Pantone colour spec for your printer.</p>
+        <a class="btn" href="/brand/assets/downloads/sitwell-cc-logos-print.zip" download>Download print (.zip)</a>
       </div>
       <div class="p-5 bg-black/5">
         <h3 class="text-2xl font-ropa mb-2">Font pack</h3>
@@ -253,13 +258,14 @@ const principles = [
     </div>
 
     <h3 class="text-2xl font-ropa mb-5">Individual files</h3>
-    <p class="text-sm mb-5">SVG for screen &amp; large print; PNG for tools that don&apos;t take vectors.</p>
+    <p class="text-sm mb-5"><strong>SVG / PNG</strong> for screen &amp; web; <strong>PDF</strong> (vector, CMYK-ready) for print.</p>
     <div class="grid md:grid-cols-3 gap-5">
       <div>
         <p class="font-ropa mb-2">Crest</p>
         <div class="flex flex-row flex-wrap gap-2.5">
           <a class="btn" href="/img/scc-crest.svg" download>SVG</a>
           <a class="btn" href="/brand/assets/logos/scc-crest.png" download>PNG</a>
+          <a class="btn" href="/brand/assets/logos-print/scc-crest.pdf" download>PDF</a>
         </div>
       </div>
       <div>
@@ -267,6 +273,7 @@ const principles = [
         <div class="flex flex-row flex-wrap gap-2.5">
           <a class="btn" href="/img/scc-logotype.svg" download>SVG</a>
           <a class="btn" href="/brand/assets/logos/scc-logotype.png" download>PNG</a>
+          <a class="btn" href="/brand/assets/logos-print/scc-logotype.pdf" download>PDF</a>
         </div>
       </div>
       <div>
@@ -274,8 +281,11 @@ const principles = [
         <div class="flex flex-row flex-wrap gap-2.5">
           <a class="btn" href="/img/scc-stripes.svg" download>SVG</a>
           <a class="btn" href="/brand/assets/logos/scc-stripes.png" download>PNG</a>
+          <a class="btn" href="/brand/assets/logos-print/scc-stripes.pdf" download>PDF</a>
         </div>
       </div>
     </div>
+
+    <p class="text-sm mt-8">Colour spec: <a href="/brand/assets/COLOURS.txt" download>COLOURS.txt</a> — exact RGB, CMYK and Pantone values.</p>
   </section>
 </Layout>

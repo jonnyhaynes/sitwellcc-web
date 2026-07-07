@@ -1,0 +1,29 @@
+SITWELL CYCLING CLUB — BRAND COLOUR SPECIFICATION
+=================================================
+
+Use these exact values. For print, set the CMYK / Pantone values below —
+do NOT auto-convert the RGB/hex, as it will drift from the intended colour.
+
+CLUB GREEN
+  HEX      #109A49
+  RGB      16 154 73
+  CMYK     C100  M25  Y100  K0
+  Pantone  348
+
+CLUB YELLOW
+  HEX      #FBDF08
+  RGB      251 223 8
+  CMYK     C0  M25  Y100  K0
+  Pantone  7408
+
+NEUTRALS
+  Black    #000000   (K100 for print)
+  White    #FFFFFF
+
+USAGE
+  - Green leads, yellow accents (roughly 60% neutral / 30% green / 10% yellow).
+  - Screen/web: use the RGB SVG or PNG logo files (assets/logos/).
+  - Print: use the vector PDF logo files (assets/logos-print/) and instruct
+    the printer to set the CMYK / Pantone values above.
+
+Questions: team@sitwell.cc

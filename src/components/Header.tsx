@@ -4,6 +4,17 @@ const Header = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 
+  // On the brand.sitwell.cc microsite every path is rewritten to the brand
+  // page, so relative nav links go nowhere. When we detect that host, point
+  // internal links at the main site instead.
+  const [base, setBase] = useState('');
+
+  useEffect(() => {
+    if (window.location.hostname === 'brand.sitwell.cc') {
+      setBase('https://www.sitwell.cc');
+    }
+  }, []);
+
   useEffect(() => {
     const checkIfClickedOutside = (e: MouseEvent) => {
       if (open && ref.current && !ref.current.contains(e.target as Node)) {
@@ -41,31 +52,31 @@ const Header = () => {
             </button>
             <nav className="navigation bg-black lg:w-1/4 absolute left-0 ml-3 lg:ml-6 p-2 lg:p-4 z-20">
               <ul className="mb-2 lg:mb-4">
-                <li><a href="/rides" className="text-white block text-3xl font-ropa mb-2">Club rides</a></li>
-                <li><a href="/coaching" className="text-white block text-3xl font-ropa mb-2">Go-Ride coaching</a></li>
-                <li><a href="/races" className="text-white block text-3xl font-ropa mb-2">Races</a></li>
-                <li><a href="/charity" className="text-white block text-3xl font-ropa">Charity work</a></li>
+                <li><a href={`${base}/rides`} className="text-white block text-3xl font-ropa mb-2">Club rides</a></li>
+                <li><a href={`${base}/coaching`} className="text-white block text-3xl font-ropa mb-2">Go-Ride coaching</a></li>
+                <li><a href={`${base}/races`} className="text-white block text-3xl font-ropa mb-2">Races</a></li>
+                <li><a href={`${base}/charity`} className="text-white block text-3xl font-ropa">Charity work</a></li>
               </ul>
               <ul>
-                <li><a href="/about" className="text-white block mb-1">About</a></li>
-                <li><a href="/membership" className="text-white block mb-1">Membership</a></li>
-                <li><a href="/kit" className="text-white block mb-1">Kit</a></li>
-                <li><a href="/constitution" className="text-white block mb-1">Constitution</a></li>
-                <li><a href="/welfare" className="text-white block mb-1">Welfare &amp; Safeguarding</a></li>
-                <li><a href="/news" className="text-white block mb-1">News</a></li>
-                <li><a href="/contact" className="text-white block mb-4">Contact</a></li>
+                <li><a href={`${base}/about`} className="text-white block mb-1">About</a></li>
+                <li><a href={`${base}/membership`} className="text-white block mb-1">Membership</a></li>
+                <li><a href={`${base}/kit`} className="text-white block mb-1">Kit</a></li>
+                <li><a href={`${base}/constitution`} className="text-white block mb-1">Constitution</a></li>
+                <li><a href={`${base}/welfare`} className="text-white block mb-1">Welfare &amp; Safeguarding</a></li>
+                <li><a href={`${base}/news`} className="text-white block mb-1">News</a></li>
+                <li><a href={`${base}/contact`} className="text-white block mb-4">Contact</a></li>
               </ul>
-              <a href="/membership" className="btn mb-1.5">Join us today</a>
+              <a href={`${base}/membership`} className="btn mb-1.5">Join us today</a>
             </nav>
           </div>
         </div>
         <div className="flex-grow flex flex-row w-full lg:w-3/5 justify-center order-1 lg:order-2 mb-10 lg:mb-0">
-          <a href="/">
+          <a href={`${base}/`}>
             <img src="/img/scc-logotype.svg" alt="Sitwell Cycling Club" width="250" height="75" />
           </a>
         </div>
         <div className="flex flex-row flex-none w-2/3 lg:w-1/5 content-center justify-end order-3">
-          <a href="/membership" className="btn btn--large self-center whitespace-nowrap">Join us today</a>
+          <a href={`${base}/membership`} className="btn btn--large self-center whitespace-nowrap">Join us today</a>
         </div>
       </div>
     </header>

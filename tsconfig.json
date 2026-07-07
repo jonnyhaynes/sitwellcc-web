@@ -6,7 +6,6 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "baseUrl": ".",
-    "types": ["vitest/globals"],
     "paths": {
       "@/*": ["src/*"]
     }

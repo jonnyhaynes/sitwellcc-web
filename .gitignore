@@ -9,3 +9,6 @@ sanitytutorialblog
 .env.local
 .env.production
 .env*
+.next
+.claude/settings.local.json
+.claude/worktrees

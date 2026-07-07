@@ -4,7 +4,7 @@
 .routes-layout {
   display: grid;
   gap: 1.25rem;
-  padding: 0 1.25rem;
+  padding: 0 1.25rem; /* mirrors the px-5 / lg:px-10 page gutters */
   grid-template-areas: 'filter' 'map' 'detail';
 }
 .routes-panel { display: contents; } /* let filter + detail place into the grid independently */
@@ -27,7 +27,7 @@
 }
 
 /* Google Maps needs the map container to have an explicit height. */
-.routes-map :global(.gm-style),
+.routes-map .gm-style,
 .routes-map > div { height: 100%; }
 
 .routes-filter {
@@ -44,7 +44,7 @@
   gap: 0.4rem;
   border-left: 6px solid var(--chip);
   padding: 0.35rem 0.6rem;
-  font-family: 'Ropa Sans Pro Bold', ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-ropa);
   text-transform: uppercase;
   cursor: pointer;
   user-select: none;
@@ -53,6 +53,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.05);
   background: color-mix(in srgb, var(--color-black) 5%, transparent);
 }
 

@@ -86,7 +86,7 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
       <div className="routes-detail">
         {selected ? (
           <>
-            <h2>{selected.name}</h2>
+            <h2 className="text-2xl font-ropa leading-none">{selected.name}</h2>
             <p>
               {COLOR_LABEL[selected.color]} · {selected.distance} miles
             </p>

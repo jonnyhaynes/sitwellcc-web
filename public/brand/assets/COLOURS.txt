@@ -23,7 +23,9 @@ NEUTRALS
 USAGE
   - Green leads, yellow accents (roughly 60% neutral / 30% green / 10% yellow).
   - Screen/web: use the RGB SVG or PNG logo files (assets/logos/).
-  - Print: use the vector PDF logo files (assets/logos-print/) and instruct
-    the printer to set the CMYK / Pantone values above.
+  - Print: use the vector PDF logo files (assets/logos-print/). These are
+    already authored in DeviceCMYK with the exact values above baked in
+    (green = C100 M25 Y100 K0, yellow = C0 M25 Y100 K0, black = K100) — no
+    colour conversion needed. Match to Pantone 348 / 7408 for spot printing.
 
 Questions: team@sitwell.cc

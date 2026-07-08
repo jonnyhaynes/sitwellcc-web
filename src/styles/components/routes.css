@@ -23,8 +23,12 @@
     grid-template-areas:
       'filter map'
       'detail map';
-    align-items: start;
   }
+  /* Keep the left-column panels top-aligned, but let the map (which spans both
+     rows) stretch to fill its cell — a container-wide `align-items: start`
+     would collapse the map's height and it wouldn't render. */
+  .routes-filter,
+  .routes-detail { align-self: start; }
   .routes-map,
   .routes-map-fallback { min-height: 75vh; }
 }

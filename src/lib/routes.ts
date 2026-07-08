@@ -23,10 +23,11 @@ export interface Route {
   gpxUrl: string; // untouched Sanity file URL — the source of the download
   downloadName: string; // tidy filename for the download, e.g. "sitwell-cadeby-loop.gpx"
   coords: LatLng[]; // parsed from the GPX — the map line
-  elevationGain: number | null; // Sanity override (m) if set, else total ascent from GPX <ele>; null if neither available
+  elevationGain: number | null; // feet: Sanity override (already feet) if set, else GPX ascent converted to feet; null if neither available
 }
 
 const METERS_PER_MILE = 1609.344;
+const FEET_PER_METER = 3.28084;
 
 // Turn a route name into a filename-safe slug for the GPX download, so members
 // get "sitwell-cadeby-loop.gpx" rather than "komoot_export_final(3).gpx".
@@ -113,6 +114,16 @@ export function elevationGainMeters(coords: LatLng[]): number | null {
   return Math.round(gain);
 }
 
+// Total ascent in feet: the metres figure converted to whole feet, matching how
+// the Studio derives the elevation field default (metres × 3.28084, rounded).
+// Elevation is stored and displayed in feet across both repos, so the GPX
+// fallback is converted here at the point of use. Returns null when there is no
+// usable elevation data (i.e. elevationGainMeters returns null).
+export function elevationGainFeet(coords: LatLng[]): number | null {
+  const meters = elevationGainMeters(coords);
+  return meters === null ? null : Math.round(meters * FEET_PER_METER);
+}
+
 interface RawRoute {
   _id: string;
   name: string;
@@ -120,7 +131,7 @@ interface RawRoute {
   cafeStop: string;
   gpxUrl: string | null;
   distance: number | null; // optional editor override, in miles
-  elevation: number | null; // optional editor override, in metres
+  elevation: number | null; // optional editor override, in feet
 }
 
 // Fetch route documents from Sanity and enrich each with parsed GPX coords, plus
@@ -139,8 +150,10 @@ export async function getRoutes(): Promise<Route[]> {
   // Prefer the editor override; fall back to the GPX-computed value.
   const distanceOf = (r: RawRoute, coords: LatLng[]) =>
     r.distance != null ? r.distance * METERS_PER_MILE : routeDistanceMeters(coords);
+  // The override is already in feet, so it is used as-is; the GPX fallback is
+  // converted from metres to feet.
   const elevationOf = (r: RawRoute, coords: LatLng[]) =>
-    r.elevation != null ? r.elevation : elevationGainMeters(coords);
+    r.elevation != null ? r.elevation : elevationGainFeet(coords);
 
   const routes = await Promise.all(
     raw.map(async (r): Promise<Route | null> => {

@@ -1,7 +1,7 @@
 import {
   metersToMiles,
   metersToKm,
-  metersToFeet,
+  feetToMeters,
   formatDistance,
   formatElevation,
 } from './units';
@@ -13,8 +13,8 @@ describe('conversions', () => {
   it('converts metres to km', () => {
     expect(metersToKm(2500)).toBe(2.5);
   });
-  it('converts metres to feet', () => {
-    expect(metersToFeet(100)).toBeCloseTo(328.084, 2);
+  it('converts feet to metres', () => {
+    expect(feetToMeters(328.084)).toBeCloseTo(100, 2);
   });
 });
 
@@ -29,11 +29,13 @@ describe('formatDistance', () => {
 });
 
 describe('formatElevation', () => {
-  it('formats metres as a whole number', () => {
-    expect(formatElevation(540, 'm')).toBe('540 m');
+  // Input is feet (the stored unit).
+  it('passes feet through with a thousands separator', () => {
+    expect(formatElevation(1772, 'ft')).toBe('1,772 ft');
   });
-  it('formats feet with a thousands separator', () => {
-    expect(formatElevation(540, 'ft')).toBe('1,772 ft');
+  it('converts feet to metres for the metric option', () => {
+    // 1772 ft ÷ 3.28084 ≈ 540 m
+    expect(formatElevation(1772, 'm')).toBe('540 m');
   });
   it('renders an em dash for null', () => {
     expect(formatElevation(null, 'm')).toBe('—');

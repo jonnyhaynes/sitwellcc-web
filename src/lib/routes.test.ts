@@ -7,6 +7,7 @@ import {
   getRoutes,
   routeDistanceMeters,
   elevationGainMeters,
+  elevationGainFeet,
   gpxDownloadName,
 } from './routes';
 
@@ -114,6 +115,17 @@ describe('elevationGainMeters', () => {
   });
 });
 
+describe('elevationGainFeet', () => {
+  it('converts the metres gain to whole feet', () => {
+    // fixture: 80 -> 120 -> 95 = +40 m; 40 × 3.28084 ≈ 131 ft
+    const coords = parseGpx(fixture);
+    expect(elevationGainFeet(coords)).toBe(131);
+  });
+  it('returns null when there is no usable elevation data', () => {
+    expect(elevationGainFeet([{ lat: 0, lng: 0, ele: 100 }])).toBeNull();
+  });
+});
+
 describe('gpxDownloadName', () => {
   it('slugifies the route name into sitwell-<slug>.gpx', () => {
     expect(gpxDownloadName('Cadeby Loop')).toBe('sitwell-cadeby-loop.gpx');
@@ -157,7 +169,7 @@ describe('getRoutes', () => {
       color: 'green',
       gpxUrl: 'https://cdn/x.gpx',
       downloadName: 'sitwell-cadeby-loop.gpx',
-      elevationGain: 40, // 50 -> 90
+      elevationGain: 131, // GPX 50->90 = +40 m, converted to feet
     });
     expect(routes[0].coords).toHaveLength(2);
     expect(routes[0].distanceMeters).toBeGreaterThan(0);
@@ -171,13 +183,13 @@ describe('getRoutes', () => {
         cafeStop: '',
         gpxUrl: 'https://cdn/x.gpx',
         distance: 50, // miles → 80467.2 m
-        elevation: 700,
+        elevation: 700, // feet — used as-is, no conversion
       },
     ]);
     vi.mocked(fetch).mockResolvedValue(new Response(gpx, { status: 200 }));
     const routes = await getRoutes();
     expect(routes[0].distanceMeters).toBeCloseTo(50 * 1609.344, 3);
-    expect(routes[0].elevationGain).toBe(700);
+    expect(routes[0].elevationGain).toBe(700); // feet, unchanged
   });
   it('still lists a route whose GPX fetch fails, using overrides or 0/null fallbacks', async () => {
     fetchMock.mockResolvedValue([

@@ -45,24 +45,25 @@
   .routes-map-fallback { min-height: 75vh; }
 }
 
-/* Route list: scrollable, capped to the map's height so long lists don't push
-   the layout tall. Mobile = same height as the map; desktop = it fills the
-   middle grid row (map height minus filters/detail) via min-height:0. */
+/* Route list: capped to show 10 items, then scrolls. Height is derived from the
+   single-line row metrics (--routes-list-row) plus the inter-row gap, so exactly
+   10 rows are visible and an 11th is clipped and reachable by scroll. --row is
+   item line-height (1.1rem) + vertical padding (2 × 0.5rem). */
 .routes-list {
+  --routes-list-gap: 0.4rem;
+  --routes-list-row: 2.1rem;
+  --routes-list-rows: 10;
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  max-height: 60vh;
+  gap: var(--routes-list-gap);
+  max-height: calc(
+    var(--routes-list-rows) * var(--routes-list-row) +
+      (var(--routes-list-rows) - 1) * var(--routes-list-gap)
+  );
   overflow-y: auto;
-}
-@media (min-width: 1024px) {
-  .routes-list {
-    max-height: none; /* bounded by the 1fr grid row instead */
-    min-height: 0; /* allow the flex/grid item to shrink so overflow scrolls */
-  }
 }
 .routes-list-item {
   display: flex;

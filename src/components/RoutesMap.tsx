@@ -29,6 +29,7 @@ function FitBounds({ routes }: { routes: Route[] }) {
 
   useEffect(() => {
     if (!map) return;
+
     const bounds = new google.maps.LatLngBounds();
     let hasPoints = false;
     for (const route of routes) {
@@ -37,7 +38,15 @@ function FitBounds({ routes }: { routes: Route[] }) {
         hasPoints = true;
       }
     }
-    if (hasPoints) map.fitBounds(bounds, 32);
+    if (!hasPoints) return;
+
+    // fitBounds derives zoom from the map's pixel size, so it must run once the
+    // map has laid out. On first mount the container may still be sizing (grid),
+    // giving a wrong zoom — so fit now and again after the map goes idle.
+    const fit = () => map.fitBounds(bounds, 32);
+    fit();
+    const listener = google.maps.event.addListenerOnce(map, 'idle', fit);
+    return () => listener.remove();
   }, [map, routes]);
 
   return null;

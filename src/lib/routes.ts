@@ -99,17 +99,29 @@ export function routeDistanceMeters(coords: LatLng[]): number {
   return total;
 }
 
-// Total ascent in metres: sum of positive elevation deltas between consecutive
-// points that both carry <ele>, ignoring climbs below the noise threshold.
-// Returns null when fewer than two points have elevation data (i.e. the GPX
-// carries no usable elevation).
+// Total ascent in metres from the points that carry <ele>. Returns null when
+// fewer than two have elevation data (i.e. the GPX carries no usable elevation).
+//
+// The noise threshold is applied *cumulatively* against a running reference,
+// not per adjacent point-pair. A climb is banked only once elevation has risen
+// at least the threshold above the reference; the reference then moves up. It
+// moves down on any new local low. This rejects genuine wobble (rises that
+// reverse before clearing the threshold) while still counting gradual real
+// ascent — densely-sampled tracks climb in sub-metre steps, and a per-pair
+// threshold would discard the whole climb.
 export function elevationGainMeters(coords: LatLng[]): number | null {
   const withEle = coords.filter((c): c is Required<LatLng> => c.ele !== undefined);
   if (withEle.length < 2) return null;
   let gain = 0;
+  let ref = withEle[0].ele;
   for (let i = 1; i < withEle.length; i++) {
-    const delta = withEle[i].ele - withEle[i - 1].ele;
-    if (delta >= ELEVATION_NOISE_THRESHOLD_M) gain += delta;
+    const ele = withEle[i].ele;
+    if (ele - ref >= ELEVATION_NOISE_THRESHOLD_M) {
+      gain += ele - ref;
+      ref = ele;
+    } else if (ele < ref) {
+      ref = ele;
+    }
   }
   return Math.round(gain);
 }

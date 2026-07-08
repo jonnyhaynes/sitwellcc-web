@@ -96,14 +96,52 @@ describe('elevationGainMeters', () => {
     const coords = parseGpx(fixture);
     expect(elevationGainMeters(coords)).toBe(40);
   });
-  it('ignores climbs below the 3 m noise threshold', () => {
-    const noisy = [
+  it('banks a cumulative climb once it clears the 3 m threshold', () => {
+    // Rises in sub-threshold steps but crosses 3 m against the reference at the
+    // last point: the whole 12 m from the reference is banked (100 -> 112), not
+    // just the final step.
+    const climbing = [
       { lat: 0, lng: 0, ele: 100 },
-      { lat: 0, lng: 0, ele: 101 }, // +1, below threshold
-      { lat: 0, lng: 0, ele: 102 }, // +1, below threshold
-      { lat: 0, lng: 0, ele: 112 }, // +10, counts
+      { lat: 0, lng: 0, ele: 101 }, // +1 vs ref, held
+      { lat: 0, lng: 0, ele: 102 }, // +2 vs ref, held
+      { lat: 0, lng: 0, ele: 112 }, // +12 vs ref, clears threshold → bank 12
     ];
-    expect(elevationGainMeters(noisy)).toBe(10);
+    expect(elevationGainMeters(climbing)).toBe(12);
+  });
+  it('does not discard a gradual densely-sampled climb (the under-count bug)', () => {
+    // 300 points rising 1 m each: every adjacent step is < 3 m, so the old
+    // per-pair threshold dropped the entire 300 m climb. Cumulatively it should
+    // count the full rise (within the 3 m still "in flight" at the very end).
+    const gradual = Array.from({ length: 300 }, (_, i) => ({ lat: 0, lng: 0, ele: i }));
+    const gain = elevationGainMeters(gradual);
+    expect(gain).not.toBeNull();
+    expect(gain!).toBeGreaterThanOrEqual(296); // ~299 m of the 299 m rise
+  });
+  it('rejects genuine wobble that reverses before clearing the threshold', () => {
+    // Bounces ±2 m around 100, never 3 m above the running reference → 0.
+    const wobble = [
+      { lat: 0, lng: 0, ele: 100 },
+      { lat: 0, lng: 0, ele: 102 },
+      { lat: 0, lng: 0, ele: 100 },
+      { lat: 0, lng: 0, ele: 102 },
+      { lat: 0, lng: 0, ele: 100 },
+    ];
+    expect(elevationGainMeters(wobble)).toBe(0);
+  });
+  it('counts a clean 30 m climb and returns 0 for descent / null for no data', () => {
+    expect(
+      elevationGainMeters([
+        { lat: 0, lng: 0, ele: 100 },
+        { lat: 0, lng: 0, ele: 130 },
+      ]),
+    ).toBe(30);
+    expect(
+      elevationGainMeters([
+        { lat: 0, lng: 0, ele: 130 },
+        { lat: 0, lng: 0, ele: 100 },
+      ]),
+    ).toBe(0);
+    expect(elevationGainMeters([{ lat: 0, lng: 0, ele: 100 }])).toBeNull();
   });
   it('returns 0 for a flat-or-descending profile', () => {
     const down = [

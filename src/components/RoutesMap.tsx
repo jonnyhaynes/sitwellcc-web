@@ -123,7 +123,7 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
       <div className="routes-map">
         <APIProvider apiKey={apiKey}>
           <Map
-            mapId="scc-routes"
+            style={{ width: '100%', height: '100%' }}
             gestureHandling="cooperative"
             defaultCenter={WHISTON}
             defaultZoom={11}

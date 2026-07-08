@@ -2,6 +2,9 @@
    Reorder via CSS grid areas (not `order:`) so DOM/reading/tab order stays
    filter -> detail -> map. */
 .routes-layout {
+  /* The island is a direct child of the flex <main>; other pages span the row
+     via a `w-full` wrapper, so match that or the grid collapses to content width. */
+  width: 100%;
   display: grid;
   gap: 1.25rem;
   padding: 0 1.25rem; /* mirrors the px-5 / lg:px-10 page gutters */

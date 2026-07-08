@@ -8,7 +8,7 @@
   display: grid;
   gap: 1.25rem;
   padding: 0 1.25rem; /* mirrors the px-5 / lg:px-10 page gutters */
-  grid-template-areas: 'filter' 'map' 'list' 'detail';
+  grid-template-areas: 'filter' 'units' 'map' 'list' 'detail';
 }
 .routes-panel { display: contents; } /* let filter + list + detail place into the grid independently */
 .routes-filter { grid-area: filter; }
@@ -27,11 +27,12 @@
   .routes-layout {
     padding: 0 2.5rem;
     grid-template-columns: 22rem 1fr;
-    /* Left column: filters (auto) -> list (fills) -> detail (auto). The map
-       spans all three rows on the right. */
-    grid-template-rows: auto 1fr auto;
+    /* Left column: filters (auto) -> units (auto) -> list (fills) -> detail
+       (auto). The map spans all four rows on the right. */
+    grid-template-rows: auto auto 1fr auto;
     grid-template-areas:
       'filter map'
+      'units  map'
       'list   map'
       'detail map';
   }
@@ -149,6 +150,42 @@
   justify-content: center;
   background: rgba(0, 0, 0, 0.05);
   background: color-mix(in srgb, var(--color-black) 5%, transparent);
+}
+
+/* Units toggle: two small segmented controls (distance, elevation) sitting above
+   the route list. Flat bordered idiom — black border + hard offset shadow, no
+   rounding. Selected segment inverts to solid black. */
+.routes-units {
+  grid-area: units;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.routes-unit-group {
+  display: inline-flex;
+  border: 2px solid var(--color-black);
+  box-shadow: 4px 4px 0 0 rgba(127, 127, 127, 0.5);
+}
+.routes-unit-group .routes-unit-btn + .routes-unit-btn {
+  border-left: 2px solid var(--color-black);
+}
+.routes-unit-btn {
+  font-family: var(--font-ropa);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 0.35rem 0.6rem;
+  background: var(--color-white);
+  color: var(--color-black);
+  cursor: pointer;
+}
+.routes-unit-btn[aria-pressed='true'] {
+  background: var(--color-black);
+  color: var(--color-white);
+}
+.routes-unit-btn:focus-visible {
+  outline: 2px solid var(--color-black);
+  outline-offset: 2px;
 }
 
 /* Accessible visually-hidden utility (the filter legend uses it). */

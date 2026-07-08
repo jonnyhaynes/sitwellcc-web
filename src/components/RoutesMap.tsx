@@ -90,7 +90,7 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
             <p>
               {COLOR_LABEL[selected.color]} · {selected.distance} miles
             </p>
-            <p>Café stop: {selected.cafeStop}</p>
+            <p className="mb-2.5">Café stop: {selected.cafeStop}</p>
             <a className="btn" href={selected.gpxUrl} download>
               Download GPX
             </a>
@@ -108,7 +108,7 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
 
   if (!apiKey) {
     return (
-      <div className="routes-layout">
+      <div className="routes-layout mb-20">
         {panel}
         <div className="routes-map-fallback">
           <p>Map unavailable.</p>
@@ -118,7 +118,7 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
   }
 
   return (
-    <div className="routes-layout">
+    <div className="routes-layout mb-20">
       {panel}
       <div className="routes-map">
         <APIProvider apiKey={apiKey}>

@@ -4,13 +4,15 @@ const Header = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 
-  // On the brand.sitwell.cc microsite every path is rewritten to the brand
-  // page, so relative nav links go nowhere. When we detect that host, point
-  // internal links at the main site instead.
+  // On the single-page microsites (brand.sitwell.cc, routes.sitwell.cc) every
+  // path is rewritten to that microsite's page, so relative nav links go
+  // nowhere. When we detect one of those hosts, point internal links at the
+  // main site instead.
   const [base, setBase] = useState('');
 
   useEffect(() => {
-    if (window.location.hostname === 'brand.sitwell.cc') {
+    const microsites = ['brand.sitwell.cc', 'routes.sitwell.cc'];
+    if (microsites.includes(window.location.hostname)) {
       setBase('https://www.sitwell.cc');
     }
   }, []);

@@ -92,26 +92,50 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
         ))}
       </fieldset>
 
-      <div className="routes-detail">
-        {selected ? (
-          <>
-            <h2 className="text-2xl font-ropa leading-none">{selected.name}</h2>
-            <p>
-              {COLOR_LABEL[selected.color]} · {selected.distance} miles
-            </p>
-            <p className="mb-2.5">Café stop: {selected.cafeStop}</p>
-            <a className="btn" href={selected.gpxUrl} download>
-              Download GPX
-            </a>
-          </>
-        ) : (
-          <p>
+      <ul className="routes-list">
+        {visible.length === 0 ? (
+          <li className="routes-list-empty">
             {routes.length === 0
               ? 'No routes published yet.'
-              : 'Click a route to see details.'}
-          </p>
+              : 'No routes match the selected colours.'}
+          </li>
+        ) : (
+          visible.map((route) => (
+            <li key={route.id}>
+              <button
+                type="button"
+                className={
+                  route.id === selectedId
+                    ? 'routes-list-item routes-list-item--selected'
+                    : 'routes-list-item'
+                }
+                style={{ '--chip': ROUTE_HEX[route.color] } as React.CSSProperties}
+                aria-pressed={route.id === selectedId}
+                onClick={() => setSelectedId(route.id)}
+              >
+                <span className="routes-list-name">{route.name}</span>
+                <span className="routes-list-meta">{route.distance} miles</span>
+              </button>
+            </li>
+          ))
         )}
-      </div>
+      </ul>
+
+      {selected && (
+        <div
+          className="routes-detail"
+          style={{ '--chip': ROUTE_HEX[selected.color] } as React.CSSProperties}
+        >
+          <h2 className="text-2xl font-ropa leading-none">{selected.name}</h2>
+          <p>
+            {COLOR_LABEL[selected.color]} · {selected.distance} miles
+          </p>
+          {selected.cafeStop && <p className="mb-2.5">Café stop: {selected.cafeStop}</p>}
+          <a className="btn" href={selected.gpxUrl} download>
+            Download GPX
+          </a>
+        </div>
+      )}
     </div>
   );
 

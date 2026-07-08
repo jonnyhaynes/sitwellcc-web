@@ -8,29 +8,92 @@
   display: grid;
   gap: 1.25rem;
   padding: 0 1.25rem; /* mirrors the px-5 / lg:px-10 page gutters */
-  grid-template-areas: 'filter' 'map' 'detail';
+  grid-template-areas: 'filter' 'map' 'list' 'detail';
 }
-.routes-panel { display: contents; } /* let filter + detail place into the grid independently */
+.routes-panel { display: contents; } /* let filter + list + detail place into the grid independently */
 .routes-filter { grid-area: filter; }
 .routes-map,
 .routes-map-fallback { grid-area: map; min-height: 60vh; }
-.routes-detail { grid-area: detail; }
+.routes-list { grid-area: list; }
+.routes-detail {
+  grid-area: detail;
+  /* Coloured left-border in the selected route's colour — matches the list
+     items' left-bar so row, detail and map line all share the colour language. */
+  border-left: 6px solid var(--chip);
+  padding-left: 0.75rem;
+}
 
 @media (min-width: 1024px) {
   .routes-layout {
     padding: 0 2.5rem;
     grid-template-columns: 22rem 1fr;
+    /* Left column: filters (auto) -> list (fills) -> detail (auto). The map
+       spans all three rows on the right. */
+    grid-template-rows: auto 1fr auto;
     grid-template-areas:
       'filter map'
+      'list   map'
       'detail map';
   }
-  /* Keep the left-column panels top-aligned, but let the map (which spans both
-     rows) stretch to fill its cell — a container-wide `align-items: start`
-     would collapse the map's height and it wouldn't render. */
+  /* Keep the fixed-height panels from stretching; the list fills the 1fr row
+     and scrolls. A container-wide `align-items: start` would collapse the map's
+     height (it spans all rows) and it wouldn't render. */
   .routes-filter,
   .routes-detail { align-self: start; }
   .routes-map,
   .routes-map-fallback { min-height: 75vh; }
+}
+
+/* Route list: scrollable, capped to the map's height so long lists don't push
+   the layout tall. Mobile = same height as the map; desktop = it fills the
+   middle grid row (map height minus filters/detail) via min-height:0. */
+.routes-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+@media (min-width: 1024px) {
+  .routes-list {
+    max-height: none; /* bounded by the 1fr grid row instead */
+    min-height: 0; /* allow the flex/grid item to shrink so overflow scrolls */
+  }
+}
+.routes-list-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  text-align: left;
+  border-left: 6px solid var(--chip);
+  padding: 0.5rem 0.75rem;
+  background: color-mix(in srgb, var(--color-black) 4%, transparent);
+  cursor: pointer;
+}
+.routes-list-item:hover {
+  background: color-mix(in srgb, var(--color-black) 8%, transparent);
+}
+.routes-list-item--selected {
+  background: color-mix(in srgb, var(--chip) 18%, transparent);
+}
+.routes-list-name {
+  font-family: var(--font-ropa);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+.routes-list-meta {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+.routes-list-empty {
+  padding: 0.5rem 0;
+  opacity: 0.75;
 }
 
 /* Google Maps needs the map container to have an explicit height. */
@@ -49,12 +112,36 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  border-left: 6px solid var(--chip);
-  padding: 0.35rem 0.6rem;
+  /* Filled button in the RAG colour with white text — matches the rides page
+     labels (bg-green/amber/red text-white), with the site's hard offset shadow
+     (grey, as the menu uses; the .btn action uses yellow). */
+  background: var(--chip);
+  color: var(--color-white);
+  padding: 0.35rem 0.75rem;
   font-family: var(--font-ropa);
   text-transform: uppercase;
   cursor: pointer;
   user-select: none;
+  box-shadow: 5px 5px 0 0 rgba(127, 127, 127, 0.5);
+  transition: opacity 0.12s ease, filter 0.12s ease;
+}
+/* Hide the native checkbox — the whole chip is the control; its on/off state is
+   shown by dimming (below), not a tickbox. */
+.routes-chip input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+/* Off state: colour deselected → dim + desaturate so it reads as filtered out. */
+.routes-chip:has(input:not(:checked)) {
+  opacity: 0.4;
+  filter: grayscale(1);
+}
+/* Keyboard focus lands on the hidden checkbox; ring the chip instead. */
+.routes-chip:has(input:focus-visible) {
+  outline: 2px solid var(--color-black);
+  outline-offset: 2px;
 }
 .routes-map-fallback {
   display: flex;

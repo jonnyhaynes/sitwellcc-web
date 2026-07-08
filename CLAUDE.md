@@ -18,7 +18,9 @@ pages where needed. React islands for interactive components; Tailwind CSS v4 (v
 `@tailwindcss/vite`); Sanity as the headless CMS; SendGrid for the contact form;
 Ticket Tailor + a custom Apollo events API for ride listings; deployed on Vercel
 (`@astrojs/vercel`). Strict TypeScript (avoid `any`); type-check with
-`npm run astro check`. There is no test suite or linter configured yet.
+`npm run astro check`. Vitest runs unit tests (`npm test`): pure logic is
+unit-tested, UI is verified via `npm run astro check` plus a manual smoke test.
+No linter is configured yet.
 
 See `README.md` for the full stack breakdown and project structure.
 

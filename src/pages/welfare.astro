@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { urlFor, getTeamMembers } from '../lib/sanity';
+
+const welfareOfficers = await getTeamMembers('welfare');
 ---
 
 <Layout
@@ -22,20 +25,24 @@ import Layout from '../layouts/Layout.astro';
       <p class="mb-2">If you have any concerns about the welfare of children or adults at risk involved in the Club you can contact our Welfare Officers by emailing: <a href="mailto:welfare@sitwell.cc">welfare@sitwell.cc</a></p>
       <p class="mb-2"><strong>The role of a Club Welfare Officer is an advisory role and is not intended to replace, even on a temporary basis, the roles and responsibilities of Parents, Guardians, Responsible Adults or Carers. The final decision as to whether an activity or event which involves young people or adults at risk receives approval remains at all times with the Committee of the Club.</strong></p>
       <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 pt-5 mb-5">
-        <article>
-          <img class="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Craig Wright" width="285" height="285" />
-          <h3 class="text-xl font-ropa">Craig Wright</h3>
-          <p class="text-sm"><a href="https://www.nspcc.org.uk/what-you-can-do/get-expert-training/child-protection-sport-online-course/">Child Protection in Sport Certified</a></p>
-          <p class="text-sm mb-2.5"><a href="https://www.dbscheck.org/">DBS Checked</a></p>
-          <a href="mailto:craig.wright@sitwell.cc" class="btn">Contact Craig</a>
-        </article>
-        <!-- <article>
-          <img class="block w-full mb-2.5" src="/img/coaching/claire.webp" alt="A portrait photograph of Clarie Wardle" width="285" height="285" />
-          <h3 class="text-xl font-ropa">Claire Wardle</h3>
-          <p class="text-sm"><a href="https://www.nspcc.org.uk/what-you-can-do/get-expert-training/child-protection-sport-online-course/">Child Protection in Sport Certified</a></p>
-          <p class="text-sm mb-2.5"><a href="https://www.dbscheck.org/">DBS Checked</a></p>
-          <a href="mailto:claire.wardle@sitwell.cc" class="btn">Contact Claire</a>
-        </article> -->
+        {welfareOfficers.map((officer) => (
+          <article>
+            <img
+              class="block w-full mb-2.5"
+              src={officer.photo ? urlFor(officer.photo).width(285).height(285).url() : '/img/coaching/placeholder.webp'}
+              alt={`A portrait photograph of ${officer.name}`}
+              width="285"
+              height="285"
+            />
+            <h3 class="text-xl font-ropa">{officer.name}</h3>
+            <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">{officer.membership.title}</h3>
+            <p class="text-sm"><a href="https://www.nspcc.org.uk/what-you-can-do/get-expert-training/child-protection-sport-online-course/">Child Protection in Sport Certified</a></p>
+            <p class="text-sm mb-2.5"><a href="https://www.dbscheck.org/">DBS Checked</a></p>
+            {officer.membership.email && (
+              <a href={`mailto:${officer.membership.email}`} class="btn">Contact {officer.name.split(' ')[0]}</a>
+            )}
+          </article>
+        ))}
       </section>
       <p><strong>British Cycling&apos;s Safeguarding Liaison Officer:</strong> <a href="tel:01612742000">0161 274 2000</a>.</p>
       <p><strong>Rotherham Safeguarding Children Partnership:</strong> <a href="http://www.rscp.org.uk/">www.rscp.org.uk</a>.</p>

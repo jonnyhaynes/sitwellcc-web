@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import History from '../components/History.astro';
+import { urlFor, getTeamMembers } from '../lib/sanity';
+
+const committee = await getTeamMembers('committee');
 ---
 
 <Layout title="About // Sitwell Cycling Club" description="Rotherham's award-winning Go-Ride club.">
@@ -20,42 +23,22 @@ import History from '../components/History.astro';
         <h3 class="text-2xl font-ropa mb-1">Members</h3>
       </section>
       <section class="grid grid-cols-2 lg:grid-cols-3 gap-5 mb-5">
-        <article class="relative pb-8">
-          <img class="block w-full mb-2.5" src="/img/coaching/jude.webp" alt="A portrait photograph of Jude Daly" width="285" height="285" />
-          <h3 class="text-xl font-ropa">Jude Daly</h3>
-          <h3 class="text-base font-ropa block uppercase opacity-50 mb-2">Club Coach</h3>
-          <a href="mailto:coach@sitwell.cc" class="btn absolute left-0 bottom-0">Contact Jude</a>
-        </article>
-        <article class="relative pb-8">
-          <img class="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Ted Daly" width="285" height="285" />
-          <h3 class="text-xl font-ropa">Ted Daly</h3>
-          <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">Treasurer and <br /> Membership Officer</h3>
-          <a href="mailto:membership@sitwell.cc" class="btn absolute left-0 bottom-0">Contact Ted</a>
-        </article>
-        <article class="relative pb-8">
-          <img class="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Janice McWillliam" width="285" height="285" />
-          <h3 class="text-xl font-ropa">Janice McWilliam</h3>
-          <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">Chair</h3>
-          <a href="mailto:chair@sitwell.cc" class="btn absolute left-0 bottom-0">Contact Janice</a>
-        </article>
-        <article class="relative pb-8">
-          <img class="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Andy Moulster" width="285" height="285" />
-          <h3 class="text-xl font-ropa">Andy Moulster</h3>
-          <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">Club Captain</h3>
-          <a href="mailto:captain@sitwell.cc" class="btn absolute left-0 bottom-0">Contact Andy</a>
-        </article>
-        <article class="relative pb-8">
-          <img class="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Phil Smith" width="285" height="285" />
-          <h3 class="text-xl font-ropa">Phil Smith</h3>
-          <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">Kit Officer</h3>
-          <a href="mailto:kit@sitwell.cc" class="btn absolute left-0 bottom-0">Contact Phil</a>
-        </article>
-        <article class="relative pb-8">
-          <img class="block w-full mb-2.5" src="/img/coaching/placeholder.webp" alt="A portrait photograph of Craig Wright" width="285" height="285" />
-          <h3 class="text-xl font-ropa">Craig Wright</h3>
-          <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">Welfare Officer</h3>
-          <a href="mailto:welfare@sitwell.cc" class="btn absolute left-0 bottom-0">Contact Craig</a>
-        </article>
+        {committee.map((member) => (
+          <article class="relative pb-8">
+            <img
+              class="block w-full mb-2.5"
+              src={member.photo ? urlFor(member.photo).width(285).height(285).url() : '/img/coaching/placeholder.webp'}
+              alt={`A portrait photograph of ${member.name}`}
+              width="285"
+              height="285"
+            />
+            <h3 class="text-xl font-ropa">{member.name}</h3>
+            <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">{member.membership.title}</h3>
+            {member.membership.email && (
+              <a href={`mailto:${member.membership.email}`} class="btn absolute left-0 bottom-0">Contact {member.name.split(' ')[0]}</a>
+            )}
+          </article>
+        ))}
       </section>
     </section>
     <History />

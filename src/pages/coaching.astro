@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { urlFor, getTeamMembers } from '../lib/sanity';
+
+const team = await getTeamMembers('coaching');
 ---
 <Layout title="Go-Ride coaching // Sitwell Cycling Club" description="We're coaching the next generation.">
     <section class="title w-full px-5 lg:px-10 mb-20">
@@ -16,57 +19,22 @@ import Layout from '../layouts/Layout.astro';
         <section class="mb-5 md:mb-0 md:col-span-2">
             <h2 class="text-3xl font-ropa mb-2">Our Coaching Team</h2>
             <section class="grid grid-cols-2 lg:grid-cols-3 gap-5 mb-5">
-                <article>
-                    <img src="/img/coaching/placeholder.webp" alt="A portrait photograph of Erin Avill" width="183" height="183" class="block mb-2.5" />
-                    <h3 class="text-xl font-ropa">Erin Avill</h3>
-                    <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 2 Coach</h3>
-                    <a href="mailto:coaching@sitwell.cc" class="btn">Contact Erin</a>
-                </article>
-                <article>
-                    <img src="/img/coaching/placeholder.webp" alt="A portrait photograph of Karen Avill" width="183" height="183" class="block mb-2.5" />
-                    <h3 class="text-xl font-ropa">Karen Avill</h3>
-                    <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 1 Coach</h3>
-                    <a href="mailto:coaching@sitwell.cc" class="btn">Contact Karen</a>
-                </article>
-                <article>
-                    <img src="/img/coaching/placeholder.webp" alt="A portrait photograph of Danni Cunningham" width="183" height="183" class="block mb-2.5" />
-                    <h3 class="text-xl font-ropa">Danni Haynes</h3>
-                    <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">Volunteer Helper</h3>
-                </article>
-                <article>
-                    <img src="/img/coaching/george.webp" alt="A portrait photograph of George Daly" width="183" height="183" class="block mb-2.5" />
-                    <h3 class="text-xl font-ropa">George Daly</h3>
-                    <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 1 Coach</h3>
-                    <a href="mailto:coaching@sitwell.cc" class="btn">Contact George</a>
-                </article>
-                <article>
-                    <img src="/img/jude.webp" alt="A portrait photograph of Jude Daly" width="183" height="183" class="block mb-2.5" />
-                    <h3 class="text-xl font-ropa">Jude Daly</h3>
-                    <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">Activity Coach - Coaching in Context MTB XC</h3>
-                    <a href="mailto:coaching@sitwell.cc" class="btn">Contact Jude</a>
-                </article>
-                <article>
-                    <img src="/img/coaching/placeholder.webp" alt="A portrait photograph of Ted Daly" width="183" height="183" class="block mb-2.5" />
-                    <h3 class="text-xl font-ropa">Ted Daly</h3>
-                    <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">Activity Coach - Coaching in Context MTB XC</h3>
-                    <a href="mailto:coaching@sitwell.cc" class="btn">Contact Ted</a>
-                </article>
-                <article>
-                    <img src="/img/coaching/jonny.webp" alt="A portrait photograph of Jonny Haynes" width="183" height="183" class="block mb-2.5" />
-                    <h3 class="text-xl font-ropa">Jonny Haynes</h3>
-                    <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">Level 2 MTB Coach</h3>
-                    <a href="mailto:coaching@sitwell.cc" class="btn">Contact Jonny</a>
-                </article>
-                <article>
-                    <img src="/img/coaching/placeholder.webp" alt="A portrait photograph of Aaron Thomas" width="183" height="183" class="block mb-2.5" />
-                    <h3 class="text-xl font-ropa">Aaron Thomas</h3>
-                    <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">Volunteer Helper</h3>
-                </article>
-                <article class="relative pb-8">
-                    <img src="/img/coaching/placeholder.webp" alt="A portrait photograph of Craig Wright" width="183" height="183" class="block mb-2.5" />
-                    <h3 class="text-xl font-ropa">Craig Wright</h3>
-                    <h3 class="text-base font-ropa block uppercase opacity-50">Welfare Officer</h3>
-                </article>
+                {team.map((member) => (
+                    <article>
+                        <img
+                            src={member.photo ? urlFor(member.photo).width(183).height(183).url() : '/img/coaching/placeholder.webp'}
+                            alt={`A portrait photograph of ${member.name}`}
+                            width="183"
+                            height="183"
+                            class="block mb-2.5"
+                        />
+                        <h3 class="text-xl font-ropa">{member.name}</h3>
+                        <h3 class="text-base font-ropa block uppercase opacity-50 mb-2.5">{member.membership.title}</h3>
+                        {member.membership.email && (
+                            <a href={`mailto:${member.membership.email}`} class="btn">Contact {member.name.split(' ')[0]}</a>
+                        )}
+                    </article>
+                ))}
             </section>
         </section>
         <section class="mb-5 md:mb-0 md:col-span-2 border-t-8 border-blue pt-5 px-5 bg-blue/5">

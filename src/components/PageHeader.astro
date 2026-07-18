@@ -50,4 +50,8 @@ const intro = page?.intro ?? null;
       <slot />
     )
   }
+  {/* Always rendered after the intro, whether the intro is CMS or slotted —
+      for header elements that must survive once a CMS intro is authored
+      (e.g. the coaching "Book now" button). */}
+  <slot name="after" />
 </section>

@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { getPage } from '../lib/sanity';
 
 // Brand guidelines. Uses the site's shared Layout so the header, footer and
 // green/yellow banner match every other page. Content sections use the site's
@@ -42,18 +44,18 @@ const principles = [
   { h: 'Place & season', p: 'Lean into local landscape and weather — Yorkshire lanes, big skies, honest British conditions.' },
   { h: 'Natural light & colour', p: 'Golden-hour warmth, true greens. Keep edits light; avoid heavy filters that fight the green & yellow.' },
 ];
+
+const page = await getPage('brand');
 ---
 
 <Layout
-  title="Brand // Sitwell Cycling Club"
-  description="Brand guidelines for Sitwell Cycling Club: logo, colours, typography and imagery. Download the logo and font files."
+  title={page?.seo?.metaTitle ?? 'Brand // Sitwell Cycling Club'}
+  description={page?.seo?.metaDescription ?? 'Brand guidelines for Sitwell Cycling Club: logo, colours, typography and imagery. Download the logo and font files.'}
 >
   <!-- ===== Banner / title ===== -->
-  <section class="title w-full px-5 lg:px-10 mb-20">
-    <h1 class="text-6xl font-ropa-bold mb-5">Brand guidelines</h1>
-    <h2 class="text-3xl font-ropa mb-5">We&apos;re here for the smiles, not the miles.</h2>
+  <PageHeader page={page} title="Brand guidelines" subtitle="We're here for the smiles, not the miles." subtitleClass="mb-5">
     <p class="lg:w-3/4">These guidelines keep the Sitwell CC identity consistent wherever it appears — on kit, on the website, on social media, on event banners and in print. Please use the supplied <a href="#downloads">logo, colour and font files</a> rather than re-creating them. The brand should always feel warm, active and welcoming — never corporate or intimidating.</p>
-  </section>
+  </PageHeader>
 
   <!-- ===== Logo ===== -->
   <section id="logo" class="w-full px-5 lg:px-10 mb-20">

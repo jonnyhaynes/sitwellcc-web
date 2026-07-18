@@ -1,12 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { getPage } from '../lib/sanity';
+
+const page = await getPage('membership');
 ---
-<Layout title="Membership // Sitwell Cycling Club" description="For the good times!">
-    <section class="title w-full px-5 lg:px-10 mb-20">
-        <h1 class="text-6xl font-ropa-bold mb-5">Membership</h1>
-        <h2 class="text-3xl font-ropa">For the good times!</h2>
+<Layout
+    title={page?.seo?.metaTitle ?? 'Membership // Sitwell Cycling Club'}
+    description={page?.seo?.metaDescription ?? 'For the good times!'}
+>
+    <PageHeader page={page} title="Membership" subtitle="For the good times!">
         <p class="lg:w-3/4">You&apos;re more than welcome to come along for a couple of rides before deciding if we&apos;re the club for you, but we think our membership is great value for money. Membership runs January - December, and if you join from October onwards you&apos;ll be credited with the following year. Benefits include discounts on bike servicing and parts, bike fits, sports nutrition, bike insurance, and skincare, as well as access to club kit, socials and awards amongst a whole host of other things. First year members receive a club branded buff, stickers and <a href="https://onelifeid.com/">OneLifeiD</a> tags.</p>
-    </section>
+    </PageHeader>
     <section class="membership w-full px-5 lg:px-10 mb-20 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
         <img src="/img/membership/zero.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />
         <img src="/img/membership/one.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />

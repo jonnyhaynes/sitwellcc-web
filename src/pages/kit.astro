@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { getPage } from '../lib/sanity';
 
 const items = [
   { src: '/video/jersey.mp4', label: 'S/S Jersey' },
@@ -7,14 +9,17 @@ const items = [
   { src: '/video/cap.mp4', label: 'Cap' },
   { src: '/video/socks.mp4', label: 'Socks' },
 ];
+
+const page = await getPage('kit');
 ---
 
-<Layout title="Kit // Sitwell Cycling Club" description="SCC + Bioracer = ♥">
-  <section class="title w-full px-5 lg:px-10 mb-20">
-    <h1 class="text-6xl font-ropa-bold mb-5">Kit</h1>
-    <h2 class="text-3xl font-ropa">SCC + Bioracer = &hearts;</h2>
+<Layout
+  title={page?.seo?.metaTitle ?? 'Kit // Sitwell Cycling Club'}
+  description={page?.seo?.metaDescription ?? 'SCC + Bioracer = ♥'}
+>
+  <PageHeader page={page} title="Kit" subtitle="SCC + Bioracer = ♥">
     <p class="lg:w-3/4">With a great range of items including casual wear and at a very competitive price point, <a href="https://shop-bioracer.co.uk/">Bioracer</a> have been the club&apos;s kit supplier since 2021. After all, if it&apos;s good enough for the Belgian, Dutch, German, Team DSM and <a href="https://www.ineosgrenadiers.com/article/ineos-grenadiers-and-castelli-part-ways-after-five-successful-seasons">Ineos Grenadiers</a> cycling teams as well as local team <a href="https://www.cyclingsheffield.com/bioracer/">Cycling Sheffield</a>, then it&apos;s good enough for us.</p>
-  </section>
+  </PageHeader>
   <section class="races w-full px-5 lg:px-10 mb-20 grid lg:grid-cols-3 lg:gap-5">
     <section class="lg:col-start-3 mb-10 lg:mb-0">
       <section class="p-5 bg-black/5">

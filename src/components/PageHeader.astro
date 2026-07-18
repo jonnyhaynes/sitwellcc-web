@@ -1,0 +1,57 @@
+---
+import PortableTextContent from './PortableTextContent.tsx';
+import type { Page } from '../lib/sanity';
+
+// The shared page header: H1 title, H2 subtitle, and an intro. When a `page`
+// doc exists in Sanity we render its title/subtitle/intro; otherwise the page
+// passes its own hard-coded values via props and/or the default <slot /> for
+// the intro. The intro renders as Portable Text when given block content,
+// falling back to the slot so existing pages keep their bespoke intro markup
+// until their doc is authored.
+interface Props {
+  page?: Page | null;
+  // Hard-coded fallbacks, used when there is no `page` doc.
+  title?: string;
+  subtitle?: string;
+  // Extra classes for the subtitle (e.g. a width constraint on a long subtitle).
+  subtitleClass?: string;
+}
+
+const { page, title, subtitle, subtitleClass } = Astro.props;
+
+// Prefer the CMS value, then the string prop. A named `subtitle` slot is a last
+// resort for pages whose hard-coded subtitle carries inline markup (e.g. an
+// <em>) that can't be passed as a plain string. The CMS value always wins.
+const heading = page?.title ?? title;
+const sub = page?.subtitle ?? subtitle;
+const hasSubtitleSlot = Astro.slots.has('subtitle');
+const intro = page?.intro ?? null;
+---
+
+<section class="title w-full px-5 lg:px-10 mb-20">
+  {heading && <h1 class="text-6xl font-ropa-bold mb-5">{heading}</h1>}
+  {
+    sub ? (
+      <h2 class:list={['text-3xl font-ropa', subtitleClass]}>{sub}</h2>
+    ) : (
+      hasSubtitleSlot && (
+        <h2 class:list={['text-3xl font-ropa', subtitleClass]}>
+          <slot name="subtitle" />
+        </h2>
+      )
+    )
+  }
+  {
+    intro && intro.length > 0 ? (
+      <div class="wysiwyg lg:w-3/4">
+        <PortableTextContent value={intro} />
+      </div>
+    ) : (
+      <slot />
+    )
+  }
+  {/* Always rendered after the intro, whether the intro is CMS or slotted —
+      for header elements that must survive once a CMS intro is authored
+      (e.g. the coaching "Book now" button). */}
+  <slot name="after" />
+</section>

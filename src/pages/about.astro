@@ -1,17 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import History from '../components/History.astro';
-import { urlFor, getTeamMembers } from '../lib/sanity';
+import PageHeader from '../components/PageHeader.astro';
+import { urlFor, getTeamMembers, getPage } from '../lib/sanity';
 
 const committee = await getTeamMembers('committee');
+const page = await getPage('about');
 ---
 
-<Layout title="About // Sitwell Cycling Club" description="Rotherham's award-winning Go-Ride club.">
-  <section class="title w-full px-5 lg:px-10 mb-20">
-    <h1 class="text-6xl font-ropa-bold mb-5">Sitwell Cycling Club</h1>
-    <h2 class="text-3xl font-ropa">Rotherham&apos;s award-winning Go-Ride club.</h2>
+<Layout
+  title={page?.seo?.metaTitle ?? 'About // Sitwell Cycling Club'}
+  description={page?.seo?.metaDescription ?? "Rotherham's award-winning Go-Ride club."}
+>
+  <PageHeader page={page} title="Sitwell Cycling Club" subtitle="Rotherham's award-winning Go-Ride club.">
     <p class="lg:w-3/4">Offering nine social rides a week, Go-Ride coaching sessions for under 16s, monthly socials and overseas trips. Some of us race, but most of us are just here for the coffee and the cake. We ride on road and off-road. There&apos;s something for everyone, so <a href="/contact">contact us</a> now to see what you&apos;re missing.</p>
-  </section>
+  </PageHeader>
   <section class="rides w-full px-5 lg:px-10 mb-20 grid md:gap-5 md:grid-cols-2">
     <section>
       <section>

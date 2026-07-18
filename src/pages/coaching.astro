@@ -1,16 +1,21 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { urlFor, getTeamMembers } from '../lib/sanity';
+import PageHeader from '../components/PageHeader.astro';
+import { urlFor, getTeamMembers, getPage } from '../lib/sanity';
 
 const team = await getTeamMembers('coaching');
+const page = await getPage('coaching');
 ---
-<Layout title="Go-Ride coaching // Sitwell Cycling Club" description="We're coaching the next generation.">
-    <section class="title w-full px-5 lg:px-10 mb-20">
-        <h1 class="text-6xl font-ropa-bold mb-5">Go-Ride coaching</h1>
-        <h2 class="text-3xl font-ropa">We&apos;re coaching the next generation.</h2>
-        <p class="mb-2.5 lg:w-3/4">Our Saturday morning sessions are suitable for under 16s who can ride a bike, be that a balance bike or pedal bike (without stabilisers).</p>
-        <a href="https://www.tickettailor.com/events/sitwellcyclingclub/674381" class="btn btn--large">Book now</a>
-    </section>
+<Layout
+    title={page?.seo?.metaTitle ?? 'Go-Ride coaching // Sitwell Cycling Club'}
+    description={page?.seo?.metaDescription ?? "We're coaching the next generation."}
+>
+    <PageHeader page={page} title="Go-Ride coaching" subtitle="We're coaching the next generation.">
+        <p class="lg:w-3/4">Our Saturday morning sessions are suitable for under 16s who can ride a bike, be that a balance bike or pedal bike (without stabilisers).</p>
+        {/* Kept in the `after` slot so the Book now button survives once a CMS
+            intro replaces the default slot above. */}
+        <a slot="after" href="https://www.tickettailor.com/events/sitwellcyclingclub/674381" class="btn btn--large mt-2.5">Book now</a>
+    </PageHeader>
     <section class="coaching w-full px-5 lg:px-10 mb-20 grid md:gap-5 md:grid-cols-2 lg:grid-cols-4">
         <img src="/img/coaching/one.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />
         <img src="/img/coaching/seven.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />

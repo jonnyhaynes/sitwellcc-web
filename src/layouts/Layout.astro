@@ -68,8 +68,9 @@ const {
     })} />
   </head>
   <body class="font-arial antialiased min-h-screen bg-white flex flex-col text-black">
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <Header client:load />
-    <main class="page-content flex-grow flex-shrink-0 w-full max-w-screen-xl flex flex-row justify-center flex-wrap mx-auto">
+    <main id="main-content" class="page-content flex-grow flex-shrink-0 w-full max-w-screen-xl flex flex-row justify-center flex-wrap mx-auto">
       <slot />
     </main>
     <Footer />

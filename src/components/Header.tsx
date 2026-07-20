@@ -24,8 +24,18 @@ const Header = () => {
       }
     };
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (open && e.key === 'Escape') {
+        setOpen(false);
+      }
+    };
+
     document.addEventListener('click', checkIfClickedOutside);
-    return () => document.removeEventListener('click', checkIfClickedOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('click', checkIfClickedOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, [open]);
 
   return (
@@ -34,8 +44,10 @@ const Header = () => {
         <div className="navigation-wrapper flex flex-none w-1/3 lg:w-1/5 content-center order-2 lg:order-1">
           <div className={open ? 'navigation-wrapper--focus-within' : ''} ref={ref}>
             <button
-              className="menu focus:outline-none -ml-2 lg:-ml-4 p-2 lg:p-4 rounded-none"
+              className="menu -ml-2 lg:-ml-4 p-2 lg:p-4 rounded-none"
               aria-label="Menu"
+              aria-expanded={open}
+              aria-controls="site-nav"
               onClick={() => setOpen(!open)}
             >
               <svg
@@ -52,7 +64,7 @@ const Header = () => {
                 <rect x="0" width="50" height="5"></rect>
               </svg>
             </button>
-            <nav className="navigation bg-black lg:w-1/4 absolute left-0 ml-3 lg:ml-6 p-2 lg:p-4 z-20">
+            <nav id="site-nav" className="navigation bg-black lg:w-1/4 absolute left-0 ml-3 lg:ml-6 p-2 lg:p-4 z-20">
               <ul className="mb-2 lg:mb-4">
                 <li><a href={`${base}/rides`} className="text-white block text-3xl font-ropa mb-2">Club rides</a></li>
                 <li><a href={`${base}/coaching`} className="text-white block text-3xl font-ropa mb-2">Go-Ride coaching</a></li>

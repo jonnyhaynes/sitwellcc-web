@@ -6,9 +6,9 @@
   color: #fff;
   box-shadow: 5px 5px 0 0 var(--color-yellow);
 
-  &:focus {
-    border: 0;
-    outline: 0;
+  &:focus-visible {
+    outline: 2px solid var(--color-black);
+    outline-offset: 2px;
   }
 
   &--large {

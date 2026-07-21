@@ -1,7 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Accordion from '../components/Accordion.tsx';
+import PageHeader from '../components/PageHeader.astro';
 import { getUpcomingRides, RIDE_CLASSES } from '../lib/rides';
+import { getPage } from '../lib/sanity';
 
 export const prerender = false;
 
@@ -12,6 +14,7 @@ Astro.response.headers.set(
 );
 
 const rides = await getUpcomingRides();
+const page = await getPage('rides');
 
 const jsonLd = rides.map((ride) => ({
   '@context': 'https://schema.org/',
@@ -171,8 +174,8 @@ const tips = [
 ---
 
 <Layout
-  title="Club rides // Sitwell Cycling Club"
-  description="We're here for the smiles, not the miles."
+  title={page?.seo?.metaTitle ?? 'Club rides // Sitwell Cycling Club'}
+  description={page?.seo?.metaDescription ?? "We're here for the smiles, not the miles."}
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
   <svg class="hidden" aria-hidden="true">
@@ -195,13 +198,15 @@ const tips = [
       <rect x="98.47" y="151.55" width="3.06" height="36.54"></rect>
     </symbol>
   </svg>
-  <section class="title w-full px-5 lg:px-10 mb-20">
-    <h1 class="text-6xl font-ropa-bold mb-5">Club rides</h1>
-    <h2 class="text-3xl font-ropa">We&apos;re here for the smiles, not the miles.</h2>
+  <PageHeader
+    page={page}
+    title="Club rides"
+    subtitle="We're here for the smiles, not the miles."
+  >
     <p class="lg:w-3/4">
       Ten social rides a week on Wednesday evenings, and Saturday and Sunday mornings. All rides meet outside Brookside Pharmacy, Whiston (<a href="https://goo.gl/maps/b4GQ4U8fdRn6J8A97">S60 4HY - MAP</a>). Plenty of on-street parking if you wish to drive over. All of our rides are lead by an experienced member of the club who we call Ride Captains. All weekend rides include a cafe stop and aim to be back in the village for 1pm. Wednesday evening rides last 90 minutes and we usually pop in <a href="https://www.thesitwell.co.uk/">The Sitwell Arms</a> for a cheeky pop afterwards.
     </p>
-  </section>
+  </PageHeader>
   <section class="rides w-full px-5 lg:px-10 mb-20 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
     <div>
       <h3 class="w-full border-b-8 border-green mb-5 lg:mr-10">

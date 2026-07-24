@@ -2,6 +2,10 @@ import base64 from 'base-64';
 
 export type RideColor = 'green' | 'amber' | 'red' | 'brown' | 'blue' | 'black';
 
+// Server invite used for all Apollo (Discord) rides, in place of the per-event
+// Discord event links from the feed.
+const DISCORD_INVITE_URL = 'https://discord.gg/svzSs8bGC8';
+
 // Discord channel IDs (Apollo feed) map to ride categories/colours.
 const CHANNEL_COLORS: Record<string, RideColor> = {
   '1511799690310582443': 'red',
@@ -212,7 +216,7 @@ async function fetchApolloRides(): Promise<Ride[]> {
         id: `apollo-${event.id}`,
         title: event.title,
         startTime: event.startTime,
-        url: event.url,
+        url: DISCORD_INVITE_URL,
         color: CHANNEL_COLORS[event.channelId] ?? 'black',
         image: event.thumbnailUrl ?? event.imageUrl ?? null,
         goingCount: accepted?.count ?? 0,

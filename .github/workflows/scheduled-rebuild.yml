@@ -1,0 +1,46 @@
+# Rebuild the site once a day so date-driven content expires on its own.
+#
+# Why this exists: /races drops events once their date has passed, but the page is
+# static, so "has passed" is only re-evaluated at build time. Sanity already pings
+# a Vercel deploy hook whenever an editor publishes, and merges to main deploy —
+# but nothing rebuilds when the only thing that changed is the date. Without this,
+# a finished race could sit on the page for weeks in a quiet period, which is
+# exactly the bug the CMS work set out to fix.
+#
+# A daily rebuild bounds the staleness of every page's CMS content to 24 hours,
+# not just the events, and costs one Vercel build a day.
+name: Scheduled rebuild
+
+on:
+  schedule:
+    # 05:15 UTC. Off the hour because GitHub's scheduler queues on-the-hour jobs
+    # heavily, and early enough that a rebuild has landed before anyone looks.
+    - cron: '15 5 * * *'
+  # Lets you force a rebuild from the Actions tab without an empty commit.
+  workflow_dispatch:
+
+# A scheduled run should never race a manual one.
+concurrency:
+  group: scheduled-rebuild
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    name: trigger deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger the Vercel deploy hook
+        env:
+          # Same hook Sanity calls on publish. Set as a repo secret rather than
+          # inlined: the URL is the credential — anyone holding it can trigger
+          # builds on the project.
+          DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "VERCEL_DEPLOY_HOOK_URL is not set, so nothing was rebuilt." >&2
+            exit 1
+          fi
+          curl --fail-with-body --silent --show-error -X POST "$DEPLOY_HOOK_URL"
+# Note: GitHub disables scheduled workflows in a repository with no commits for
+# 60 days, and emails the owner first. If events stop expiring on their own,
+# check the Actions tab before suspecting the code.

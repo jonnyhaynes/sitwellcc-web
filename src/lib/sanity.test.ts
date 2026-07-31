@@ -15,8 +15,18 @@ vi.mock('@sanity/image-url', () => ({
   default: () => ({ image: () => ({ url: () => '' }) }),
 }));
 
-import { surname, getPage, featureFor, rideGradeImageFor, getKitItems } from './sanity';
-import type { Feature, Page, RideGrade } from './sanity';
+import {
+  surname,
+  getPage,
+  featureFor,
+  rideGradeImageFor,
+  getKitItems,
+  getEvents,
+  upcomingEvents,
+  isoDate,
+  eventMonthLabel,
+} from './sanity';
+import type { ClubEvent, Feature, Page, RideGrade } from './sanity';
 
 describe('surname', () => {
   it('returns the last word of a two-part name', () => {
@@ -306,5 +316,163 @@ describe('kit item fallback selection', () => {
 
   it('uses the CMS items once one has a video', () => {
     expect(pick([{ videoUrl: 'a.mp4' }, { videoUrl: null }])).toBe('cms');
+  });
+});
+
+describe('getEvents', () => {
+  const resolved = fetchMock as unknown as Mock<() => Promise<unknown>>;
+
+  beforeEach(() => {
+    fetchMock.mockReset();
+  });
+
+  it('orders soonest first', async () => {
+    resolved.mockResolvedValue([]);
+    await getEvents();
+    const [query] = fetchMock.mock.calls[0];
+    expect(query).toContain('order(date asc)');
+  });
+
+  it('skips docs with no date, which nothing downstream can place', async () => {
+    resolved.mockResolvedValue([]);
+    await getEvents();
+    const [query] = fetchMock.mock.calls[0];
+    expect(query).toContain('defined(date)');
+  });
+
+  it('does not filter past events in the query', async () => {
+    resolved.mockResolvedValue([]);
+    await getEvents();
+    const [query] = fetchMock.mock.calls[0];
+    // The page needs "nothing authored" and "authored but all passed" to be
+    // distinguishable, so expiry is applied after the fetch, not in GROQ.
+    expect(query).not.toContain('date >=');
+  });
+
+  it('returns an empty array when nothing is authored (fallback path)', async () => {
+    resolved.mockResolvedValue([]);
+    await expect(getEvents()).resolves.toEqual([]);
+  });
+
+  it('passes the card fields through', async () => {
+    resolved.mockResolvedValue([
+      {
+        _id: 'e1',
+        title: 'Ranskill Gold',
+        category: 'race',
+        date: '2026-10-04',
+        image: { asset: { _ref: 'image-ranskill' }, alt: 'Riders at Ranskill' },
+        summary: 'Three routes to choose from.',
+        signOn: 'Ulley Village Hall, S26 3YD',
+        fee: '£10',
+        entryUrl: 'https://www.britishcycling.org.uk/events/details/1',
+        colour: 'amber',
+        sanctioned: true,
+      },
+    ]);
+    const [event] = await getEvents();
+    expect(event.image?.alt).toBe('Riders at Ranskill');
+    expect(event.fee).toBe('£10');
+    expect(event.sanctioned).toBe(true);
+  });
+});
+
+describe('isoDate', () => {
+  it('formats a date as YYYY-MM-DD', () => {
+    expect(isoDate(new Date(2026, 6, 31))).toBe('2026-07-31');
+  });
+
+  it('zero-pads single-digit months and days', () => {
+    expect(isoDate(new Date(2026, 0, 5))).toBe('2026-01-05');
+  });
+
+  it('uses the local date, so late-evening builds do not skip a day', () => {
+    // 23:30 local. Reading this as UTC would roll some timezones into tomorrow
+    // and hide an event that is still on today.
+    expect(isoDate(new Date(2026, 9, 4, 23, 30))).toBe('2026-10-04');
+  });
+});
+
+describe('upcomingEvents', () => {
+  const event = (date: string): ClubEvent => ({
+    _id: date,
+    title: `Race on ${date}`,
+    category: 'race',
+    date,
+    image: null,
+    summary: null,
+    signOn: null,
+    fee: null,
+    entryUrl: null,
+    colour: 'amber',
+    sanctioned: null,
+  });
+
+  const now = new Date(2026, 9, 4); // 4 October 2026
+
+  it('drops events whose date has passed', () => {
+    const kept = upcomingEvents([event('2025-10-05'), event('2026-11-01')], now);
+    expect(kept.map((e) => e.date)).toEqual(['2026-11-01']);
+  });
+
+  it('keeps an event happening today', () => {
+    expect(upcomingEvents([event('2026-10-04')], now)).toHaveLength(1);
+  });
+
+  it('drops an event that happened yesterday', () => {
+    expect(upcomingEvents([event('2026-10-03')], now)).toHaveLength(0);
+  });
+
+  it('compares full dates, not just years', () => {
+    const kept = upcomingEvents([event('2026-01-01'), event('2026-12-31')], now);
+    expect(kept.map((e) => e.date)).toEqual(['2026-12-31']);
+  });
+
+  it('returns an empty array when every event has passed', () => {
+    // Distinct from "nothing authored": the page shows an empty state here
+    // rather than reviving the card built into it.
+    expect(upcomingEvents([event('2025-10-05')], now)).toEqual([]);
+  });
+
+  it('preserves the order it was given', () => {
+    const kept = upcomingEvents(
+      [event('2026-10-10'), event('2026-11-01'), event('2026-12-25')],
+      now,
+    );
+    expect(kept.map((e) => e.date)).toEqual([
+      '2026-10-10',
+      '2026-11-01',
+      '2026-12-25',
+    ]);
+  });
+});
+
+describe('eventMonthLabel', () => {
+  const now = new Date(2026, 9, 4); // 4 October 2026
+
+  it('shows just the month for an event this year', () => {
+    expect(eventMonthLabel('2026-10-04', now)).toBe('October');
+  });
+
+  it('adds the year for an event in a later year', () => {
+    expect(eventMonthLabel('2027-10-04', now)).toBe('October 2027');
+  });
+
+  it('adds the year for an event in an earlier year', () => {
+    expect(eventMonthLabel('2025-10-05', now)).toBe('October 2025');
+  });
+
+  it('does not shift the month on the first of the month', () => {
+    // Formatting a date-only value in a western timezone can land on the last
+    // day of the previous month, which would label 1 March as February.
+    expect(eventMonthLabel('2026-03-01', now)).toBe('March');
+  });
+
+  it('does not shift the month on the last day of the month', () => {
+    expect(eventMonthLabel('2026-05-31', now)).toBe('May');
+  });
+
+  it('returns an empty label rather than "Invalid Date" for a malformed date', () => {
+    expect(eventMonthLabel('October 2026', now)).toBe('');
   });
 });

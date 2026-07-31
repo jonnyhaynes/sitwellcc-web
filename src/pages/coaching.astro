@@ -1,10 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import SanityImage from '../components/SanityImage.astro';
 import { urlFor, getTeamMembers, getPage } from '../lib/sanity';
 
 const team = await getTeamMembers('coaching');
 const page = await getPage('coaching');
+
+// Four photos sit above the team + framework blocks and eight below them. The
+// hard-coded filenames are the per-slot fallback, so the grid is unchanged until
+// a `gallery` is authored. Note the source order is not numeric — it is the
+// order the photos appear on the page, and it is preserved deliberately.
+const FALLBACKS_ABOVE = ['one', 'seven', 'eight', 'two'];
+const FALLBACKS_BELOW = ['nine', 'three', 'five', 'four', 'six', 'ten', 'eleven', 'twelve'];
+
+const gallery = page?.gallery ?? [];
+const above = FALLBACKS_ABOVE.map((name, i) => ({
+    image: gallery[i] ?? null,
+    fallbackSrc: `/img/coaching/${name}.webp`,
+}));
+const below = FALLBACKS_BELOW.map((name, i) => ({
+    image: gallery[FALLBACKS_ABOVE.length + i] ?? null,
+    fallbackSrc: `/img/coaching/${name}.webp`,
+}));
 ---
 <Layout
     title={page?.seo?.metaTitle ?? 'Go-Ride coaching // Sitwell Cycling Club'}
@@ -17,10 +35,17 @@ const page = await getPage('coaching');
         <a slot="after" href="https://www.tickettailor.com/events/sitwellcyclingclub/674381" class="btn btn--large mt-2.5">Book now</a>
     </PageHeader>
     <section class="coaching w-full px-5 lg:px-10 mb-20 grid md:gap-5 md:grid-cols-2 lg:grid-cols-4">
-        <img src="/img/coaching/one.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />
-        <img src="/img/coaching/seven.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />
-        <img src="/img/coaching/eight.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />
-        <img src="/img/coaching/two.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />
+        {above.map((slot) => (
+            <SanityImage
+                image={slot.image}
+                width={285}
+                height={285}
+                fallbackSrc={slot.fallbackSrc}
+                fallbackAlt="An action shot from a Go-Ride coaching session"
+                class="block w-full mb-5 md:mb-0"
+                loading="eager"
+            />
+        ))}
         <section class="mb-5 md:mb-0 md:col-span-2">
             <h2 class="text-3xl font-ropa mb-2">Our Coaching Team</h2>
             <section class="grid grid-cols-2 lg:grid-cols-3 gap-5 mb-5">
@@ -79,13 +104,15 @@ const page = await getPage('coaching');
             <p class="mb-2">All coaches hold relevant qualifications and insurance through British Cycling. They are first aid trained, DBS checked and they&apos;ve done safeguarding training.</p>
             <p class="mb-5">We also have <a href="/welfare">Club Welfare Officers</a> and follow British Cycling&apos;s Safeguarding policies.</p>
         </section>
-        <img src="/img/coaching/nine.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />
-        <img src="/img/coaching/three.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />
-        <img src="/img/coaching/five.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />
-        <img src="/img/coaching/four.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />
-        <img src="/img/coaching/six.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />
-        <img src="/img/coaching/ten.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />
-        <img src="/img/coaching/eleven.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />
-        <img src="/img/coaching/twelve.webp" alt="An action shot from a Go-Ride coaching session" width="285" height="285" class="block w-full mb-5 md:mb-0" />
+        {below.map((slot) => (
+            <SanityImage
+                image={slot.image}
+                width={285}
+                height={285}
+                fallbackSrc={slot.fallbackSrc}
+                fallbackAlt="An action shot from a Go-Ride coaching session"
+                class="block w-full mb-5 md:mb-0"
+            />
+        ))}
     </section>
 </Layout>

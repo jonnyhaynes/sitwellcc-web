@@ -1,6 +1,6 @@
 import { createClient } from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
-import type { SanityImageSource } from '@sanity/image-url';
+import type { SanityImageObject, SanityImageSource } from '@sanity/image-url';
 import type { PortableTextBlock } from '@portabletext/types';
 
 export const client = createClient({
@@ -13,6 +13,13 @@ export const client = createClient({
 const builder = imageUrlBuilder(client);
 
 export const urlFor = (source: SanityImageSource) => builder.image(source);
+
+// Every CMS-managed image carries its own alt text (Studio type `imageWithAlt`),
+// so the description travels with the asset instead of being hard-coded next to
+// the slot — otherwise swapping a photo would leave the old alt text behind.
+export type ImageWithAlt = SanityImageObject & {
+  alt: string | null;
+};
 
 export type TeamSection = 'coaching' | 'committee' | 'welfare';
 
@@ -62,6 +69,11 @@ export type Page = {
   title: string;
   subtitle: string | null;
   intro: PortableTextBlock[] | null;
+  // Photos for the page, in the order the editor arranged them. Each page places
+  // them in its own layout: the Coaching and Membership grids render the first
+  // four above the main content block and the rest below it. Null/empty means
+  // "keep the photos built into the page".
+  gallery: ImageWithAlt[] | null;
   seo: {
     metaTitle: string | null;
     metaDescription: string | null;
@@ -77,6 +89,7 @@ export async function getPage(slug: string): Promise<Page | null> {
       title,
       subtitle,
       intro,
+      gallery,
       seo
     }`,
     { slug },

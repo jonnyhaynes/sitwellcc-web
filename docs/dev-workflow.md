@@ -19,8 +19,8 @@ change to a load-bearing decision explicitly rather than slipping it in.
    tasks, each with a clear done condition.
 4. **Build** -- work the plan task by task. Prefer a fresh Claude context per task --
    it keeps each unit focused and reviewable. Review between tasks: does it match the
-   plan, and is the code good? (No automated test suite exists yet, so verify changes
-   by running the site — `npm run dev` — and checking the affected pages.)
+   plan, and is the code good? (Run `npm test` for logic, and verify UI by running the
+   site — `npm run dev` — and checking the affected pages.)
 5. **Review** -- run a code review across the branch. **Vet the findings; don't
    blindly apply them.** Fix the real issues.
 6. **Ship** -- type-check (`npm run astro check`) and build (`npm run build`) green
@@ -45,9 +45,11 @@ Automation never moves the human gates: **plan approval (step 2) and the merge
 - **TypeScript.** Strict mode; avoid `any`. Type-check with `npm run astro check`.
 - **Styling.** Tailwind CSS v4 via `@tailwindcss/vite`; the theme is defined in
   `src/styles/global.css` (`@theme`). Component CSS lives under `src/styles/components/`.
-- **Testing.** No automated test suite is configured. Verify changes by running the
-  site (`npm run dev`) and checking the affected pages, plus `npm run build` to catch
-  build-time breakage. If a suite is added later, wire it in here.
+- **Testing.** Vitest runs unit tests (`npm test`, or `npm run test:watch`). Pure
+  logic is unit-tested — see `src/lib/sanity.test.ts`, `routes.test.ts`,
+  `units.test.ts`. UI is verified by `npm run astro check` plus running the site
+  (`npm run dev`) and checking the affected pages, and `npm run build` to catch
+  build-time breakage.
 
 ### Guardrails (`.claude/`)
 

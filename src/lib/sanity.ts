@@ -48,6 +48,32 @@ export type RideGrade = {
   image: ImageWithAlt | null;
 };
 
+// An item of club kit on /kit. This is video rather than photography — the page
+// has always used short clips — so `videoUrl` points at an uploaded MP4 and
+// `poster` is the still shown before it plays.
+export type KitItem = {
+  _id: string;
+  label: string;
+  poster: ImageWithAlt | null;
+  videoUrl: string | null;
+  orderUrl: string | null;
+};
+
+// Kit items, ordered by the editor's `order` then alphabetically as a tiebreak.
+// Returns an empty array when none are authored, so the caller falls back to the
+// clips built into the page.
+export async function getKitItems(): Promise<KitItem[]> {
+  return client.fetch<KitItem[]>(
+    `*[_type == "kitItem"] | order(order asc, label asc){
+      _id,
+      label,
+      poster,
+      "videoUrl": video.asset->url,
+      orderUrl
+    }`,
+  );
+}
+
 export type TeamSection = 'coaching' | 'committee' | 'welfare';
 
 export type TeamMember = {

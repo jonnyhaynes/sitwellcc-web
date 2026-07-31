@@ -395,11 +395,11 @@ Appended as phases land, so the plan stays the record rather than drifting from 
 | 1 — foundation + galleries | **merged** | api#9, web#77 |
 | ~~brand page photos~~ | **dropped** — chrome; see the struck-through phase above | — |
 | 2 — homepage promo cards | **merged** | api#10, web#78 |
-| 3 — ride grades | **in review** | api#12, web (this branch) |
+| 3 — ride grades | **merged** | api#12, web#79 |
 | 4 — events | **blocked** — needs the `CLAUDE.md` boundary wording + the static/SSR answer | — |
-| 5 — kit | not started | — |
+| 5 — kit | **in review** | api#15, web (this branch) |
 | 6 — Open Graph + cleanup | not started | — |
-| _infra_ — Studio deploy on merge | **in review** | api#11 |
+| _infra_ — Studio deploy on merge | **merged + verified working** | api#11, fixed by api#13, tidied by api#14 |
 
 ### Studio deploys are not automatic (was)
 

@@ -15,8 +15,8 @@ vi.mock('@sanity/image-url', () => ({
   default: () => ({ image: () => ({ url: () => '' }) }),
 }));
 
-import { surname, getPage, featureFor } from './sanity';
-import type { Feature, Page } from './sanity';
+import { surname, getPage, featureFor, rideGradeImageFor } from './sanity';
+import type { Feature, Page, RideGrade } from './sanity';
 
 describe('surname', () => {
   it('returns the last word of a two-part name', () => {
@@ -64,6 +64,7 @@ describe('getPage', () => {
       intro: [{ _type: 'block', children: [] }],
       gallery: null,
       features: null,
+      rideGrades: null,
       seo: { metaTitle: null, metaDescription: null },
     };
     resolved.mockResolvedValue(page);
@@ -93,6 +94,7 @@ describe('getPage', () => {
       intro: null,
       gallery,
       features: null,
+      rideGrades: null,
       seo: null,
     });
     const page = await getPage('membership');
@@ -119,6 +121,7 @@ describe('featureFor', () => {
     intro: null,
     gallery: null,
     features,
+    rideGrades: null,
     seo: null,
   });
 
@@ -189,5 +192,54 @@ describe('gallery slot mapping', () => {
     const { above, below } = slots(gallery);
     expect(above.length + below.length).toBe(12);
     expect(below[7].image).toBe('photo-11');
+  });
+});
+
+describe('rideGradeImageFor', () => {
+  const grade = (key: RideGrade['key'], alt: string | null): RideGrade => ({
+    key,
+    image: { asset: { _ref: `image-${key}` }, alt } as RideGrade['image'],
+  });
+
+  const pageWith = (rideGrades: RideGrade[] | null): Page => ({
+    title: 'Rides',
+    subtitle: null,
+    intro: null,
+    gallery: null,
+    features: null,
+    rideGrades,
+    seo: null,
+  });
+
+  it('returns null when no page doc is authored', () => {
+    expect(rideGradeImageFor(null, 'green')).toBeNull();
+  });
+
+  it('returns null when the page has no ride grades', () => {
+    expect(rideGradeImageFor(pageWith(null), 'green')).toBeNull();
+  });
+
+  it('returns null when that grade has no entry', () => {
+    expect(rideGradeImageFor(pageWith([grade('red', 'a peloton')]), 'green')).toBeNull();
+  });
+
+  it('returns null when the grade exists but its photo is empty', () => {
+    const empty: RideGrade = { key: 'green', image: null };
+    expect(rideGradeImageFor(pageWith([empty]), 'green')).toBeNull();
+  });
+
+  it('finds a grade photo by key', () => {
+    const page = pageWith([grade('red', 'a peloton'), grade('green', 'a cafe table')]);
+    expect(rideGradeImageFor(page, 'green')?.alt).toBe('a cafe table');
+  });
+
+  // Guards the reason for keying: an editor reordering the array in the Studio
+  // must not move a photo onto a different grade's card.
+  it('is unaffected by the order of the array', () => {
+    const forwards = pageWith([grade('green', 'green photo'), grade('offroad', 'mtb')]);
+    const backwards = pageWith([grade('offroad', 'mtb'), grade('green', 'green photo')]);
+    expect(rideGradeImageFor(forwards, 'offroad')?.alt).toBe(
+      rideGradeImageFor(backwards, 'offroad')?.alt,
+    );
   });
 });

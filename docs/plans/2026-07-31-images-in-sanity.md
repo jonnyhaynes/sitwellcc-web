@@ -394,11 +394,21 @@ Appended as phases land, so the plan stays the record rather than drifting from 
 |---|---|---|
 | 1 — foundation + galleries | **merged** | api#9, web#77 |
 | ~~brand page photos~~ | **dropped** — chrome; see the struck-through phase above | — |
-| 2 — homepage promo cards | **in review** | api#10, web (this branch) |
-| 3 — ride grades | not started | — |
+| 2 — homepage promo cards | **merged** | api#10, web#78 |
+| 3 — ride grades | **in review** | api#12, web (this branch) |
 | 4 — events | **blocked** — needs the `CLAUDE.md` boundary wording + the static/SSR answer | — |
 | 5 — kit | not started | — |
 | 6 — Open Graph + cleanup | not started | — |
+| _infra_ — Studio deploy on merge | **in review** | api#11 |
+
+### Studio deploys are not automatic (was)
+
+Merging in the Studio repo deployed **nothing** — no CI, no `studioHost` in
+`sanity.json`. Because the website repo auto-deploys on merge it was easy to assume
+the Studio did too, so api#9 and api#10 sat merged but invisible to editors. Caught by
+grepping the live `app.bundle.js`, which was still the 18 July build. Fixed manually
+with `npx sanity deploy`, and permanently by api#11 (a deploy workflow). **Check the
+Actions tab, not just the merge, when wondering if a schema change is live.**
 
 ### Measured corrections to this plan
 

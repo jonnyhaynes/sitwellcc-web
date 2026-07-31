@@ -2,8 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import Accordion from '../components/Accordion.tsx';
 import PageHeader from '../components/PageHeader.astro';
+import SanityImage from '../components/SanityImage.astro';
 import { getUpcomingRides, RIDE_CLASSES } from '../lib/rides';
-import { getPage } from '../lib/sanity';
+import { getPage, rideGradeImageFor } from '../lib/sanity';
 
 export const prerender = false;
 
@@ -15,6 +16,37 @@ Astro.response.headers.set(
 
 const rides = await getUpcomingRides();
 const page = await getPage('rides');
+
+// Photo per ride grade, matched by key so Studio ordering can't put a photo on
+// the wrong card. Each keeps its current image and alt text as the fallback, so
+// the grid is unchanged until photos are authored. Only the photo is CMS-driven —
+// the distances, speeds and times below stay in this file deliberately.
+const gradePhoto = (
+  key: Parameters<typeof rideGradeImageFor>[1],
+  fallbackSrc: string,
+  fallbackAlt: string,
+) => ({ image: rideGradeImageFor(page, key), fallbackSrc, fallbackAlt });
+
+const greenPhoto = gradePhoto(
+  'green',
+  '/img/green-rides.webp',
+  'A photograph of club members sat around a table',
+);
+const amberPhoto = gradePhoto(
+  'amber',
+  '/img/amber-rides.webp',
+  'A photograph of members on a gavel track',
+);
+const redPhoto = gradePhoto(
+  'red',
+  '/img/red-rides.webp',
+  'A photograph of members in a peloton',
+);
+const offroadPhoto = gradePhoto(
+  'offroad',
+  '/img/offroad-rides.webp',
+  'A photograph of members on an MTB trail',
+);
 
 const jsonLd = rides.map((ride) => ({
   '@context': 'https://schema.org/',
@@ -212,7 +244,7 @@ const tips = [
       <h3 class="w-full border-b-8 border-green mb-5 lg:mr-10">
         <span class="inline-block bg-green text-white text-md font-ropa uppercase pt-2 px-3">Road Green Rides</span>
       </h3>
-      <img class="block w-full" src="/img/green-rides.webp" alt="A photograph of club members sat around a table" width="285" height="285" />
+      <SanityImage image={greenPhoto.image} width={285} height={285} fallbackSrc={greenPhoto.fallbackSrc} fallbackAlt={greenPhoto.fallbackAlt} class="block w-full" loading="eager" />
       <div class="info text-green text-sm font-ropa-bold uppercase leading-none flex flex-row content-center pt-5 pb-5 border-b-8 border-green">
         <div class="flex flex-row mr-3">
           <svg class="w-7 h-7 fill-current mr-1"><use xlink:href="#icon--distance" /></svg>
@@ -232,7 +264,7 @@ const tips = [
       <h3 class="w-full border-b-8 border-amber mb-5 lg:mr-10">
         <span class="inline-block bg-amber text-white text-md font-ropa uppercase pt-2 px-3">Road Amber Rides</span>
       </h3>
-      <img class="block w-full" src="/img/amber-rides.webp" alt="A photograph of members on a gavel track" width="285" height="285" />
+      <SanityImage image={amberPhoto.image} width={285} height={285} fallbackSrc={amberPhoto.fallbackSrc} fallbackAlt={amberPhoto.fallbackAlt} class="block w-full" loading="eager" />
       <div class="info text-amber text-sm font-ropa-bold uppercase leading-none flex flex-row content-center pt-5 pb-5 border-b-8 border-amber">
         <div class="flex flex-row mr-3">
           <svg class="w-7 h-7 fill-current mr-1"><use xlink:href="#icon--distance" /></svg>
@@ -252,7 +284,7 @@ const tips = [
       <h3 class="w-full border-b-8 border-red mb-5 lg:mr-10">
         <span class="inline-block bg-red text-white text-md font-ropa uppercase pt-2 px-3">Road Red Rides</span>
       </h3>
-      <img class="block w-full" src="/img/red-rides.webp" alt="A photograph of members in a peloton" width="285" height="285" />
+      <SanityImage image={redPhoto.image} width={285} height={285} fallbackSrc={redPhoto.fallbackSrc} fallbackAlt={redPhoto.fallbackAlt} class="block w-full" loading="eager" />
       <div class="info text-red text-sm font-ropa-bold uppercase leading-none flex flex-row content-center pt-5 pb-5 border-b-8 border-red">
         <div class="flex flex-row mr-3">
           <svg class="w-7 h-7 fill-current mr-1"><use xlink:href="#icon--distance" /></svg>
@@ -272,7 +304,7 @@ const tips = [
       <h3 class="w-full border-b-8 border-brown mb-5 lg:mr-10">
         <span class="inline-block bg-brown text-white text-md font-ropa uppercase pt-2 px-3">Off-Road Rides</span>
       </h3>
-      <img class="block w-full" src="/img/offroad-rides.webp" alt="A photograph of members on an MTB trail" width="285" height="285" />
+      <SanityImage image={offroadPhoto.image} width={285} height={285} fallbackSrc={offroadPhoto.fallbackSrc} fallbackAlt={offroadPhoto.fallbackAlt} class="block w-full" loading="eager" />
       <div class="info text-brown text-sm font-ropa-bold uppercase leading-none flex flex-row content-center pt-5 pb-5 border-b-8 border-brown">
         <div class="flex flex-row mr-3">
           <svg class="w-7 h-7 fill-current mr-1"><use xlink:href="#icon--distance" /></svg>

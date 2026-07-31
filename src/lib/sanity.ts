@@ -37,6 +37,17 @@ export type Feature = {
   linkLabel: string | null;
 };
 
+// The photo for one of the four ride-grade cards on /rides. Only the photo is
+// CMS-driven: the distances, speeds and meeting times stay in the page, since
+// they read alongside the grade's colour and heading and it would be easy to
+// leave a CMS photo disagreeing with hard-coded stats.
+export type RideGradeKey = 'green' | 'amber' | 'red' | 'offroad';
+
+export type RideGrade = {
+  key: RideGradeKey;
+  image: ImageWithAlt | null;
+};
+
 export type TeamSection = 'coaching' | 'committee' | 'welfare';
 
 export type TeamMember = {
@@ -92,6 +103,8 @@ export type Page = {
   gallery: ImageWithAlt[] | null;
   // Homepage only. Null/empty means "keep the cards built into the page".
   features: Feature[] | null;
+  // /rides only. Null/empty means "keep the photos built into the page".
+  rideGrades: RideGrade[] | null;
   seo: {
     metaTitle: string | null;
     metaDescription: string | null;
@@ -109,10 +122,21 @@ export async function getPage(slug: string): Promise<Page | null> {
       intro,
       gallery,
       features,
+      rideGrades,
       seo
     }`,
     { slug },
   );
+}
+
+// Pick a ride grade's photo out of a page's `rideGrades` by its key. Returns null
+// when no doc is authored yet, or when that grade has no photo, so the caller
+// falls back to the image built into the page.
+export function rideGradeImageFor(
+  page: Page | null,
+  key: RideGradeKey,
+): ImageWithAlt | null {
+  return page?.rideGrades?.find((grade) => grade.key === key)?.image ?? null;
 }
 
 // Pick a homepage card out of a page's `features` by its key. Returns null when

@@ -1,6 +1,6 @@
 # Images in Sanity — plan
 
-**Status:** plan, awaiting approval
+**Status:** approved, in progress — see the progress log at the end
 **Date:** 2026-07-31
 **Slug:** images-in-sanity
 **Spans two repos:** website (`~/Projects/react/sitwellcc`) + Studio (`~/Projects/node/sitwellcc-api`)
@@ -19,7 +19,7 @@ different treatment, and the split matters more than the total:
 
 | Group | Examples | In scope? |
 |---|---|---|
-| **Galleries** — loose photos in a grid, no per-photo copy | coaching ×12, membership ×12, brand mood shots ×7, charity body photo | **Yes** — cleanest possible case |
+| **Galleries** — loose photos in a grid, no per-photo copy | coaching ×12, membership ×12, charity body photo | **Yes** — cleanest possible case |
 | **Card items** — a photo bound to its own heading/copy/link | homepage promos ×4, ride grades ×4, the Ranskill event card, kit items ×4 | **Yes**, with a caveat (below) |
 | **Chrome** — brand marks and UI furniture | crest, logotype, stripes, favicons, stat badges, social/PDF icons, BC + EPiC logos | **No** — see push-back |
 | **Orphans** — files nothing references | 28 files, verified 0 references | **No** — delete, don't migrate |
@@ -68,12 +68,12 @@ the site. That's a content gap to raise with them, not a CMS gap.
 | Decision | Choice | Rationale |
 |---|---|---|
 | Alt text | **Required, CMS-authored, per image** | A shared `imageWithAlt` type carries `alt` alongside the asset. Preserves the accessibility work in PR #68 — otherwise moving an image to Sanity loses its description. |
-| Gallery model | **`gallery: [imageWithAlt]` on `page`**, ordered; the page template decides placement | Coaching and membership are the *same shape*: 4 photos → content block → 8 photos. One ordered array covers both, plus brand mood shots and the single charity photo. No new document type. |
+| Gallery model | **`gallery: [imageWithAlt]` on `page`**, ordered; the page template decides placement | Coaching and membership are the *same shape*: 4 photos → content block → 8 photos. One ordered array covers both, plus the single charity photo. No new document type. |
 | Card model | **Object-type arrays on `page`**, matched by a `key` field, **not array order** | Layout for these cards is bespoke and asymmetric (7/12 vs 5/12 widths, per-card text positioning). Keying by `rides`/`charity`/`races`/`coaching` means reordering in the Studio can't scramble the design. |
 | Chrome | **Stays in `public/`** | See push-back above. |
 | Rendering | **Static (build-time fetch)** | Same as team/routes/page-header. No new SSR. |
 | Fallback | **Every slot keeps its current hard-coded image** until a Sanity asset exists | Same graceful-fallback pattern as the header work — nothing goes blank during content entry. |
-| Format handling | **Sanity CDN `auto('format')` replaces hand-maintained `.jpg`/`.webp` pairs** | ~70 files are duplicate-format pairs maintained by hand, plus three `<picture>` blocks. The CDN negotiates webp/avif per browser, so these collapse to one `<img>`. |
+| Format handling | **Sanity CDN `auto('format')` replaces hand-maintained `.jpg`/`.webp` pairs** | ~70 files are duplicate-format pairs maintained by hand, plus three `<picture>` blocks. The CDN negotiates webp/avif per browser, so these collapse to one `<img>`. **Corrected after measuring:** this is a *maintenance* win, not reliably a bytes win — see below. |
 | Studio version | **Sanity v2 syntax** | Studio is v2 (`part:` imports, plain object schemas). No `defineType`. |
 | Events | **`event` document type**, replacing the hard-coded Ranskill card | Ranskill is one instance of a repeatable thing. Requires amending a `CLAUDE.md` scope boundary — flagged in A4. |
 | Kit videos | **`kitItem` document type** with a `file` MP4 + poster image | The four clips total 3.2 MB; Sanity's asset CDN is adequate. Also fixes the missing `poster` attribute. See the kit section. |
@@ -134,7 +134,7 @@ Added fields (existing `title` / `subtitle` / `intro` / `slug` / `seo` untouched
 }
 ```
 
-Plus a `socialImage` inside the existing `seo` object (see Phase 5).
+Plus a `socialImage` inside the existing `seo` object (see Phase 6).
 
 ### A3. Card object types
 
@@ -250,42 +250,61 @@ coaching (12), membership (12), charity (1). Both grids render
 matching the existing markup order exactly. *Done when:* all three pages are
 pixel-identical with no `page` doc, and swap to Sanity photos once authored.
 
-**Phase 2 — brand page photos.** Brand mood shots (7) and the three "in use" photos
-(`club-kit`, `banner`, `badges`). Mood shots are CSS `background-image` with a
-gradient overlay, so they consume the URL from `urlFor` directly rather than
-`SanityImage.astro`. The downloadable logo ZIPs and PDFs stay static.
+**~~Phase 2 — brand page photos.~~ Dropped — the brand page is chrome.** Decided
+2026-07-31 after reading the page properly. Reasons, recorded so this isn't
+re-litigated:
 
-**Phase 3 — homepage promo cards.** `page` doc for slug `home` + `features` array.
-Layout classes stay in the template, matched by `key`. *Note:* the current headings
-contain deliberate non-breaking spaces (`We're here for the smiles, not&nbsp;the&nbsp;miles.`)
-to control wrapping. Editors won't type those — either accept looser wrapping or add
-a short description telling them to use the Studio's non-breaking-space entry.
+- The brand page **is** the guidelines document. Its mood shots are curated examples
+  of correct house photography style and the "in use" shots document the identity
+  applied — that's design-system material, the same argument that keeps the crest and
+  logotype in the repo.
+- The plan had also mis-modelled it. Mood shots aren't loose photos: each carries a
+  `label` rendered as a caption *and* a `wide` flag driving `col-span-2`
+  (`brand.astro:31-39`, `173-180`), so the plain `gallery` array would have silently
+  dropped both.
+- The "in use" section isn't a photo set either — it's four cards of which only three
+  have images; the third is a live rendered button demo (`brand.astro:217-226`).
 
-**Phase 4 — ride grades.** `rideGrades` on the `rides` page doc (photo only;
+If this is revisited, it needs a `moodShot` type (image + label + wide) and a
+`showcase` type (image optional + heading + description) — not `gallery`.
+
+**Phase 2 — homepage promo cards.** `page` doc for slug `home` + `features` array,
+matched by `key` so Studio reordering can't scramble the asymmetric layout. Two things
+found while building it:
+
+- The **Races heading is three stacked lines** via `<br />` (`index.astro:83-85`). A
+  `string` field can't carry that and rendering CMS-authored HTML isn't worth the
+  injection surface for a headline, so `heading` is a **multi-line `text` field**
+  rendered with `whitespace-pre-line`: editors press Enter, no markup leaves the CMS.
+- The headings use deliberate **non-breaking spaces** to stop a word dangling
+  (`not&nbsp;the&nbsp;miles.`). The code defaults keep them as ` ` escapes so
+  they're visible in review, and the Studio field description tells editors to use
+  option+space.
+
+**Phase 3 — ride grades.** `rideGrades` on the `rides` page doc (photo only;
 distances, speeds and ride times stay hard-coded — flagged as the obvious next
 extension, not built here). Colour tokens map through the existing `RIDE_CLASSES`
 lookup.
 
-**Phase 5 — events.** `event` document type + `getEvents()`, replacing the single
+**Phase 4 — events.** `event` document type + `getEvents()`, replacing the single
 hard-coded Ranskill card with a reusable card component. Build-time filter drops
 events whose `date` has passed. **Needs confirming:** the races page is static, so a
 passed event lingers until the next deploy — same pre-existing condition as all the
 `page` content. If there's no Sanity → Vercel deploy webhook configured, either add
 one or opt this page into SSR like `/rides`. Tell me which and I'll fold it in.
 
-**Phase 6 — kit.** `kitItem` document type (poster image + MP4 + label + order +
+**Phase 5 — kit.** `kitItem` document type (poster image + MP4 + label + order +
 order URL), wired into `kit.astro` with the `poster` attribute the page currently
 lacks.
 
-**Phase 7 — Open Graph + cleanup.**
+**Phase 6 — Open Graph + cleanup.**
 - **The site has no `og:image` and no Open Graph tags at all.** Add
   `seo.socialImage` (`imageWithAlt`) to `page`, and `og:` / `twitter:` tags to
   `Layout.astro` with a club-crest default. This is a real gap the client will hit
   the moment anyone shares a page.
 - Delete the verified-orphan files (grepped for references across `src/`,
   `site.webmanifest` and `browserconfig.xml` — all returned zero): `firbeck`,
-  `herringthorpe`, `kilo`, `white-rose`, `winter-series`, `hill-climb` (after Phase
-  2), `david`, `jude`, `open`, `icon`, `chat.svg`, `retweet.svg`, `heart.svg`,
+  `herringthorpe`, `kilo`, `white-rose`, `winter-series`, `hill-climb`, `david`, `jude`, `open`, `icon`, `chat.svg`, `retweet.svg`, `heart.svg`,
   `menu.svg`, `search.svg`, `go-race`, `ctt`, `bc-yorkshire`, `aardvark-swift`,
   `andy-bishop`, `expert-bike-repair`, `the-sitwell-arms`, and all 10 files in
   `public/img/kit/` — ~28 files counting format variants. Re-run the reference check
@@ -351,18 +370,45 @@ Cloudflare Stream (poster image in Sanity, video ID pointing out).
 - Content entry is the long pole: ~55 photos to re-upload with alt text, plus four
   kit clips and their posters. It's page-by-page and can be staged after each phase
   merges.
-- Scope drift to watch: Phases 3–6 model card *copy*, not just images. That's
+- Scope drift to watch: Phases 2–5 model card *copy*, not just images. That's
   deliberate and argued above — challenge it at approval if you disagree.
 - **One boundary change to approve:** the `CLAUDE.md` events wording (see A4).
 - **One question to answer:** static vs SSR for the races page once events expire
-  (see Phase 5).
+  (see Phase 4).
 
 ## Out of scope (noted, not built)
 
 - Full page **bodies** in the CMS — still bespoke layouts, still deferred.
 - Dynamic `[slug]` routing from `page` docs — pages remain individual `.astro` files.
-- Ride-grade *stats* (distance / speed / times) — photo only in Phase 4.
+- Ride-grade *stats* (distance / speed / times) — photo only in Phase 3.
 - `astro:assets` for the remaining static chrome — the Sanity CDN handles CMS images,
   and the chrome is mostly SVG, which `astro:assets` doesn't optimise either.
 - Sponsor logos — every named sponsor logo is currently orphaned; that's a content
   question for the client first.
+
+## Progress log
+
+Appended as phases land, so the plan stays the record rather than drifting from it.
+
+| Phase | Status | PRs |
+|---|---|---|
+| 1 — foundation + galleries | **merged** | api#9, web#77 |
+| ~~brand page photos~~ | **dropped** — chrome; see the struck-through phase above | — |
+| 2 — homepage promo cards | **in review** | api#10, web (this branch) |
+| 3 — ride grades | not started | — |
+| 4 — events | **blocked** — needs the `CLAUDE.md` boundary wording + the static/SSR answer | — |
+| 5 — kit | not started | — |
+| 6 — Open Graph + cleanup | not started | — |
+
+### Measured corrections to this plan
+
+- **`auto('format')` is a maintenance win, not reliably a bytes win.** Measured on a
+  real asset, the 285×285 webp came back *larger* than the jpeg (24,120 vs 22,827
+  bytes). The benefit is deleting ~70 hand-maintained duplicate files and the
+  `<picture>` blocks, not per-image weight.
+- **Hotspot cropping is confirmed working.** The builder emits
+  `?rect=0,252,1512,1512&w=285&h=285&fit=crop&auto=format` — the `rect` proves the
+  Studio hotspot is honoured, which only happens because `fit('crop')` is set.
+- **Charity lost its `.jpg` fallback** when its `<picture>` block collapsed. It was the
+  only page still serving a JPEG source; every other page already served bare `.webp`.
+

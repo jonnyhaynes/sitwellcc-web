@@ -21,6 +21,22 @@ export type ImageWithAlt = SanityImageObject & {
   alt: string | null;
 };
 
+// One of the four big promo cards on the homepage. The layout of each card is
+// fixed in `index.astro` (asymmetric widths, text in a different corner on each),
+// so a card is matched to its slot by `key` rather than by array position —
+// reordering them in the Studio can't scramble the design.
+export type FeatureKey = 'rides' | 'charity' | 'races' | 'coaching';
+
+export type Feature = {
+  key: FeatureKey;
+  image: ImageWithAlt | null;
+  eyebrow: string | null;
+  heading: string | null;
+  body: string | null;
+  linkHref: string | null;
+  linkLabel: string | null;
+};
+
 export type TeamSection = 'coaching' | 'committee' | 'welfare';
 
 export type TeamMember = {
@@ -74,6 +90,8 @@ export type Page = {
   // four above the main content block and the rest below it. Null/empty means
   // "keep the photos built into the page".
   gallery: ImageWithAlt[] | null;
+  // Homepage only. Null/empty means "keep the cards built into the page".
+  features: Feature[] | null;
   seo: {
     metaTitle: string | null;
     metaDescription: string | null;
@@ -90,8 +108,19 @@ export async function getPage(slug: string): Promise<Page | null> {
       subtitle,
       intro,
       gallery,
+      features,
       seo
     }`,
     { slug },
   );
+}
+
+// Pick a homepage card out of a page's `features` by its key. Returns null when
+// no doc is authored yet, or when that particular card has not been filled in, so
+// the caller falls back to the version built into the page.
+export function featureFor(
+  page: Page | null,
+  key: FeatureKey,
+): Feature | null {
+  return page?.features?.find((feature) => feature.key === key) ?? null;
 }

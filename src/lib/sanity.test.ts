@@ -15,7 +15,8 @@ vi.mock('@sanity/image-url', () => ({
   default: () => ({ image: () => ({ url: () => '' }) }),
 }));
 
-import { surname, getPage } from './sanity';
+import { surname, getPage, featureFor } from './sanity';
+import type { Feature, Page } from './sanity';
 
 describe('surname', () => {
   it('returns the last word of a two-part name', () => {
@@ -62,6 +63,7 @@ describe('getPage', () => {
       subtitle: "We're coaching the next generation.",
       intro: [{ _type: 'block', children: [] }],
       gallery: null,
+      features: null,
       seo: { metaTitle: null, metaDescription: null },
     };
     resolved.mockResolvedValue(page);
@@ -90,12 +92,61 @@ describe('getPage', () => {
       subtitle: null,
       intro: null,
       gallery,
+      features: null,
       seo: null,
     });
     const page = await getPage('membership');
     expect(page?.gallery).toHaveLength(2);
     expect(page?.gallery?.[0].alt).toBe('Members at a cafe');
     expect(page?.gallery?.[1].alt).toBeNull();
+  });
+});
+
+describe('featureFor', () => {
+  const feature = (key: Feature['key']): Feature => ({
+    key,
+    image: null,
+    eyebrow: `${key} eyebrow`,
+    heading: null,
+    body: null,
+    linkHref: null,
+    linkLabel: null,
+  });
+
+  const pageWith = (features: Feature[] | null): Page => ({
+    title: 'Home',
+    subtitle: null,
+    intro: null,
+    gallery: null,
+    features,
+    seo: null,
+  });
+
+  it('returns null when no page doc is authored', () => {
+    expect(featureFor(null, 'rides')).toBeNull();
+  });
+
+  it('returns null when the page has no features', () => {
+    expect(featureFor(pageWith(null), 'rides')).toBeNull();
+  });
+
+  it('returns null when that particular card is missing', () => {
+    expect(featureFor(pageWith([feature('charity')]), 'rides')).toBeNull();
+  });
+
+  it('finds a card by key', () => {
+    const page = pageWith([feature('charity'), feature('rides')]);
+    expect(featureFor(page, 'rides')?.eyebrow).toBe('rides eyebrow');
+  });
+
+  // The whole point of keying rather than indexing: the design must not depend on
+  // the order an editor happens to leave the array in.
+  it('is unaffected by the order of the array', () => {
+    const forwards = pageWith([feature('rides'), feature('races')]);
+    const backwards = pageWith([feature('races'), feature('rides')]);
+    expect(featureFor(forwards, 'races')?.eyebrow).toBe(
+      featureFor(backwards, 'races')?.eyebrow,
+    );
   });
 });
 

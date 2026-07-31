@@ -1,0 +1,63 @@
+---
+import { urlFor } from '../lib/sanity';
+import type { ImageWithAlt } from '../lib/sanity';
+
+// One renderer for every CMS image, so the URL building, the DPR srcset and the
+// "no doc authored yet" fallback live in a single place.
+//
+// Two things this buys over a hand-written <img>:
+//  - `auto('format')` makes Sanity's CDN negotiate webp/avif per browser, which
+//    replaces the .jpg/.webp pairs and <picture> blocks maintained by hand.
+//  - `fit('crop')` is what makes the `hotspot: true` set on the Studio image
+//    types actually take effect, so square crops centre on the subject rather
+//    than the middle of the frame.
+interface Props {
+  image?: ImageWithAlt | null;
+  width: number;
+  height?: number;
+  // Used verbatim when `image` is null, so a page renders exactly as it does
+  // today until its Sanity doc is authored.
+  fallbackSrc: string;
+  fallbackAlt: string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const {
+  image,
+  width,
+  height,
+  fallbackSrc,
+  fallbackAlt,
+  class: className,
+  loading = 'lazy',
+} = Astro.props;
+
+function buildUrl(source: ImageWithAlt, dpr?: number): string {
+  let builder = urlFor(source).width(width).auto('format');
+  if (height) builder = builder.height(height).fit('crop');
+  if (dpr) builder = builder.dpr(dpr);
+  return builder.url();
+}
+
+const src = image ? buildUrl(image) : fallbackSrc;
+const srcset = image ? `${buildUrl(image)} 1x, ${buildUrl(image, 2)} 2x` : undefined;
+
+// When an image IS set but its alt is somehow blank, fall back to an empty alt
+// rather than to `fallbackAlt`. The fallback text describes the *old* photo, so
+// reusing it on a new upload would state something untrue — an empty alt at
+// least only understates. The Studio requires alt text once an asset is chosen,
+// so this should not normally be reachable.
+const alt = image ? (image.alt ?? '') : fallbackAlt;
+---
+
+<img
+  src={src}
+  srcset={srcset}
+  alt={alt}
+  width={width}
+  height={height}
+  class={className}
+  loading={loading}
+  decoding="async"
+/>

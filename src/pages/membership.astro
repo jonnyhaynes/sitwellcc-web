@@ -1,9 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import SanityImage from '../components/SanityImage.astro';
 import { getPage } from '../lib/sanity';
 
 const page = await getPage('membership');
+
+// The grid puts four photos above the pricing block and the rest below it. The
+// hard-coded filenames are the fallback for each slot, so the page looks
+// identical until a `gallery` is authored — and the slot count stays fixed at
+// 4 + 8 regardless of how many photos the editor uploads.
+const FALLBACKS_ABOVE = ['zero', 'one', 'two', 'three'];
+const FALLBACKS_BELOW = ['four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven'];
+
+const gallery = page?.gallery ?? [];
+const above = FALLBACKS_ABOVE.map((name, i) => ({
+  image: gallery[i] ?? null,
+  fallbackSrc: `/img/membership/${name}.webp`,
+}));
+const below = FALLBACKS_BELOW.map((name, i) => ({
+  image: gallery[FALLBACKS_ABOVE.length + i] ?? null,
+  fallbackSrc: `/img/membership/${name}.webp`,
+}));
 ---
 <Layout
     title={page?.seo?.metaTitle ?? 'Membership // Sitwell Cycling Club'}
@@ -13,10 +31,17 @@ const page = await getPage('membership');
         <p class="lg:w-3/4">You&apos;re more than welcome to come along for a couple of rides before deciding if we&apos;re the club for you, but we think our membership is great value for money. Membership runs January - December, and if you join from October onwards you&apos;ll be credited with the following year. Benefits include discounts on bike servicing and parts, bike fits, sports nutrition, bike insurance, and skincare, as well as access to club kit, socials and awards amongst a whole host of other things. First year members receive a club branded buff, stickers and <a href="https://onelifeid.com/">OneLifeiD</a> tags.</p>
     </PageHeader>
     <section class="membership w-full px-5 lg:px-10 mb-20 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-        <img src="/img/membership/zero.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />
-        <img src="/img/membership/one.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />
-        <img src="/img/membership/two.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />
-        <img src="/img/membership/three.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />
+        {above.map((slot) => (
+            <SanityImage
+                image={slot.image}
+                width={285}
+                height={285}
+                fallbackSrc={slot.fallbackSrc}
+                fallbackAlt="A photograph of members"
+                class="block w-full"
+                loading="eager"
+            />
+        ))}
         <section class="md:col-span-2 lg:col-span-4 grid gap-5 md:grid-cols-5">
             <div class="md:py-5 flex">
                 <div class="bg-yellow/25 p-5 w-full flex flex-col content-center justify-center">
@@ -70,13 +95,15 @@ const page = await getPage('membership');
             </div>
         </section>
         <p class="md:col-span-2 lg:col-span-4 text-center text-xs opacity-50">*All membership is subject to a £1 processing fee by British Cycling</p>
-        <img src="/img/membership/four.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />
-        <img src="/img/membership/five.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />
-        <img src="/img/membership/six.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />
-        <img src="/img/membership/seven.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />
-        <img src="/img/membership/eight.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />
-        <img src="/img/membership/nine.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />
-        <img src="/img/membership/ten.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />
-        <img src="/img/membership/eleven.webp" class="block w-full" alt="A photograph of members" width="285" height="285" />
+        {below.map((slot) => (
+            <SanityImage
+                image={slot.image}
+                width={285}
+                height={285}
+                fallbackSrc={slot.fallbackSrc}
+                fallbackAlt="A photograph of members"
+                class="block w-full"
+            />
+        ))}
     </section>
 </Layout>

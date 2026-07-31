@@ -1,16 +1,41 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { getPage } from '../lib/sanity';
+import { getPage, getKitItems, urlFor } from '../lib/sanity';
 
-const items = [
-  { src: '/video/jersey.mp4', label: 'S/S Jersey' },
-  { src: '/video/bib-shorts.mp4', label: 'Bib Shorts' },
-  { src: '/video/cap.mp4', label: 'Cap' },
-  { src: '/video/socks.mp4', label: 'Socks' },
+const BIORACER_URL = 'https://www.bioracer.co.uk/en/mybioracer';
+
+// The clips built into the page. Used whenever no kit items are authored in
+// Sanity, so /kit is unchanged until content exists. Note these are videos, not
+// photographs — the stills in public/img/kit/ are orphans from an older design.
+const FALLBACK_ITEMS = [
+  { label: 'S/S Jersey', videoUrl: '/video/jersey.mp4' },
+  { label: 'Bib Shorts', videoUrl: '/video/bib-shorts.mp4' },
+  { label: 'Cap', videoUrl: '/video/cap.mp4' },
+  { label: 'Socks', videoUrl: '/video/socks.mp4' },
 ];
 
 const page = await getPage('kit');
+const kitItems = await getKitItems();
+
+// Only take over from the fallback list when an authored item actually has a clip
+// to play — a half-finished doc shouldn't blank the page.
+const authored = kitItems.filter((item) => item.videoUrl);
+
+const items = authored.length
+  ? authored.map((item) => ({
+      label: item.label,
+      videoUrl: item.videoUrl as string,
+      // <video poster> takes a URL, so this builds one directly rather than going
+      // through SanityImage.astro. 1200 wide covers the two-column layout at 2x.
+      poster: item.poster ? urlFor(item.poster).width(1200).auto('format').url() : undefined,
+      orderUrl: item.orderUrl ?? BIORACER_URL,
+    }))
+  : FALLBACK_ITEMS.map((item) => ({
+      ...item,
+      poster: undefined,
+      orderUrl: BIORACER_URL,
+    }));
 ---
 
 <Layout
@@ -26,15 +51,15 @@ const page = await getPage('kit');
         <h3 class="text-2xl font-ropa">Ordering kit</h3>
         <p class="text-sm mb-2">Ordering is easy. <strong>We place an order once every quarter.</strong> Usually the first two weeks in Janaury, April, July and October with the kit arriving around 6-8 weeks later.</p>
         <p class="text-sm mb-5"><strong>Orders are placed through the Bioracer online portal available only to members.</strong></p>
-        <a class="btn" href="https://www.bioracer.co.uk/en/mybioracer">Order kit</a>
+        <a class="btn" href={BIORACER_URL}>Order kit</a>
       </section>
     </section>
     <section class="lg:col-span-2 lg:col-start-1 lg:row-start-1">
       {items.map((item) => (
         <div class="mb-5 border border-black/5 block relative">
-          <video src={item.src} muted controls playsinline class="w-full block"></video>
+          <video src={item.videoUrl} poster={item.poster} muted controls playsinline class="w-full block"></video>
           <h2 class="font-ropa text-3xl absolute top-5 left-5">{item.label}</h2>
-          <a class="btn absolute bottom-5 right-5" href="https://www.bioracer.co.uk/en/mybioracer">Order kit</a>
+          <a class="btn absolute bottom-5 right-5" href={item.orderUrl}>Order kit</a>
         </div>
       ))}
     </section>

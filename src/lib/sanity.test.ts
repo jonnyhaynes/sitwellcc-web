@@ -15,7 +15,7 @@ vi.mock('@sanity/image-url', () => ({
   default: () => ({ image: () => ({ url: () => '' }) }),
 }));
 
-import { surname, getPage, featureFor, rideGradeImageFor } from './sanity';
+import { surname, getPage, featureFor, rideGradeImageFor, getKitItems } from './sanity';
 import type { Feature, Page, RideGrade } from './sanity';
 
 describe('surname', () => {
@@ -241,5 +241,70 @@ describe('rideGradeImageFor', () => {
     expect(rideGradeImageFor(forwards, 'offroad')?.alt).toBe(
       rideGradeImageFor(backwards, 'offroad')?.alt,
     );
+  });
+});
+
+describe('getKitItems', () => {
+  const resolved = fetchMock as unknown as Mock<() => Promise<unknown>>;
+
+  beforeEach(() => {
+    fetchMock.mockReset();
+  });
+
+  it('resolves the video file asset to a URL', async () => {
+    resolved.mockResolvedValue([]);
+    await getKitItems();
+    const [query] = fetchMock.mock.calls[0];
+    // Without the `->` dereference this returns an asset ref, not a playable URL.
+    expect(query).toContain('video.asset->url');
+  });
+
+  it('orders by the editor order, then label as a tiebreak', async () => {
+    resolved.mockResolvedValue([]);
+    await getKitItems();
+    const [query] = fetchMock.mock.calls[0];
+    expect(query).toContain('order(order asc, label asc)');
+  });
+
+  it('returns an empty array when nothing is authored (fallback path)', async () => {
+    resolved.mockResolvedValue([]);
+    await expect(getKitItems()).resolves.toEqual([]);
+  });
+
+  it('passes through the poster and order link', async () => {
+    resolved.mockResolvedValue([
+      {
+        _id: 'k1',
+        label: 'S/S Jersey',
+        poster: { asset: { _ref: 'image-jersey' }, alt: 'The club jersey' },
+        videoUrl: 'https://cdn.sanity.io/files/x/production/jersey.mp4',
+        orderUrl: null,
+      },
+    ]);
+    const items = await getKitItems();
+    expect(items[0].poster?.alt).toBe('The club jersey');
+    expect(items[0].videoUrl).toContain('.mp4');
+    expect(items[0].orderUrl).toBeNull();
+  });
+});
+
+// kit.astro only takes over from its built-in clips when an authored item actually
+// has a video, so a half-finished doc can't blank the page.
+describe('kit item fallback selection', () => {
+  const pick = (authored: { videoUrl: string | null }[]) => {
+    const withVideo = authored.filter((i) => i.videoUrl);
+    return withVideo.length ? 'cms' : 'fallback';
+  };
+
+  it('uses the built-in clips when nothing is authored', () => {
+    expect(pick([])).toBe('fallback');
+  });
+
+  it('uses the built-in clips when an authored item has no video yet', () => {
+    expect(pick([{ videoUrl: null }])).toBe('fallback');
+  });
+
+  it('uses the CMS items once one has a video', () => {
+    expect(pick([{ videoUrl: 'a.mp4' }, { videoUrl: null }])).toBe('cms');
   });
 });

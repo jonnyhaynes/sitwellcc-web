@@ -208,6 +208,7 @@ const tips = [
 <Layout
   title={page?.seo?.metaTitle ?? 'Club rides // Sitwell Cycling Club'}
   description={page?.seo?.metaDescription ?? "We're here for the smiles, not the miles."}
+  socialImage={page?.seo?.socialImage}
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
   <svg class="hidden" aria-hidden="true">

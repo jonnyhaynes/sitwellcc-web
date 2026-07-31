@@ -51,6 +51,7 @@ const page = await getPage('brand');
 <Layout
   title={page?.seo?.metaTitle ?? 'Brand // Sitwell Cycling Club'}
   description={page?.seo?.metaDescription ?? 'Brand guidelines for Sitwell Cycling Club: logo, colours, typography and imagery. Download the logo and font files.'}
+  socialImage={page?.seo?.socialImage}
 >
   <!-- ===== Banner / title ===== -->
   <PageHeader page={page} title="Brand guidelines" subtitle="We're here for the smiles, not the miles." subtitleClass="mb-5">

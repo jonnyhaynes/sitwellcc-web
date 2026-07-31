@@ -10,6 +10,7 @@ const page = await getPage('welfare');
 <Layout
   title={page?.seo?.metaTitle ?? 'Welfare & Safeguarding // Sitwell Cycling Club'}
   description={page?.seo?.metaDescription ?? 'We believe everyone is entitled to participate in an enjoyable and safe environment and to be given the chance to experience the fun, challenge and sense of achievement that are inherent to cycling.'}
+  socialImage={page?.seo?.socialImage}
 >
   <PageHeader
     page={page}

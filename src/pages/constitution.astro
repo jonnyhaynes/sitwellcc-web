@@ -9,6 +9,7 @@ const page = await getPage('constitution');
 <Layout
   title={page?.seo?.metaTitle ?? 'Constitution // Sitwell Cycling Club'}
   description={page?.seo?.metaDescription ?? 'Founded 2016. Rotherham Advertiser Sports Awards Club of the Year 2018. 10 social rides a week. Go-Ride Coaching. Meet Brookside Pharmacy, Whiston.'}
+  socialImage={page?.seo?.socialImage}
 >
   <PageHeader page={page} title="Constitution">
     <Fragment slot="subtitle">Effective from <em>20th May 2026</em>.</Fragment>

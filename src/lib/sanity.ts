@@ -231,6 +231,8 @@ export type Page = {
   seo: {
     metaTitle: string | null;
     metaDescription: string | null;
+    // Shown when the page is shared. Cropped to 1200x630 by the layout.
+    socialImage: ImageWithAlt | null;
   } | null;
 };
 

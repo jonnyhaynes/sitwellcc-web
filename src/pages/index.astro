@@ -101,8 +101,9 @@ const coaching = card('coaching');
 ---
 
 <Layout
-  title="Sitwell Cycling Club"
-  description="Founded 2016. Rotherham Advertiser Sports Awards Club of the Year 2018. 10 social rides a week. Go-Ride Coaching. Meet Brookside Pharmacy, Whiston."
+  title={page?.seo?.metaTitle ?? 'Sitwell Cycling Club'}
+  description={page?.seo?.metaDescription ?? 'Founded 2016. Rotherham Advertiser Sports Awards Club of the Year 2018. 10 social rides a week. Go-Ride Coaching. Meet Brookside Pharmacy, Whiston.'}
+  socialImage={page?.seo?.socialImage}
 >
   <section class="updates grid gap-5 lg:grid-cols-4 px-5 lg:px-10 mb-20">
     <section class="announcements">

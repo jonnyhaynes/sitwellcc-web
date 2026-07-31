@@ -400,9 +400,10 @@ Appended as phases land, so the plan stays the record rather than drifting from 
 | ~~brand page photos~~ | **dropped** — chrome; see the struck-through phase above | — |
 | 2 — homepage promo cards | **merged** | api#10, web#78 |
 | 3 — ride grades | **merged** | api#12, web#79 |
-| 4 — events | **in review** — unblocked 2026-07-31; static + daily rebuild | api#17, web#82 |
-| 5 — kit | **in review** | api#15, web (this branch) |
-| 6 — Open Graph + cleanup | not started | — |
+| 4 — events | **merged + verified live** | api#17, web#82 |
+| 5 — kit | **merged** | api#15, web#80 |
+| 6a — Open Graph | **in review** | api#16, web#81 |
+| 6b — delete orphaned files | not started — held back deliberately, see below | — |
 | _infra_ — Studio deploy on merge | **merged + verified working** | api#11, fixed by api#13, tidied by api#14 |
 
 ### Studio deploys are not automatic (was)
@@ -425,7 +426,6 @@ Actions tab, not just the merge, when wondering if a schema change is live.**
   Studio hotspot is honoured, which only happens because `fit('crop')` is set.
 - **Charity lost its `.jpg` fallback** when its `<picture>` block collapsed. It was the
   only page still serving a JPEG source; every other page already served bare `.webp`.
-
 
 ### Decisions taken while building phase 4
 
@@ -450,3 +450,29 @@ Actions tab, not just the merge, when wondering if a schema change is live.**
 - **Daily rebuild is the general fix.** `scheduled-rebuild.yml` bounds staleness for
   *all* CMS content to 24 hours, not just events, which also covers the case where an
   editor's publish webhook fails silently.
+
+### Phase 6 split into 6a and 6b
+
+The deletions are the only irreversible step in this plan, so they're separated from
+the Open Graph work rather than bundled into one PR. **Re-run the reference check at
+delete time** — the orphan list in this doc was compiled on 2026-07-31 and several
+phases have changed which files are referenced since.
+
+### Follow-up found during 6a: news articles share badly
+
+Every news article currently shares with the **same generic club description and no
+image** (`news/[slug].astro:45-46` hard-codes the description). The obvious fix is to
+use `post.summary` for the description and `post.mainImage` as the sharing image.
+
+Not done here because `post.mainImage` is a bare `image` with **no alt field**, so
+doing it properly means migrating `post` to `imageWithAlt` — a schema change plus a
+data migration for existing posts. That's its own unit of work, not a bolt-on to the
+Open Graph phase. Worth doing: article shares are likely the most common share on the
+site.
+
+### Known gap: no purpose-made default sharing image
+
+`seo.socialImage` crops uploads to 1200×630 through the hotspot, but pages without one
+fall back to `/android-chrome-512x512.png` — **square**, so platforms letterbox it. A
+purpose-made 1200×630 default is a design asset that doesn't exist in the repo. Worth
+commissioning rather than working around in code.

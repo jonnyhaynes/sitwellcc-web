@@ -16,9 +16,11 @@ interface Props {
   width: number;
   height?: number;
   // Used verbatim when `image` is null, so a page renders exactly as it does
-  // today until its Sanity doc is authored.
-  fallbackSrc: string;
-  fallbackAlt: string;
+  // today until its Sanity doc is authored. Optional: a slot with nothing
+  // sensible to stand in — an event's own photo, say — omits them and renders
+  // nothing at all rather than borrowing an unrelated image.
+  fallbackSrc?: string;
+  fallbackAlt?: string;
   class?: string;
   loading?: 'lazy' | 'eager';
 }
@@ -48,16 +50,18 @@ const srcset = image ? `${buildUrl(image)} 1x, ${buildUrl(image, 2)} 2x` : undef
 // reusing it on a new upload would state something untrue — an empty alt at
 // least only understates. The Studio requires alt text once an asset is chosen,
 // so this should not normally be reachable.
-const alt = image ? (image.alt ?? '') : fallbackAlt;
+const alt = image ? (image.alt ?? '') : (fallbackAlt ?? '');
 ---
 
-<img
-  src={src}
-  srcset={srcset}
-  alt={alt}
-  width={width}
-  height={height}
-  class={className}
-  loading={loading}
-  decoding="async"
-/>
+{src && (
+  <img
+    src={src}
+    srcset={srcset}
+    alt={alt}
+    width={width}
+    height={height}
+    class={className}
+    loading={loading}
+    decoding="async"
+  />
+)}

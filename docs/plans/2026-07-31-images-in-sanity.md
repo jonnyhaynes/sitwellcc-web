@@ -288,10 +288,14 @@ lookup.
 
 **Phase 4 — events.** `event` document type + `getEvents()`, replacing the single
 hard-coded Ranskill card with a reusable card component. Build-time filter drops
-events whose `date` has passed. **Needs confirming:** the races page is static, so a
-passed event lingers until the next deploy — same pre-existing condition as all the
-`page` content. If there's no Sanity → Vercel deploy webhook configured, either add
-one or opt this page into SSR like `/rides`. Tell me which and I'll fold it in.
+events whose `date` has passed. **Both blockers answered 2026-07-31:**
+
+- **Boundary wording approved as drafted** (see A4) and applied to `CLAUDE.md`.
+- **Static, not SSR.** A Sanity → Vercel deploy hook already exists (`Vercel` hook on
+  the `production` dataset), so publishing rebuilds the site. What it doesn't cover is
+  an event expiring with nobody publishing anything, so a **daily scheduled rebuild**
+  (`.github/workflows/scheduled-rebuild.yml`) pings the same hook and bounds staleness
+  to 24 hours — for every page's CMS content, not just events. `/races` stays static.
 
 **Phase 5 — kit.** `kitItem` document type (poster image + MP4 + label + order +
 order URL), wired into `kit.astro` with the `poster` attribute the page currently
@@ -396,7 +400,7 @@ Appended as phases land, so the plan stays the record rather than drifting from 
 | ~~brand page photos~~ | **dropped** — chrome; see the struck-through phase above | — |
 | 2 — homepage promo cards | **merged** | api#10, web#78 |
 | 3 — ride grades | **merged** | api#12, web#79 |
-| 4 — events | **blocked** — needs the `CLAUDE.md` boundary wording + the static/SSR answer | — |
+| 4 — events | **in review** — unblocked 2026-07-31; static + daily rebuild | api#17, web#82 |
 | 5 — kit | **in review** | api#15, web (this branch) |
 | 6 — Open Graph + cleanup | not started | — |
 | _infra_ — Studio deploy on merge | **merged + verified working** | api#11, fixed by api#13, tidied by api#14 |
@@ -422,3 +426,27 @@ Actions tab, not just the merge, when wondering if a schema change is live.**
 - **Charity lost its `.jpg` fallback** when its `<picture>` block collapsed. It was the
   only page still serving a JPEG source; every other page already served bare `.webp`.
 
+
+### Decisions taken while building phase 4
+
+- **Three render states, not two.** The usual two-state fallback ("authored" vs "keep
+  the built-in markup") is wrong for a *collection* that can legitimately empty out:
+  once events exist, all of them expiring would resurrect the built-in Ranskill card
+  and re-advertise a race that has already happened. So `/races` distinguishes
+  *nothing authored yet* (built-in card, page unchanged on merge) from *authored but
+  none upcoming* (a short "nothing in the diary" message). Expiry is filtered in JS
+  rather than GROQ precisely so the page can tell those two apart.
+- **No stand-in photo for an authored event.** Elsewhere a missing CMS image falls back
+  to the image already in the repo. For an event that would mean showing *some other
+  event's* photo, so `SanityImage` now takes an **optional** fallback and renders
+  nothing without one. A photoless event puts its "Enter now" link below the text
+  rather than overlaid on a picture.
+- **`<button>` inside `<a>` fixed.** The card nested a `<button>` inside the photo
+  link — invalid HTML, and confusing with a screen reader. It is a `<span class="btn">`
+  now, styled identically. A small a11y fix inside markup this phase rewrote anyway.
+- **The empty-state copy is placeholder.** Written to be sane, not final — worth a
+  client read. Hard-coded rather than CMS-authored on purpose: it's a rare state, and
+  a field for it costs more than it saves.
+- **Daily rebuild is the general fix.** `scheduled-rebuild.yml` bounds staleness for
+  *all* CMS content to 24 hours, not just events, which also covers the case where an
+  editor's publish webhook fails silently.

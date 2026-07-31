@@ -49,8 +49,11 @@ here, push back before building.
 - Not a web app or member portal — it's a marketing/informational site for the club.
 - Not a CMS or admin surface — content editing happens in Sanity Studio (separate),
   not in this repo.
-- Not the events source of truth — ride/race data comes from Ticket Tailor and the
-  Apollo events API; this site consumes and displays it.
+- Not the source of truth for the weekly ride feeds — weekly ride data comes from
+  Ticket Tailor and the Apollo events API; this site consumes and displays it.
+  Club-hosted events (races, socials) **are** authored in Sanity, because neither
+  feed can represent them: both model weekly rides, and `/rides` filters to the
+  current Mon–Sun window.
 
 ## How we work (the short version)
 

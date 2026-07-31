@@ -1,0 +1,60 @@
+---
+import SanityImage from './SanityImage.astro';
+import { RIDE_CLASSES } from '../lib/rides';
+import type { ClubEvent } from '../lib/sanity';
+
+// One club-hosted event on /races. Everything here is authored in Sanity as an
+// `event` doc; the page decides which events to show and in what order.
+interface Props {
+  event: ClubEvent;
+  // Passed in rather than derived here so the whole page formats against a
+  // single "now", and so the label is unit-testable on its own.
+  monthLabel: string;
+}
+
+const { event, monthLabel } = Astro.props;
+
+// Colours come from the shared ride token map, which spells every Tailwind class
+// out in full — Tailwind v4's scanner can't see interpolated names, so a
+// `border-${event.colour}` here would silently produce no CSS. The fallback
+// covers a doc saved before `colour` was required.
+const colour = RIDE_CLASSES[event.colour] ?? RIDE_CLASSES.amber;
+
+// The photo is the only thing the "Enter now" overlay can sit on top of, so a
+// photoless event gets the same link as a plain button under the text instead.
+// No stand-in image: an event with no photo of its own showing some other
+// event's photo would be worse than showing none.
+const PhotoWrapper = event.entryUrl ? 'a' : 'div';
+---
+
+<div class={`border-t-8 ${colour.border} pt-5`}>
+  {event.image && (
+    <PhotoWrapper href={event.entryUrl ?? undefined} class="relative block w-full mb-5">
+      <SanityImage
+        image={event.image}
+        width={285}
+        height={285}
+        class="block w-full"
+      />
+      {event.sanctioned && (
+        <img src="/img/bc.webp" class="absolute bottom-5 right-5" alt="The British Cycling logo" width="88" height="50" />
+      )}
+      {/* A span, not a button: this sits inside the link, and nesting one
+          interactive element in another is invalid HTML and confuses screen
+          readers. `.btn` is styling only, so it looks identical. */}
+      {event.entryUrl && <span class="btn absolute top-5 left-5">Enter now</span>}
+    </PhotoWrapper>
+  )}
+  {/* "October" alone is ambiguous once an event is more than a year out, so the
+      machine-readable date rides along with it. */}
+  <h3 class="text-base font-ropa block uppercase opacity-50">
+    <time datetime={event.date}>{monthLabel}</time>
+  </h3>
+  <h2 class={`text-2xl font-ropa ${colour.text}`}>{event.title}</h2>
+  {event.summary && <p class="text-sm mb-2">{event.summary}</p>}
+  {event.signOn && <p class="text-sm mb-1">Sign on: <strong>{event.signOn}</strong></p>}
+  {event.fee && <p class="text-sm mb-2">Fee: <strong>{event.fee}</strong></p>}
+  {event.entryUrl && !event.image && (
+    <a href={event.entryUrl} class="btn">Enter now</a>
+  )}
+</div>

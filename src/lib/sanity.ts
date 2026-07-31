@@ -2,6 +2,9 @@ import { createClient } from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageObject, SanityImageSource } from '@sanity/image-url';
 import type { PortableTextBlock } from '@portabletext/types';
+// Type-only, so this doesn't pull the ride feeds into every page that imports
+// this module. Events reuse the ride colour tokens rather than a second palette.
+import type { RideColor } from './rides';
 
 export const client = createClient({
   projectId: '5q0pq1hi',
@@ -72,6 +75,100 @@ export async function getKitItems(): Promise<KitItem[]> {
       orderUrl
     }`,
   );
+}
+
+// A club-hosted event — a race or a social — shown as a card on /races.
+//
+// Named ClubEvent rather than Event so it doesn't shadow the DOM's `Event`.
+//
+// This is a deliberate exception to "the site is not the events source of
+// truth": the Ticket Tailor and Apollo feeds both model *weekly* club rides, and
+// getUpcomingRides() filters them to the current Mon-Sun window, so an annual
+// club-hosted race promoted months ahead has no home in either. That's why it
+// was hard-coded in the template until now. The feeds remain the source of truth
+// for weekly rides.
+export type EventCategory = 'race' | 'social';
+
+export type ClubEvent = {
+  _id: string;
+  title: string;
+  category: EventCategory;
+  // Sanity `date` fields serialise as a plain YYYY-MM-DD string — no time, no
+  // timezone. Kept as a string on purpose: comparing and formatting the string
+  // avoids the off-by-one-day errors that come from parsing a date-only value
+  // into a Date in a non-UTC timezone.
+  date: string;
+  image: ImageWithAlt | null;
+  summary: string | null;
+  signOn: string | null;
+  fee: string | null;
+  entryUrl: string | null;
+  colour: RideColor;
+  sanctioned: boolean | null;
+};
+
+// Every event, soonest first, past ones included. The page filters to upcoming
+// itself rather than the query doing it, so it can tell "no events authored yet"
+// (keep the card built into the page) apart from "authored, but none upcoming"
+// (say so). Fetching the past ones too is cheap at a handful of events a year.
+export async function getEvents(): Promise<ClubEvent[]> {
+  return client.fetch<ClubEvent[]>(
+    `*[_type == "event" && defined(date)] | order(date asc){
+      _id,
+      title,
+      category,
+      date,
+      image,
+      summary,
+      signOn,
+      fee,
+      entryUrl,
+      colour,
+      sanctioned
+    }`,
+  );
+}
+
+// Today as YYYY-MM-DD in local time, so an event stops showing the day *after*
+// it happens rather than at midnight UTC.
+export function isoDate(now: Date): string {
+  const month = `${now.getMonth() + 1}`.padStart(2, '0');
+  const day = `${now.getDate()}`.padStart(2, '0');
+  return `${now.getFullYear()}-${month}-${day}`;
+}
+
+// Drop events whose date has passed, keeping the event visible on the day
+// itself. Both sides are YYYY-MM-DD, which sorts correctly as a string.
+//
+// This runs at build time, so a passed event lingers until the next deploy. A
+// scheduled workflow pings the Vercel deploy hook daily to bound that window —
+// see .github/workflows/scheduled-rebuild.yml.
+export function upcomingEvents(events: ClubEvent[], now: Date): ClubEvent[] {
+  const today = isoDate(now);
+  return events.filter((event) => event.date >= today);
+}
+
+const MONTH_FORMAT = new Intl.DateTimeFormat('en-GB', {
+  month: 'long',
+  timeZone: 'UTC',
+});
+
+// The eyebrow above an event's title: "October", or "October 2027" when the
+// event isn't in the current year — "October" alone would be ambiguous for a
+// race being promoted more than a year ahead.
+//
+// Formats from the string's own parts (at UTC midday) rather than parsing the
+// date-only value directly, which would shift a day in western timezones.
+export function eventMonthLabel(date: string, now: Date): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
+  if (!match) return '';
+
+  const [, year, month] = match;
+  const label = MONTH_FORMAT.format(
+    new Date(Date.UTC(Number(year), Number(month) - 1, 1, 12)),
+  );
+
+  return Number(year) === now.getFullYear() ? label : `${label} ${year}`;
 }
 
 export type TeamSection = 'coaching' | 'committee' | 'welfare';

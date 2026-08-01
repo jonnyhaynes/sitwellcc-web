@@ -403,7 +403,7 @@ Appended as phases land, so the plan stays the record rather than drifting from 
 | 4 — events | **merged + verified live** | api#17, web#82 |
 | 5 — kit | **merged** | api#15, web#80 |
 | 6a — Open Graph | **merged** | api#16, web#81 |
-| 6b — delete orphaned files | **in review** — re-check found 101, not ~28 | web#83 |
+| 6b — delete orphaned files | **in review** — re-check found 101, not ~28 | web#85 |
 | _infra_ — Studio deploy on merge | **merged + verified working** | api#11, fixed by api#13, tidied by api#14 |
 
 ### Studio deploys are not automatic (was)

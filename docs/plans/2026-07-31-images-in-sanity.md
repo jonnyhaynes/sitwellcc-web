@@ -402,8 +402,8 @@ Appended as phases land, so the plan stays the record rather than drifting from 
 | 3 — ride grades | **merged** | api#12, web#79 |
 | 4 — events | **merged + verified live** | api#17, web#82 |
 | 5 — kit | **merged** | api#15, web#80 |
-| 6a — Open Graph | **in review** | api#16, web#81 |
-| 6b — delete orphaned files | not started — held back deliberately, see below | — |
+| 6a — Open Graph | **merged** | api#16, web#81 |
+| 6b — delete orphaned files | **in review** — re-check found 101, not ~28 | web#85 |
 | _infra_ — Studio deploy on merge | **merged + verified working** | api#11, fixed by api#13, tidied by api#14 |
 
 ### Studio deploys are not automatic (was)
@@ -476,3 +476,42 @@ site.
 fall back to `/android-chrome-512x512.png` — **square**, so platforms letterbox it. A
 purpose-made 1200×630 default is a design asset that doesn't exist in the repo. Worth
 commissioning rather than working around in code.
+
+### Phase 6b: the re-check found 101 orphans, not ~28
+
+The orphan list compiled on 2026-07-31 was already out of date by the time the
+deletions ran, exactly as this doc warned. The fresh check found **101 unreferenced
+files (17 MB)** rather than the ~28 originally listed. The extra 73 are a direct
+consequence of phases 1–5:
+
+- **`.jpg` twins.** Collapsing the `<picture>` blocks in favour of the CDN's
+  `auto('format')` left every hand-made JPEG unreferenced — the coaching and
+  membership grids alone account for 24 of them.
+- **Team photos.** Coaching, committee and welfare portraits moved to Sanity in
+  PR #65; the repo copies have been dead since.
+- **Kit stills.** All 10 files in `public/img/kit/` — orphans from a pre-video design,
+  as recorded in the kit section above.
+
+**Method, since a static grep is not enough here.** Coaching, membership and the brand
+page build their image paths with template literals (`` `/img/coaching/${name}.webp` ``),
+so grepping for a filename misses them. The check instead greps the **built output** —
+every prerendered page, every JS/CSS chunk — plus the source tree (which covers
+`/rides`, the one page that never prerenders) and `site.webmanifest`. Afterwards it
+runs in reverse: every asset URL referenced anywhere must still exist on disk. It does.
+
+The Sanity dataset was also checked for `/img/` links in Portable Text, in case an
+article body pointed at a repo file. None do.
+
+### Kept deliberately, despite being unreferenced
+
+- **`downloads/SitwellCyclingClub-SafeguardingChildrenandYoungPeople(A).pdf`** and
+  **`downloads/SitwellCyclingClubSafeguardingAdultsPolicyandProcedures(A).pdf`.**
+  Nothing on the site links to either, but `/welfare` links two *other* safeguarding
+  PDFs, so the likely explanation is a missing link rather than a dead file — and a
+  safeguarding policy is not something to delete on a grep. **Decide which:** link them
+  from `/welfare`, or archive them deliberately.
+- **`brand/assets/logos-print/scc-logotype--white.pdf`.** The brand page offers the
+  crest, logotype and stripes as print PDFs but not the white logotype. Same shape of
+  question, for the brand page's owner.
+- Convention-loaded files that no source file references by name and never will:
+  `.htaccess`, `web.config`, `robots.txt`, `browserconfig.xml`, `favicon.ico`.

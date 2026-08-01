@@ -12,3 +12,4 @@ sanitytutorialblog
 .next
 .claude/settings.local.json
 .claude/worktrees
+.commandcode

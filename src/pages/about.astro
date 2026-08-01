@@ -11,6 +11,7 @@ const page = await getPage('about');
 <Layout
   title={page?.seo?.metaTitle ?? 'About // Sitwell Cycling Club'}
   description={page?.seo?.metaDescription ?? "Rotherham's award-winning Go-Ride club."}
+  socialImage={page?.seo?.socialImage}
 >
   <PageHeader page={page} title="Sitwell Cycling Club" subtitle="Rotherham's award-winning Go-Ride club.">
     <p class="lg:w-3/4">Offering nine social rides a week, Go-Ride coaching sessions for under 16s, monthly socials and overseas trips. Some of us race, but most of us are just here for the coffee and the cake. We ride on road and off-road. There&apos;s something for everyone, so <a href="/contact">contact us</a> now to see what you&apos;re missing.</p>

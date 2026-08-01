@@ -4,15 +4,44 @@ import Footer from '../components/Footer.astro';
 import Analytics from '../components/Analytics.tsx';
 import '../styles/global.css';
 
+import { urlFor } from '../lib/sanity';
+import type { ImageWithAlt } from '../lib/sanity';
+
 interface Props {
   title?: string;
   description?: string;
+  // Page's sharing image from Sanity (`seo.socialImage`). Falls back to the club
+  // icon when a page has none.
+  socialImage?: ImageWithAlt | null;
 }
 
 const {
   title = 'Sitwell Cycling Club',
   description = 'Sitwell Cycling Club — a British Cycling Affiliated Go-Ride Club in South Yorkshire.',
+  socialImage = null,
 } = Astro.props;
+
+// Sharing platforms need absolute URLs, so these resolve against `site` in
+// astro.config.mjs rather than emitting a bare path.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+// 1200×630 is the size Facebook/LinkedIn/WhatsApp expect. Cropping through the
+// hotspot means an editor can upload any landscape-ish photo and still get a
+// correctly framed card.
+//
+// The fallback is the 512×512 club icon — square rather than 1200×630, so
+// platforms letterbox it. It's a stopgap: a purpose-made 1200×630 default is a
+// design asset that doesn't exist in the repo yet.
+// Deliberately `.format('jpg')` rather than `.auto('format')`, which is used
+// everywhere else. `auto` content-negotiates on the Accept header, so a crawler
+// advertising webp would get a webp — and several sharing platforms (WhatsApp in
+// particular) render webp previews poorly, then cache the bad result. og:image is
+// fetched by scrapers, not browsers, so it should be one predictable format.
+const socialImageUrl = socialImage
+  ? urlFor(socialImage).width(1200).height(630).fit('crop').format('jpg').url()
+  : new URL('/android-chrome-512x512.png', Astro.site).href;
+
+const socialImageAlt = socialImage?.alt ?? 'The Sitwell Cycling Club crest';
 ---
 
 <!doctype html>
@@ -22,6 +51,23 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph / Twitter. The site had none of these, so shared links
+         previously rendered as bare text with no image. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sitwell Cycling Club" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:alt" content={socialImageAlt} />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />

@@ -75,7 +75,7 @@ describe('getPage', () => {
       gallery: null,
       features: null,
       rideGrades: null,
-      seo: { metaTitle: null, metaDescription: null },
+      seo: { metaTitle: null, metaDescription: null, socialImage: null },
     };
     resolved.mockResolvedValue(page);
     await expect(getPage('coaching')).resolves.toEqual(page);
@@ -474,5 +474,45 @@ describe('eventMonthLabel', () => {
 
   it('returns an empty label rather than "Invalid Date" for a malformed date', () => {
     expect(eventMonthLabel('October 2026', now)).toBe('');
+  });
+});
+
+describe('getPage social image', () => {
+  const resolved = fetchMock as unknown as Mock<() => Promise<unknown>>;
+
+  beforeEach(() => {
+    fetchMock.mockReset();
+  });
+
+  it('returns the sharing image nested under seo', async () => {
+    resolved.mockResolvedValue({
+      title: 'Charity work',
+      subtitle: null,
+      intro: null,
+      gallery: null,
+      features: null,
+      rideGrades: null,
+      seo: {
+        metaTitle: null,
+        metaDescription: null,
+        socialImage: { asset: { _ref: 'image-hospice' }, alt: 'Members at the hospice' },
+      },
+    });
+    const page = await getPage('charity');
+    expect(page?.seo?.socialImage?.alt).toBe('Members at the hospice');
+  });
+
+  it('leaves the sharing image null when unset, so the layout uses its default', async () => {
+    resolved.mockResolvedValue({
+      title: 'Charity work',
+      subtitle: null,
+      intro: null,
+      gallery: null,
+      features: null,
+      rideGrades: null,
+      seo: { metaTitle: null, metaDescription: null, socialImage: null },
+    });
+    const page = await getPage('charity');
+    expect(page?.seo?.socialImage).toBeNull();
   });
 });

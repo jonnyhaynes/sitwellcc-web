@@ -11,6 +11,7 @@ const photo = page?.gallery?.[0] ?? null;
 <Layout
   title={page?.seo?.metaTitle ?? 'Charity work // Sitwell Cycling Club'}
   description={page?.seo?.metaDescription ?? 'Raising vital funds for local charities since 2016.'}
+  socialImage={page?.seo?.socialImage}
 >
   <PageHeader page={page} title="Charity work" subtitle="We raise vital funds for local charities.">
     <p class="lg:w-3/4">In 2019 we raised over £12,250 for <a href="https://www.rotherhamhospice.org.uk/">Rotherham Hospice</a> through a range of activities and in the past we&apos;ve also raised funds for the <a href="https://www.cysticfibrosis.org.uk/">Cystic Fibrosis Trust</a>. This year our members have chosen <a href="https://www.bluebellwood.org/">Bluebell Wood</a> as the club&apos;s charity. Be on the lookout for ways to get involved.</p>

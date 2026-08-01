@@ -10,6 +10,7 @@ const page = await getPage('contact');
 <Layout
   title={page?.seo?.metaTitle ?? 'Contact // Sitwell Cycling Club'}
   description={page?.seo?.metaDescription ?? 'Founded 2016. Rotherham Advertiser Sports Awards Club of the Year 2018. 10 social rides a week. Go-Ride Coaching. Meet Brookside Pharmacy, Whiston.'}
+  socialImage={page?.seo?.socialImage}
 >
   <PageHeader page={page} title="Get in touch" subtitle="We love cycling">
     <p class="lg:w-3/4">We aim to respond to all enquiries as soon as possible, but there might be a slight delay if the weather is good.</p>

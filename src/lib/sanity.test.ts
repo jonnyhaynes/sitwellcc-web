@@ -269,11 +269,15 @@ describe('getKitItems', () => {
     expect(query).toContain('video.asset->url');
   });
 
-  it('orders by the editor order, then label as a tiebreak', async () => {
+  it('reads the array off the kit page doc, ordered by array position', async () => {
     resolved.mockResolvedValue([]);
     await getKitItems();
     const [query] = fetchMock.mock.calls[0];
-    expect(query).toContain('order(order asc, label asc)');
+    // Kit items live on the kit page's `kitItems` array now, not as standalone
+    // documents; array position is the order, so there is no `order(...)` clause.
+    expect(query).toContain('slug.current == "kit"');
+    expect(query).toContain('kitItems[]');
+    expect(query).not.toContain('order(');
   });
 
   it('returns an empty array when nothing is authored (fallback path)', async () => {
@@ -359,7 +363,6 @@ describe('getEvents', () => {
       {
         _id: 'e1',
         title: 'Ranskill Gold',
-        category: 'race',
         date: '2026-10-04',
         image: { asset: { _ref: 'image-ranskill' }, alt: 'Riders at Ranskill' },
         summary: 'Three routes to choose from.',
@@ -397,7 +400,6 @@ describe('upcomingEvents', () => {
   const event = (date: string): ClubEvent => ({
     _id: date,
     title: `Race on ${date}`,
-    category: 'race',
     date,
     image: null,
     summary: null,

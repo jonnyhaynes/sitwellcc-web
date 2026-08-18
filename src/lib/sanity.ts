@@ -55,29 +55,28 @@ export type RideGrade = {
 // has always used short clips — so `videoUrl` points at an uploaded MP4 and
 // `poster` is the still shown before it plays.
 export type KitItem = {
-  _id: string;
   label: string;
   poster: ImageWithAlt | null;
   videoUrl: string | null;
   orderUrl: string | null;
 };
 
-// Kit items, ordered by the editor's `order` then alphabetically as a tiebreak.
-// Returns an empty array when none are authored, so the caller falls back to the
-// clips built into the page.
+// Kit items, read off the Kit page doc's `kitItems` array in the order the editor
+// arranged them. Returns an empty array when none are authored, so the caller
+// falls back to the clips built into the page.
 export async function getKitItems(): Promise<KitItem[]> {
-  return client.fetch<KitItem[]>(
-    `*[_type == "kitItem"] | order(order asc, label asc){
-      _id,
+  const items = await client.fetch<KitItem[] | null>(
+    `*[_type == "page" && slug.current == "kit"][0].kitItems[]{
       label,
       poster,
       "videoUrl": video.asset->url,
       orderUrl
     }`,
   );
+  return items ?? [];
 }
 
-// A club-hosted event — a race or a social — shown as a card on /races.
+// A club-hosted event — shown as a card on /races.
 //
 // Named ClubEvent rather than Event so it doesn't shadow the DOM's `Event`.
 //
@@ -87,12 +86,9 @@ export async function getKitItems(): Promise<KitItem[]> {
 // club-hosted race promoted months ahead has no home in either. That's why it
 // was hard-coded in the template until now. The feeds remain the source of truth
 // for weekly rides.
-export type EventCategory = 'race' | 'social';
-
 export type ClubEvent = {
   _id: string;
   title: string;
-  category: EventCategory;
   // Sanity `date` fields serialise as a plain YYYY-MM-DD string — no time, no
   // timezone. Kept as a string on purpose: comparing and formatting the string
   // avoids the off-by-one-day errors that come from parsing a date-only value
@@ -116,7 +112,6 @@ export async function getEvents(): Promise<ClubEvent[]> {
     `*[_type == "event" && defined(date)] | order(date asc){
       _id,
       title,
-      category,
       date,
       image,
       summary,

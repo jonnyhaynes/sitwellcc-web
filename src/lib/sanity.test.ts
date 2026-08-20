@@ -17,6 +17,7 @@ vi.mock('@sanity/image-url', () => ({
 
 import {
   surname,
+  isCoachTitle,
   getPage,
   featureFor,
   rideGradeImageFor,
@@ -48,6 +49,24 @@ describe('surname', () => {
     const names = ['Jonny Haynes', 'Erin Avill', 'Ted Daly'];
     const sorted = [...names].sort((a, b) => surname(a).localeCompare(surname(b)));
     expect(sorted).toEqual(['Erin Avill', 'Ted Daly', 'Jonny Haynes']);
+  });
+});
+
+describe('isCoachTitle', () => {
+  it('matches a plain coach title', () => {
+    expect(isCoachTitle('Level 1 Coach')).toBe(true);
+  });
+  it('matches regardless of case', () => {
+    expect(isCoachTitle('activity coach - Coaching in Context MTB XC')).toBe(true);
+  });
+  it('matches a discipline-specific coach title', () => {
+    expect(isCoachTitle('Level 2 MTB Coach')).toBe(true);
+  });
+  it('excludes volunteer helpers', () => {
+    expect(isCoachTitle('Volunteer Helper')).toBe(false);
+  });
+  it('excludes welfare officers', () => {
+    expect(isCoachTitle('Welfare Officer')).toBe(false);
   });
 });
 

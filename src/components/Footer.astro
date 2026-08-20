@@ -27,22 +27,24 @@ const membersLabel = memberCountLabel(memberData.count);
           >
             <title>{membersLabel} members</title>
             <rect width="410" height="150" fill="#FBDF08" />
-            {/* Positions traced from the original stat-2.svg: the big number
-                sits on a ~108 baseline at ~90px tall, and "MEMBERS" is a small
-                (~26px) label sitting higher, on a ~82 baseline, to its right —
-                not bottom-aligned to the number. */}
+            {/* Positions verified against the neighbouring stat SVGs in the
+                browser: the number sits vertically centred in the box, MEMBERS
+                to its right with a matching gap and vertically centred on the
+                number. The count is always three digits + "+" (rounded down to
+                the nearest 25, capped display), so the number's width is stable
+                and MEMBERS never needs to reflow. */}
             <text
               x="70"
-              y="108"
+              y="99"
               fill="#109A49"
-              font-size="90"
+              font-size="88"
               style="font-family: 'Ropa Sans Pro ExtraBold', ui-sans-serif, sans-serif;"
             >
               {membersLabel}
             </text>
             <text
-              x="212"
-              y="84"
+              x="216"
+              y="83"
               fill="#109A49"
               font-size="28"
               letter-spacing="0.5"

@@ -75,6 +75,7 @@ describe('getPage', () => {
       gallery: null,
       features: null,
       rideGrades: null,
+      rideImages: null,
       seo: { metaTitle: null, metaDescription: null, socialImage: null },
     };
     resolved.mockResolvedValue(page);
@@ -105,12 +106,32 @@ describe('getPage', () => {
       gallery,
       features: null,
       rideGrades: null,
+      rideImages: null,
       seo: null,
     });
     const page = await getPage('membership');
     expect(page?.gallery).toHaveLength(2);
     expect(page?.gallery?.[0].alt).toBe('Members at a cafe');
     expect(page?.gallery?.[1].alt).toBeNull();
+  });
+
+  it('remaps the ride-image "offroad" colour to "brown"', async () => {
+    resolved.mockResolvedValue({
+      title: 'Club rides',
+      subtitle: null,
+      intro: null,
+      gallery: null,
+      features: null,
+      rideGrades: null,
+      rideImages: [
+        { image: { asset: { _ref: 'image-a' }, alt: 'x' }, colours: ['offroad', 'red'] },
+        { image: { asset: { _ref: 'image-b' }, alt: 'y' }, colours: ['green'] },
+      ],
+      seo: null,
+    });
+    const page = await getPage('rides');
+    expect(page?.rideImages?.[0].colours).toEqual(['brown', 'red']);
+    expect(page?.rideImages?.[1].colours).toEqual(['green']);
   });
 });
 
@@ -132,6 +153,7 @@ describe('featureFor', () => {
     gallery: null,
     features,
     rideGrades: null,
+    rideImages: null,
     seo: null,
   });
 
@@ -218,6 +240,7 @@ describe('rideGradeImageFor', () => {
     gallery: null,
     features: null,
     rideGrades,
+    rideImages: null,
     seo: null,
   });
 
@@ -494,6 +517,7 @@ describe('getPage social image', () => {
       gallery: null,
       features: null,
       rideGrades: null,
+      rideImages: null,
       seo: {
         metaTitle: null,
         metaDescription: null,
@@ -512,6 +536,7 @@ describe('getPage social image', () => {
       gallery: null,
       features: null,
       rideGrades: null,
+      rideImages: null,
       seo: { metaTitle: null, metaDescription: null, socialImage: null },
     });
     const page = await getPage('charity');

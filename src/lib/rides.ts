@@ -1,4 +1,5 @@
 import base64 from 'base-64';
+import type { ImageWithAlt, RideImage } from './sanity';
 
 export type RideColor = 'green' | 'amber' | 'red' | 'brown' | 'blue' | 'black';
 
@@ -36,7 +37,9 @@ export interface Ride {
   startTime: string; // ISO 8601
   url: string;
   color: RideColor;
-  image: string | null;
+  // Assigned from the CMS bank by assignRideImages(). The feeds always leave this
+  // null; a null after assignment means the ride shows a plain coloured box.
+  image: ImageWithAlt | null;
   goingCount: number | null; // null when the source has no signup data (Ticket Tailor)
 }
 
@@ -185,7 +188,9 @@ async function fetchTickettailorRides(start: number, end: number): Promise<Ride[
           startTime,
           url: event.checkout_url,
           color,
-          image: event.images?.thumbnail ?? null,
+          // Feed thumbnail discarded; the CMS bank supplies images (see
+          // assignRideImages).
+          image: null,
           goingCount: null,
         };
       });
@@ -218,7 +223,9 @@ async function fetchApolloRides(): Promise<Ride[]> {
         startTime: event.startTime,
         url: DISCORD_INVITE_URL,
         color: CHANNEL_COLORS[event.channelId] ?? 'black',
-        image: event.thumbnailUrl ?? event.imageUrl ?? null,
+        // The feed's own thumbnail is intentionally discarded: every ride's
+        // image comes from the CMS bank via assignRideImages().
+        image: null,
         goingCount: accepted?.count ?? 0,
       };
     });
@@ -256,4 +263,87 @@ export async function getUpcomingRides(): Promise<Ride[]> {
       return true;
     })
     .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
+}
+
+// A small stable hash of a string, so a ride maps to the same starting point in
+// its colour's image pool on every render (no flicker across the 60s edge cache).
+// FNV-1a — fine for spreading ids over a handful of images; not cryptographic.
+function hashString(value: string): number {
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < value.length; i++) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 0x01000193);
+  }
+  return hash >>> 0;
+}
+
+// Assign each ride one image from the CMS bank, matched by colour.
+//
+// Rules (agreed in the plan): every ride's image comes from the bank (any feed
+// image is ignored); an image is only used for a ride of a matching colour; no
+// image repeats within a colour on a single render; and the choice is stable per
+// ride (hashed from its id). When a colour's pool runs out, the surplus rides get
+// `image: null` and the page renders a plain coloured box for them.
+//
+// Pure and order-independent given a fixed bank, so it is unit-tested directly.
+export function assignRideImages(rides: Ride[], bank: RideImage[]): Ride[] {
+  // Group the bank's images by colour. A multi-tagged image appears in each of
+  // its colours' pools.
+  const pools = new Map<RideColor, ImageWithAlt[]>();
+  for (const item of bank) {
+    for (const colour of item.colours) {
+      const pool = pools.get(colour) ?? [];
+      pool.push(item.image);
+      pools.set(colour, pool);
+    }
+  }
+
+  // Track which pool index has been taken for each colour this render, so no
+  // image repeats within a colour.
+  const used = new Map<RideColor, Set<number>>();
+
+  // Walk rides in a stable order (start time, then id) so assignment is
+  // deterministic regardless of the input array's order.
+  const ordered = [...rides].sort((a, b) => {
+    const byTime =
+      new Date(a.startTime).getTime() - new Date(b.startTime).getTime();
+    return byTime !== 0 ? byTime : a.id.localeCompare(b.id);
+  });
+
+  const assigned = new Map<string, ImageWithAlt | null>();
+
+  for (const ride of ordered) {
+    const pool = pools.get(ride.color) ?? [];
+    if (pool.length === 0) {
+      assigned.set(ride.id, null);
+      continue;
+    }
+
+    const taken = used.get(ride.color) ?? new Set<number>();
+
+    if (taken.size >= pool.length) {
+      // Every image for this colour is already spoken for → colour box.
+      assigned.set(ride.id, null);
+      used.set(ride.color, taken);
+      continue;
+    }
+
+    // Start at the hashed index (stable per ride) and probe forward to the next
+    // free slot in this colour's pool.
+    const start = hashString(ride.id) % pool.length;
+    let index = start;
+    while (taken.has(index)) {
+      index = (index + 1) % pool.length;
+    }
+
+    taken.add(index);
+    used.set(ride.color, taken);
+    assigned.set(ride.id, pool[index]);
+  }
+
+  // Return the rides in their original order, with images filled in.
+  return rides.map((ride) => ({
+    ...ride,
+    image: assigned.get(ride.id) ?? null,
+  }));
 }

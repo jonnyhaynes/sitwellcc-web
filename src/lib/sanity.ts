@@ -51,6 +51,16 @@ export type RideGrade = {
   image: ImageWithAlt | null;
 };
 
+// One photo in the live-rides image bank on /rides. Each carries the ride
+// colours it may be used for, so a photo is only ever shown on a matching ride.
+// The Studio stores the off-road colour as `offroad` (matching the `rideGrade`
+// field the client already knows); getPage remaps it to `brown` to line up 1:1
+// with RideColor, so the rest of the site never sees `offroad`.
+export type RideImage = {
+  image: ImageWithAlt;
+  colours: RideColor[];
+};
+
 // An item of club kit on /kit. This is video rather than photography — the page
 // has always used short clips — so `videoUrl` points at an uploaded MP4 and
 // `poster` is the still shown before it plays.
@@ -223,6 +233,9 @@ export type Page = {
   features: Feature[] | null;
   // /rides only. Null/empty means "keep the photos built into the page".
   rideGrades: RideGrade[] | null;
+  // /rides only. The image bank for the live "Upcoming rides" list. Null/empty
+  // means "show plain coloured boxes".
+  rideImages: RideImage[] | null;
   seo: {
     metaTitle: string | null;
     metaDescription: string | null;
@@ -235,7 +248,7 @@ export type Page = {
 // yet, so callers can fall back to their existing hard-coded header while content
 // is being authored.
 export async function getPage(slug: string): Promise<Page | null> {
-  return client.fetch<Page | null>(
+  const page = await client.fetch<Page | null>(
     `*[_type == "page" && slug.current == $slug][0]{
       title,
       subtitle,
@@ -243,10 +256,25 @@ export async function getPage(slug: string): Promise<Page | null> {
       gallery,
       features,
       rideGrades,
+      rideImages[]{ image, colours },
       seo
     }`,
     { slug },
   );
+
+  if (!page?.rideImages) return page;
+
+  // The Studio stores the off-road colour as `offroad`; the rest of the site
+  // uses `brown` (RideColor). Remap here so no caller has to know about it.
+  return {
+    ...page,
+    rideImages: page.rideImages.map((item) => ({
+      ...item,
+      colours: (item.colours as unknown as string[]).map((c) =>
+        c === 'offroad' ? 'brown' : (c as RideColor),
+      ),
+    })),
+  };
 }
 
 // Pick a ride grade's photo out of a page's `rideGrades` by its key. Returns null

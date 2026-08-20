@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Accordion from '../components/Accordion.tsx';
 import PageHeader from '../components/PageHeader.astro';
 import SanityImage from '../components/SanityImage.astro';
-import { getUpcomingRides, RIDE_CLASSES } from '../lib/rides';
+import { assignRideImages, getUpcomingRides, RIDE_CLASSES } from '../lib/rides';
 import { getPage, rideGradeImageFor } from '../lib/sanity';
 
 export const prerender = false;
@@ -14,8 +14,8 @@ Astro.response.headers.set(
   'public, s-maxage=60, stale-while-revalidate=599',
 );
 
-const rides = await getUpcomingRides();
 const page = await getPage('rides');
+const rides = assignRideImages(await getUpcomingRides(), page?.rideImages ?? []);
 
 // Photo per ride grade, matched by key so Studio ordering can't put a photo on
 // the wrong card. Each keeps its current image and alt text as the fallback, so
@@ -331,7 +331,7 @@ const tips = [
           <article class={`mb-5 border-t-8 ${c.border} p-5 ${c.bg} flex flex-row`}>
             {ride.image ? (
               <a href={ride.url} class="block w-28 h-28 mr-5 overflow-hidden shrink-0">
-                <img src={ride.image} class="object-cover w-full h-full" alt={ride.title} width="108" height="108" />
+                <SanityImage image={ride.image} width={112} height={112} class="object-cover w-full h-full" />
               </a>
             ) : (
               <a href={ride.url} aria-label={ride.title} class={`block w-28 h-28 mr-5 shrink-0 ${c.bg}`}></a>

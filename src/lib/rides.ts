@@ -13,6 +13,7 @@ const CHANNEL_COLORS: Record<string, RideColor> = {
   '1511799767561277634': 'amber',
   '1511799912764018851': 'green',
   '1511799982876000356': 'brown',
+  '1512788710566133840': 'amber', // Wing it Wednesday
 };
 
 // Literal Tailwind class strings per ride colour. These MUST be written out in

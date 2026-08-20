@@ -3,8 +3,13 @@ import YorkshireRose from './YorkshireRose.astro';
 import Stat from './Stat.astro';
 import stats from '../data/stats.json';
 import { memberCountLabel } from '../lib/members';
+import { getCoachCount } from '../lib/sanity';
 
 const year = new Date().getFullYear();
+
+// Coaches is a live count from Sanity (coaching-section people whose title says
+// "coach"), falling back to the baked-in stats.json value if the fetch fails.
+const coachCount = (await getCoachCount()) ?? stats.coaches;
 
 const GREEN = '#109A49';
 const YELLOW = '#FBDF08';
@@ -57,14 +62,14 @@ const membersLabel = memberCountLabel(stats.memberCount);
         alt={`${stats.overseasTrips} overseas trips`}
       />
       <Stat
-        number={String(stats.coaches)}
+        number={String(coachCount)}
         label={['BRITISH CYCLING', 'COACHES']}
         numberX={89}
         labelCenterX={230}
         boxFill={YELLOW}
         textFill={GREEN}
         order="order-4 md:order-3 lg:order-4"
-        alt={`${stats.coaches} British Cycling coaches`}
+        alt={`${coachCount} British Cycling coaches`}
       />
     </section>
     <section class="copyright">

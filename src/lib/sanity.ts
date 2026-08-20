@@ -216,6 +216,28 @@ export async function getTeamMembers(section: TeamSection): Promise<TeamMember[]
   );
 }
 
+// The footer "British Cycling coaches" stat is a live count of coaching-section
+// people whose title says "coach" — this excludes welfare officers and volunteer
+// helpers who sit in the same section but aren't coaches. Kept as a pure helper
+// so the title rule is unit-tested without hitting Sanity.
+export function isCoachTitle(title: string): boolean {
+  return /coach/i.test(title);
+}
+
+// Counts coaches for the footer stat. Returns null on any failure so the footer
+// can fall back to the hard-coded stats.json value rather than render a wrong 0.
+export async function getCoachCount(): Promise<number | null> {
+  try {
+    const titles = await client.fetch<string[]>(
+      `*[_type == "teamMember" && count(memberships[section == "coaching"]) > 0]
+        .memberships[section == "coaching"][0].title`,
+    );
+    return titles.filter(isCoachTitle).length;
+  } catch {
+    return null;
+  }
+}
+
 // A page's editable header block, authored in Sanity as one `page` doc per route.
 // This is the first slice of CMS-driven pages: header + meta only. The slug is a
 // fixed lookup key (locked read-only in the Studio), so each page fetches its own

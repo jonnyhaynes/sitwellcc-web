@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+---
+
+<Layout
+  title="Page not found // Sitwell Cycling Club"
+  description="The page you were looking for doesn't exist."
+>
+  <PageHeader title="Page not found" subtitle="We couldn't find that page.">
+    <p class="lg:w-3/4">
+      The page you were looking for might have moved or no longer exists. Try one
+      of these instead:
+    </p>
+    <ul class="mt-5 flex flex-wrap gap-4">
+      <li><a href="/">Home</a></li>
+      <li><a href="/rides">Rides</a></li>
+      <li><a href="/races">Races</a></li>
+      <li><a href="/news">News</a></li>
+      <li><a href="/membership">Membership</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </PageHeader>
+</Layout>

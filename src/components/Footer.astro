@@ -21,30 +21,32 @@ const membersLabel = memberCountLabel(memberData.count);
             viewBox="0 0 410 150"
             width="285"
             height="104"
-            class="order-2"
+            class="order-2 w-full h-auto"
             role="img"
             aria-label={`${membersLabel} members`}
           >
             <title>{membersLabel} members</title>
             <rect width="410" height="150" fill="#FBDF08" />
+            {/* Positions traced from the original stat-2.svg: the big number
+                sits on a ~108 baseline at ~90px tall, and "MEMBERS" is a small
+                (~26px) label sitting higher, on a ~82 baseline, to its right —
+                not bottom-aligned to the number. */}
             <text
-              x="205"
-              y="66"
-              text-anchor="middle"
+              x="70"
+              y="108"
               fill="#109A49"
+              font-size="90"
               style="font-family: 'Ropa Sans Pro ExtraBold', ui-sans-serif, sans-serif;"
-              font-size="72"
             >
               {membersLabel}
             </text>
             <text
-              x="205"
-              y="112"
-              text-anchor="middle"
+              x="212"
+              y="84"
               fill="#109A49"
+              font-size="28"
+              letter-spacing="0.5"
               style="font-family: 'Ropa Sans Pro ExtraBold', ui-sans-serif, sans-serif;"
-              font-size="26"
-              letter-spacing="1"
             >
               MEMBERS
             </text>

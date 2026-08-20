@@ -29,11 +29,13 @@ const { number, label, labelCenterX, boxFill, textFill, order, alt } = Astro.pro
 
 const ropa = "font-family: 'Ropa Sans Pro ExtraBold', ui-sans-serif, sans-serif;";
 
-// Number baseline sits it vertically centred in the 150-tall box. A single label
-// line centres on the number's middle; two lines straddle it.
-const singleY = 83;
-const twoLineTop = 68;
-const twoLineBottom = 98;
+// Baselines are pushed down from the box's geometric centre by ~9px: a text
+// bounding box reserves descender space at the bottom, but digits and these
+// all-caps labels have no descenders, so centring the box leaves the *visible*
+// glyphs sitting high. The offset drops them to look optically centred.
+const singleY = 92;
+const twoLineTop = 77;
+const twoLineBottom = 107;
 ---
 
 <svg
@@ -46,7 +48,7 @@ const twoLineBottom = 98;
 >
   <title>{alt}</title>
   <rect width="410" height="150" fill={boxFill} />
-  <text x="70" y="99" fill={textFill} font-size="88" style={ropa}>{number}</text>
+  <text x="70" y="108" fill={textFill} font-size="88" style={ropa}>{number}</text>
   {
     label.length === 1 ? (
       <text x={labelCenterX} y={singleY} text-anchor="middle" fill={textFill} font-size="28" letter-spacing="0.5" style={ropa}>

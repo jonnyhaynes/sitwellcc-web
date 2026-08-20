@@ -22,3 +22,27 @@ export function memberCountLabel(count: number): string | null {
   const rounded = roundedMembers(count);
   return rounded > 0 ? `${rounded}+` : null;
 }
+
+// A sanity range for the scraped count. A broken scrape (wrong page, markup
+// change, Cloudflare block leaking a "0") must never overwrite a good number, so
+// the scraper rejects anything outside this band rather than trusting it.
+export const MIN_PLAUSIBLE_MEMBERS = 20;
+export const MAX_PLAUSIBLE_MEMBERS = 5000;
+
+// Pull the club member count out of the British Cycling profile page HTML (as
+// rendered by the Jina reader proxy — see scripts/scrape-member-count.mjs). The
+// page shows the line "Total club members: 180". Returns the number only when it
+// parses and is plausible; otherwise null, which the scraper treats as "don't
+// write" rather than clobbering the stored value.
+export function extractMemberCount(html: string): number | null {
+  // The number is separated from the label by a colon, a closing tag and a
+  // space in the real markup ("Total club members:</b> 180"), so skip over any
+  // run of non-digit characters — tags, whitespace, punctuation — in between.
+  const match = /Total club members\D{0,20}(\d{1,5})/i.exec(html);
+  if (!match) return null;
+
+  const count = Number(match[1]);
+  if (count < MIN_PLAUSIBLE_MEMBERS || count > MAX_PLAUSIBLE_MEMBERS) return null;
+
+  return count;
+}

@@ -1,4 +1,6 @@
-import { roundedMembers, memberCountLabel } from './members';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { roundedMembers, memberCountLabel, extractMemberCount } from './members';
 
 describe('roundedMembers', () => {
   it('rounds down to the nearest 25', () => {
@@ -26,5 +28,31 @@ describe('memberCountLabel', () => {
   it('returns null when there is no usable number', () => {
     expect(memberCountLabel(10)).toBeNull();
     expect(memberCountLabel(NaN)).toBeNull();
+  });
+});
+
+describe('extractMemberCount', () => {
+  // A real snippet of the British Cycling profile page as delivered by the Jina
+  // reader proxy, so the regex is tested against the actual markup (the number
+  // is separated from the label by "</b> ").
+  const fixture = readFileSync(
+    fileURLToPath(new URL('./__fixtures__/bc-profile-snippet.html', import.meta.url)),
+    'utf8',
+  );
+
+  it('pulls the count out of the real page markup', () => {
+    expect(extractMemberCount(fixture)).toBe(180);
+  });
+  it('handles a plain colon-and-space form', () => {
+    expect(extractMemberCount('Total club members: 342 more text')).toBe(342);
+  });
+  it('returns null when the label is absent', () => {
+    expect(extractMemberCount('<p>nothing relevant here</p>')).toBeNull();
+  });
+  it('rejects an implausibly small number (likely a broken scrape)', () => {
+    expect(extractMemberCount('Total club members: 0')).toBeNull();
+  });
+  it('rejects an implausibly large number', () => {
+    expect(extractMemberCount('Total club members: 99999')).toBeNull();
   });
 });

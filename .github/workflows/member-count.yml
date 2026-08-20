@@ -1,0 +1,56 @@
+# Update the club member count in the footer once a week.
+#
+# scripts/scrape-member-count.mjs reads the count off the club's British Cycling
+# profile (via the Jina reader proxy) and writes it into src/data/stats.json. If
+# the number changed, this job commits the file — that push triggers the normal
+# Vercel production build, so the new number goes live.
+#
+# The proxy is intermittent (Cloudflare blocks it some of the time), so a blocked
+# run is not an error: the script exits 0 without writing and the site keeps the
+# last good number. See the script's header for the full rationale.
+
+name: Update member count
+
+on:
+  schedule:
+    # 05:30 UTC on Mondays. Off the hour (GitHub queues on-the-hour jobs heavily)
+    # and early, matching the scheduled-rebuild job's reasoning.
+    - cron: '30 5 * * 1'
+  # Run it by hand from the Actions tab (useful for the first populate).
+  workflow_dispatch:
+
+concurrency:
+  group: member-count
+  cancel-in-progress: false
+
+jobs:
+  update:
+    name: scrape and commit
+    runs-on: ubuntu-latest
+    permissions:
+      # Needed to commit the updated stats.json back to the branch.
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # 22.18+ strips TypeScript types on import without a flag, which the
+          # script relies on to import the shared parser from src/lib/members.ts.
+          node-version: '22.18'
+
+      - name: Scrape the member count
+        run: node scripts/scrape-member-count.mjs
+
+      - name: Commit if the count changed
+        run: |
+          if git diff --quiet -- src/data/stats.json; then
+            echo "No change to stats.json; nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          count=$(node -p "require('./src/data/stats.json').memberCount")
+          git add src/data/stats.json
+          git commit -m "chore: update member count to ${count}"
+          git push

@@ -1,0 +1,61 @@
+---
+// One footer stat, rendered as inline SVG text so the numbers are live (fed from
+// src/data/stats.json) while matching the look of the original baked-in stat
+// images: a coloured box, a big number on the left, and a 1- or 2-line label to
+// its right, both vertically centred in the box.
+//
+// Positions were verified against the original stat SVGs in the browser. The
+// viewBox is the originals' 410x150; width/height match the other stats' slot
+// and `w-full h-auto` lets it scale down in the grid like an image.
+interface Props {
+  number: string;
+  // Label lines, top to bottom. One or two entries.
+  label: [string] | [string, string];
+  // X where the label column starts. Set per stat so the label sits the same
+  // distance from the number regardless of how wide the number is: the member
+  // count is three characters ("175+"), the rest are single digits, so a fixed
+  // value would leave the single-digit boxes with a big gap.
+  labelX: number;
+  // Box fill and text fill. Two of the four stats are green-on-yellow, two are
+  // yellow-on-green — passed in so this component stays layout-only.
+  boxFill: string;
+  textFill: string;
+  order: string;
+  alt: string;
+}
+
+const { number, label, labelX, boxFill, textFill, order, alt } = Astro.props;
+
+const ropa = "font-family: 'Ropa Sans Pro ExtraBold', ui-sans-serif, sans-serif;";
+
+// Number baseline sits it vertically centred in the 150-tall box. A single label
+// line centres on the number's middle; two lines straddle it.
+const singleY = 83;
+const twoLineTop = 68;
+const twoLineBottom = 98;
+---
+
+<svg
+  viewBox="0 0 410 150"
+  width="285"
+  height="104"
+  class={`${order} w-full h-auto`}
+  role="img"
+  aria-label={alt}
+>
+  <title>{alt}</title>
+  <rect width="410" height="150" fill={boxFill} />
+  <text x="70" y="99" fill={textFill} font-size="88" style={ropa}>{number}</text>
+  {
+    label.length === 1 ? (
+      <text x={labelX} y={singleY} fill={textFill} font-size="28" letter-spacing="0.5" style={ropa}>
+        {label[0]}
+      </text>
+    ) : (
+      <text x={labelX} fill={textFill} font-size="28" letter-spacing="0.5" style={ropa}>
+        <tspan x={labelX} y={twoLineTop}>{label[0]}</tspan>
+        <tspan x={labelX} y={twoLineBottom}>{label[1]}</tspan>
+      </text>
+    )
+  }
+</svg>

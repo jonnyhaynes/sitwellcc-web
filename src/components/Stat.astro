@@ -11,10 +11,12 @@ interface Props {
   number: string;
   // Label lines, top to bottom. One or two entries.
   label: [string] | [string, string];
-  // X of the label's horizontal centre. Set per stat so the label sits the same
-  // distance from the number regardless of how wide the number is (the member
-  // count is three characters, "175+"; the rest are single digits), and so a
-  // two-line label's shorter line centres under the longer one — matching the
+  // Left x of the number. The whole number+label block is centred in the box as
+  // a unit (like the originals), so a wide number like "175+" starts further
+  // left than a single digit — each stat passes its own value.
+  numberX: number;
+  // X of the label's horizontal centre. Sits a fixed gap right of the number and
+  // centres a two-line label's shorter line under the longer one, matching the
   // original images.
   labelCenterX: number;
   // Box fill and text fill. Two of the four stats are green-on-yellow, two are
@@ -25,17 +27,16 @@ interface Props {
   alt: string;
 }
 
-const { number, label, labelCenterX, boxFill, textFill, order, alt } = Astro.props;
+const { number, label, numberX, labelCenterX, boxFill, textFill, order, alt } = Astro.props;
 
 const ropa = "font-family: 'Ropa Sans Pro ExtraBold', ui-sans-serif, sans-serif;";
 
-// Baselines are pushed down from the box's geometric centre by ~9px: a text
-// bounding box reserves descender space at the bottom, but digits and these
-// all-caps labels have no descenders, so centring the box leaves the *visible*
-// glyphs sitting high. The offset drops them to look optically centred.
-const singleY = 92;
-const twoLineTop = 77;
-const twoLineBottom = 107;
+// Baselines chosen so the visible glyphs (digits and all-caps labels, none of
+// which have descenders) sit optically centred in the 150-tall box.
+const numberBaseline = 99;
+const singleY = 83;
+const twoLineTop = 68;
+const twoLineBottom = 98;
 ---
 
 <svg
@@ -48,7 +49,7 @@ const twoLineBottom = 107;
 >
   <title>{alt}</title>
   <rect width="410" height="150" fill={boxFill} />
-  <text x="70" y="108" fill={textFill} font-size="88" style={ropa}>{number}</text>
+  <text x={numberX} y={numberBaseline} fill={textFill} font-size="88" style={ropa}>{number}</text>
   {
     label.length === 1 ? (
       <text x={labelCenterX} y={singleY} text-anchor="middle" fill={textFill} font-size="28" letter-spacing="0.5" style={ropa}>

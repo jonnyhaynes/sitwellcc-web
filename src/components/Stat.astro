@@ -11,11 +11,12 @@ interface Props {
   number: string;
   // Label lines, top to bottom. One or two entries.
   label: [string] | [string, string];
-  // X where the label column starts. Set per stat so the label sits the same
-  // distance from the number regardless of how wide the number is: the member
-  // count is three characters ("175+"), the rest are single digits, so a fixed
-  // value would leave the single-digit boxes with a big gap.
-  labelX: number;
+  // X of the label's horizontal centre. Set per stat so the label sits the same
+  // distance from the number regardless of how wide the number is (the member
+  // count is three characters, "175+"; the rest are single digits), and so a
+  // two-line label's shorter line centres under the longer one — matching the
+  // original images.
+  labelCenterX: number;
   // Box fill and text fill. Two of the four stats are green-on-yellow, two are
   // yellow-on-green — passed in so this component stays layout-only.
   boxFill: string;
@@ -24,7 +25,7 @@ interface Props {
   alt: string;
 }
 
-const { number, label, labelX, boxFill, textFill, order, alt } = Astro.props;
+const { number, label, labelCenterX, boxFill, textFill, order, alt } = Astro.props;
 
 const ropa = "font-family: 'Ropa Sans Pro ExtraBold', ui-sans-serif, sans-serif;";
 
@@ -48,13 +49,13 @@ const twoLineBottom = 98;
   <text x="70" y="99" fill={textFill} font-size="88" style={ropa}>{number}</text>
   {
     label.length === 1 ? (
-      <text x={labelX} y={singleY} fill={textFill} font-size="28" letter-spacing="0.5" style={ropa}>
+      <text x={labelCenterX} y={singleY} text-anchor="middle" fill={textFill} font-size="28" letter-spacing="0.5" style={ropa}>
         {label[0]}
       </text>
     ) : (
-      <text x={labelX} fill={textFill} font-size="28" letter-spacing="0.5" style={ropa}>
-        <tspan x={labelX} y={twoLineTop}>{label[0]}</tspan>
-        <tspan x={labelX} y={twoLineBottom}>{label[1]}</tspan>
+      <text x={labelCenterX} text-anchor="middle" fill={textFill} font-size="28" letter-spacing="0.5" style={ropa}>
+        <tspan x={labelCenterX} y={twoLineTop}>{label[0]}</tspan>
+        <tspan x={labelCenterX} y={twoLineBottom}>{label[1]}</tspan>
       </text>
     )
   }

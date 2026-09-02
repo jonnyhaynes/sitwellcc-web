@@ -5,11 +5,9 @@ const options = [
   'Club Rides',
   'Go-Ride coaching',
   'Races',
-  'Charity work',
   'Membership',
   'Kit',
   'Welfare & Safeguarding',
-  'Sponsorship',
   'Other',
 ];
 

@@ -5,18 +5,16 @@ export const prerender = false;
 
 sendgrid.setApiKey(import.meta.env.SENDGRID_API_KEY || '');
 
-const recipientFor = (query: string): string => {
+const recipientFor = (query: string): string | string[] => {
   switch (query) {
     case 'Club Rides':
-      return 'captain@sitwell.cc';
+      return ['captain@sitwell.cc', 'vice.captain@sitwell.cc', 'membership@sitwell.cc'];
     case 'Go-Ride coaching':
       return 'coach@sitwell.cc';
     case 'Races':
-      return 'racing@sitwell.cc';
-    case 'Charity work':
-      return 'community@sitwell.cc';
+      return ['racing@sitwell.cc', 'chair@sitwell.cc'];
     case 'Membership':
-      return 'membership@sitwell.cc';
+      return ['captain@sitwell.cc', 'vice.captain@sitwell.cc', 'membership@sitwell.cc'];
     case 'Kit':
       return 'kit@sitwell.cc';
     case 'Welfare & Safeguarding':

@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@astrojs/react": "^6.0.0",
-    "@astrojs/vercel": "^11.0.0",
+    "@astrojs/vercel": "^11.0.9",
     "@portabletext/react": "^6.2.0",
     "@sanity/client": "^7.23.0",
     "@sanity/image-url": "^2.1.1",
@@ -25,7 +25,7 @@
     "@tailwindcss/vite": "^4.3.2",
     "@vercel/analytics": "^2.0.1",
     "@vis.gl/react-google-maps": "^1.9.0",
-    "astro": "^7.0.3",
+    "astro": "^7.2.10",
     "base-64": "^1.0.0",
     "groq": "^6.2.0",
     "react": "^19.2.0",

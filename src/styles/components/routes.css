@@ -93,6 +93,13 @@
   font-variant-numeric: tabular-nums;
   opacity: 0.75;
 }
+/* Difficulty rating (out of 5). Shown inline in the list meta and as its own line
+   in the detail panel, so it only needs to read as a slightly stronger value —
+   the colour language already comes from the row / detail left bar. */
+.routes-rating {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
 .routes-list-empty {
   padding: 0.5rem 0;
   opacity: 0.75;

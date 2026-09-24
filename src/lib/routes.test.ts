@@ -312,4 +312,33 @@ describe('getRoutes', () => {
     const routes = await getRoutes();
     expect(routes).toEqual([]);
   });
+  it('passes the stored difficulty rating through, and null when it is not set', async () => {
+    fetchMock.mockResolvedValue([
+      {
+        _id: 'r1',
+        name: 'Rated',
+        color: 'red',
+        cafeStop: '',
+        gpxUrl: 'https://cdn/x.gpx',
+        distance: null,
+        elevation: null,
+        rating: 4,
+      },
+      {
+        _id: 'r2',
+        name: 'Unrated',
+        color: 'green',
+        cafeStop: '',
+        gpxUrl: 'https://cdn/x.gpx',
+        distance: null,
+        elevation: null,
+      },
+    ]);
+    vi.mocked(fetch).mockImplementation(() =>
+      Promise.resolve(new Response(gpx, { status: 200 })),
+    );
+    const routes = await getRoutes();
+    expect(routes[0].rating).toBe(4);
+    expect(routes[1].rating).toBeNull();
+  });
 });

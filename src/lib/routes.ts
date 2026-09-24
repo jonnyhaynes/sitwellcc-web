@@ -24,6 +24,7 @@ export interface Route {
   downloadName: string; // tidy filename for the download, e.g. "sitwell-cadeby-loop.gpx"
   coords: LatLng[]; // parsed from the GPX — the map line
   elevationGain: number | null; // feet: Sanity override (already feet) if set, else GPX ascent converted to feet; null if neither available
+  rating: number | null; // difficulty out of 5, calculated in the Studio; null until it has been set
 }
 
 const METERS_PER_MILE = 1609.344;
@@ -144,6 +145,7 @@ interface RawRoute {
   gpxUrl: string | null;
   distance: number | null; // optional editor override, in miles
   elevation: number | null; // optional editor override, in feet
+  rating: number | null; // difficulty out of 5, calculated in the Studio
 }
 
 // Fetch route documents from Sanity and enrich each with parsed GPX coords, plus
@@ -153,7 +155,7 @@ interface RawRoute {
 // link) using its overrides (or zero distance / null elevation).
 export async function getRoutes(): Promise<Route[]> {
   const query = `*[_type == "route" && defined(gpxFile.asset)]{
-    _id, name, "color": colour, cafeStop, distance, elevation,
+    _id, name, "color": colour, cafeStop, distance, elevation, rating,
     "gpxUrl": gpxFile.asset->url
   } | order(name asc)`;
 
@@ -177,6 +179,8 @@ export async function getRoutes(): Promise<Route[]> {
         cafeStop: r.cafeStop,
         gpxUrl: r.gpxUrl,
         downloadName: gpxDownloadName(r.name),
+        // Difficulty is calculated and stored in the Studio; absent until set.
+        rating: r.rating ?? null,
       };
       try {
         const res = await fetch(r.gpxUrl);

@@ -189,6 +189,12 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
                 <span className="routes-list-name">{route.name}</span>
                 <span className="routes-list-meta">
                   {formatDistance(route.distanceMeters, distanceUnit)}
+                  {route.rating !== null && (
+                    <>
+                      {' · '}
+                      <span className="routes-rating">{route.rating}/5</span>
+                    </>
+                  )}
                 </span>
               </button>
             </li>
@@ -208,6 +214,9 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
               <> · {formatElevation(selected.elevationGain, elevationUnit)}</>
             )}
           </p>
+          {selected.rating !== null && (
+            <p className="routes-rating">Difficulty: {selected.rating}/5</p>
+          )}
           {selected.cafeStop && <p>Café stop: {selected.cafeStop}</p>}
           <a className="btn mt-2.5" href={selected.gpxUrl} download={selected.downloadName}>
             Download GPX

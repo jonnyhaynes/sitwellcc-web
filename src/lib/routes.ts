@@ -30,14 +30,45 @@ export interface Route {
 const METERS_PER_MILE = 1609.344;
 const FEET_PER_METER = 3.28084;
 
-// Turn a route name into a filename-safe slug for the GPX download, so members
-// get "sitwell-cadeby-loop.gpx" rather than "komoot_export_final(3).gpx".
-export function gpxDownloadName(name: string): string {
-  const slug = name
+// Slugify a route name: lowercase, runs of anything-but-alphanumeric collapsed to
+// single hyphens, no leading/trailing hyphen. Returns '' when the name has nothing
+// usable left, so each caller picks its own fallback. Both the GPX download
+// filename and the share URL are built from this, so the two can't drift apart.
+export function routeSlug(name: string): string {
+  return name
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
-  return `sitwell-${slug || 'route'}.gpx`;
+}
+
+// Turn a route name into a filename-safe slug for the GPX download, so members
+// get "sitwell-cadeby-loop.gpx" rather than "komoot_export_final(3).gpx".
+export function gpxDownloadName(name: string): string {
+  return `sitwell-${routeSlug(name) || 'route'}.gpx`;
+}
+
+// A route is shared at /routes/<slug>. That pretty path is a rewrite onto the one
+// prerendered /routes document, so the slug is read back off the pathname (and, as
+// a fallback, off ?route= — the rewrite isn't applied by `astro dev` or any host
+// that ignores vercel.json).
+// Slugs are [a-z0-9-] only, so no percent-decoding is needed here.
+
+// '/routes/cadeby-loop' (or '…/') -> 'cadeby-loop'. Anything that isn't a single
+// segment under /routes/ — the index itself, another page, a deeper path — is null.
+export function routeSlugFromPath(pathname: string): string | null {
+  const match = /^\/routes\/([^/]+)\/?$/.exec(pathname);
+  return match ? match[1] : null;
+}
+
+// The ?route= fallback: present, trimmed value, else null.
+export function routeSlugFromSearch(search: string): string | null {
+  const value = new URLSearchParams(search).get('route')?.trim();
+  return value ? value : null;
+}
+
+// The shareable URL for a route, relative to the site root.
+export function routeShareUrl(pathname: string, slug: string): string {
+  return `${pathname.replace(/\/+$/, '')}/${encodeURIComponent(slug)}`;
 }
 
 export const ROUTE_HEX: Record<RouteColor, string> = {

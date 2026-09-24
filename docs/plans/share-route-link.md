@@ -91,12 +91,16 @@ separate piece of work; noted in Out of scope.
    button; `replaceState` keeps the URL current so a manual copy works, and Back
    still leaves the page in one press. Deselecting (clicking the map background)
    strips the slug.
-6. **Use the native share sheet where it exists, copy everywhere else.**
-   `navigator.share({ title, url })` on iOS/Android (the likely case for members);
-   otherwise `navigator.clipboard.writeText` with a transient "Link copied"
-   confirmation. If the Clipboard API is unavailable/blocked (non-secure context),
-   fall back to revealing the URL in a read-only input so it can be selected by
-   hand — no silent failure.
+6. **Native share sheet on touch devices; copy on desktop.** Phones
+   (`pointer: coarse`) get `navigator.share({ title, url })` — that's where sharing
+   a route into the group chat happens. Desktop always copies to the clipboard with
+   a transient "Link copied" confirmation, deliberately *not* the OS sheet: support
+   and behaviour vary too much across desktop (Firefox never implemented it; Edge
+   and Chrome on Windows open the Windows share flyout, which has no plain "copy
+   link"; Chrome only gained it on macOS/Linux in 128). One predictable action per
+   device beats a different dialog each time. If the Clipboard API is
+   unavailable/blocked (non-secure context), fall back to revealing the URL in a
+   read-only input so it can be selected by hand — no silent failure.
 7. **Arriving via a link surfaces the route.** On mount, a matching slug selects
    the route and scrolls the detail panel into view (`scrollIntoView`) — on mobile
    the detail sits below the map, so without this the visitor lands on the map
@@ -145,18 +149,26 @@ Deliberately minimal — only the share path's rewrite. (The repo has no
 - An effect that, when the initial selection came *from* the URL, scrolls
   `.routes-detail` into view once.
 - In the `.routes-detail` block, wrap the actions in a row: keep the existing
-  `Download GPX` `.btn`, add a `Share` button (`btn btn--secondary`). Handler:
-  `navigator.share` → else `clipboard.writeText` + set a `copied` flag (cleared on
-  route change and after a short timeout) → else reveal the read-only input.
+  `Download GPX` `.btn`, add a `Share` button (`btn btn--secondary`).
+- `isTouchDevice()` (a `(pointer: coarse)` check) picks the branch: touch devices
+  call `navigator.share`, desktop goes straight to `clipboard.writeText` + a
+  transient "Link copied" flag (cleared on route change and after a short timeout).
+  A dismissed sheet (`AbortError`) is treated as a decision, not a failure — it does
+  not then copy. Any other share failure falls through to the clipboard. If that is
+  blocked too, the URL is revealed in a read-only input.
   The shared URL is absolute — built against `location.origin`.
 - A `role="status"` element announcing "Link copied" for screen readers.
 
 ### `src/styles/components/buttons.css`
 
-- Add `.btn--secondary`: same shape as `.btn` but white background, black text,
-  black 2px border, and the grey hard offset shadow already used by the route
-  chips/unit toggle (`rgb(127 127 127 / 0.5)`) — keeps the flat, hard-shadow idiom
-  while visually deferring to the primary green download button.
+- Add `.btn--secondary`: deliberately **smaller** than `.btn` (0.85rem text on the
+  route unit toggle's metrics) and **monochrome** — white background, black text,
+  black outline, and a 3px grey offset shadow matching the route chips/unit toggle.
+  Sized down from the primary during implementation, on review feedback that it read
+  as too prominent next to the green download.
+- Written as its own `.btn.btn--secondary` rule, **not** a nested `&--secondary`:
+  native CSS nesting doesn't concatenate suffixes, so the nested form compiles to
+  nothing (see Risks — the existing `&--large` has the same problem).
 
 ### `src/styles/components/routes.css`
 
@@ -220,8 +232,20 @@ smoke-tested in the browser).
 - **No per-route social preview.** A shared link's card is the generic `/routes`
   OG image. If the client expects the route name in the WhatsApp/Slack preview,
   that needs real per-route pages — blocked behind slimming the 8.8 MB payload.
-- **`navigator.share` isn't universal** — desktop Firefox/Safari fall back to
-  clipboard, which is why the copy path exists rather than share-only.
+- **`pointer: coarse` is only a proxy for "phone".** A tablet with a trackpad, or a
+  phone in desktop mode, can land on the other side of the line. The failure mode is
+  benign either way: a copied link instead of a sheet, or a sheet instead of a copy.
+- **Both branches were verified in a real browser** (Chrome over CDP): with a fine
+  pointer, no share call is made, the absolute route URL lands on the clipboard and
+  "Link copied" shows; with an emulated coarse pointer, `navigator.share` receives
+  `{ title: "Barlow", url: "…/routes/barlow" }` and the clipboard is left untouched.
+- **Pre-existing bug found while here: `&--large` never applies.** `.btn--large`
+  (Header's "Join us today", the brand and coaching CTAs) is written as a nested
+  `&--large`, which native CSS nesting drops — so those buttons render at the
+  normal size. It's the same pattern that made this plan's first attempt at
+  `.btn--secondary` silently do nothing. Not fixed here because it would resize CTAs
+  on three unrelated pages; it's a one-line follow-up (hoist it to a `.btn.btn--large`
+  rule).
 - **Clipboard needs a secure context** — falls back to the read-only input.
 
 ## Out of scope

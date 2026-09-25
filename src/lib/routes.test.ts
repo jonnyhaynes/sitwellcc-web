@@ -8,7 +8,11 @@ import {
   routeDistanceMeters,
   elevationGainMeters,
   elevationGainFeet,
+  routeSlug,
   gpxDownloadName,
+  routeSlugFromPath,
+  routeSlugFromSearch,
+  routeShareUrl,
 } from './routes';
 
 vi.mock('./sanity', () => ({ client: { fetch: vi.fn() } }));
@@ -164,6 +168,20 @@ describe('elevationGainFeet', () => {
   });
 });
 
+describe('routeSlug', () => {
+  it('lowercases and hyphenates the route name', () => {
+    expect(routeSlug('Cadeby Loop')).toBe('cadeby-loop');
+  });
+  it('collapses punctuation runs into a single hyphen', () => {
+    expect(routeSlug("Whiston  &  Ulley (long)")).toBe('whiston-ulley-long');
+  });
+  it('returns an empty string when nothing usable remains', () => {
+    // The '' is load-bearing: gpxDownloadName substitutes "route", and the share
+    // link omits an unusable slug rather than minting a link that matches nothing.
+    expect(routeSlug('!!!')).toBe('');
+  });
+});
+
 describe('gpxDownloadName', () => {
   it('slugifies the route name into sitwell-<slug>.gpx', () => {
     expect(gpxDownloadName('Cadeby Loop')).toBe('sitwell-cadeby-loop.gpx');
@@ -173,6 +191,50 @@ describe('gpxDownloadName', () => {
   });
   it('falls back to "route" when the name has no usable characters', () => {
     expect(gpxDownloadName('!!!')).toBe('sitwell-route.gpx');
+  });
+});
+
+describe('routeSlugFromPath', () => {
+  it('reads the slug from a route path', () => {
+    expect(routeSlugFromPath('/routes/cadeby-loop')).toBe('cadeby-loop');
+  });
+  it('tolerates a trailing slash', () => {
+    expect(routeSlugFromPath('/routes/cadeby-loop/')).toBe('cadeby-loop');
+  });
+  it('is null for the routes index itself', () => {
+    expect(routeSlugFromPath('/routes')).toBeNull();
+    expect(routeSlugFromPath('/routes/')).toBeNull();
+  });
+  it('is null for other pages and deeper paths', () => {
+    expect(routeSlugFromPath('/')).toBeNull();
+    expect(routeSlugFromPath('/races/foo')).toBeNull();
+    expect(routeSlugFromPath('/routes/foo/bar')).toBeNull();
+  });
+});
+
+describe('routeSlugFromSearch', () => {
+  it('reads the ?route= fallback', () => {
+    expect(routeSlugFromSearch('?route=cadeby-loop')).toBe('cadeby-loop');
+  });
+  it('works with other params alongside it', () => {
+    expect(routeSlugFromSearch('?foo=1&route=cadeby-loop')).toBe('cadeby-loop');
+  });
+  it('is null when absent or blank', () => {
+    expect(routeSlugFromSearch('')).toBeNull();
+    expect(routeSlugFromSearch('?route=')).toBeNull();
+    expect(routeSlugFromSearch('?route=%20')).toBeNull();
+  });
+});
+
+describe('routeShareUrl', () => {
+  it('builds the clean path for a route', () => {
+    expect(routeShareUrl('/routes', 'cadeby-loop')).toBe('/routes/cadeby-loop');
+  });
+  it('tolerates a trailing slash on the base path', () => {
+    expect(routeShareUrl('/routes/', 'cadeby-loop')).toBe('/routes/cadeby-loop');
+  });
+  it('encodes the slug', () => {
+    expect(routeShareUrl('/routes', 'a b')).toBe('/routes/a%20b');
   });
 });
 

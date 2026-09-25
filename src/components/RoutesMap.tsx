@@ -1,7 +1,15 @@
 /// <reference types="google.maps" />
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { APIProvider, Map, Polyline, useMap } from '@vis.gl/react-google-maps';
-import { ROUTE_HEX, type Route, type RouteColor } from '../lib/routes';
+import {
+  ROUTE_HEX,
+  routeShareUrl,
+  routeSlug,
+  routeSlugFromPath,
+  routeSlugFromSearch,
+  type Route,
+  type RouteColor,
+} from '../lib/routes';
 import {
   formatDistance,
   formatElevation,
@@ -11,6 +19,38 @@ import {
 
 const DISTANCE_UNIT_KEY = 'routes.distanceUnit';
 const ELEVATION_UNIT_KEY = 'routes.elevationUnit';
+
+// The one page routes live on. A shared route is that page's path plus the slug
+// (see the rewrite in vercel.json), so this is the base for both reading the
+// current selection out of the URL and writing it back.
+const ROUTES_PATH = '/routes';
+
+// How long the "Link copied" confirmation stays up, in ms.
+const COPY_FEEDBACK_MS = 2000;
+
+// Resolve the route a shared link points at: the pretty /routes/<slug> path, or
+// the ?route= fallback (the rewrite isn't applied by `astro dev`). Returns null
+// for no slug, an unrecognised slug, or a slug that matches no published route —
+// the page then renders with nothing selected rather than erroring.
+function routeIdFromUrl(routes: Route[]): string | null {
+  const slug =
+    routeSlugFromPath(window.location.pathname) ??
+    routeSlugFromSearch(window.location.search);
+  if (!slug) return null;
+  return routes.find((route) => routeSlug(route.name) === slug)?.id ?? null;
+}
+
+// Is the primary input a touchscreen? The OS share sheet is the right affordance
+// on a phone, but on desktop it varies by OS and browser — Windows' flyout offers
+// no plain "copy link", and Firefox doesn't implement it at all — so desktop
+// always takes the predictable copy path instead. `pointer: coarse` describes the
+// primary input, so a touchscreen laptop with a mouse attached still copies.
+function isTouchDevice(): boolean {
+  return (
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(pointer: coarse)').matches
+  );
+}
 
 // Read a persisted unit choice, falling back to the default. Guarded so it's
 // safe under SSR / storage-disabled browsers (the island is client:only, but be
@@ -72,7 +112,23 @@ function FitBounds({ routes }: { routes: Route[] }) {
 
 export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
   const [active, setActive] = useState<Set<RouteColor>>(() => new Set(ALL_COLORS));
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  // Whether the page was opened on a shared link. Decides the one-off scroll to
+  // the detail panel, and nothing else.
+  const cameFromUrl = useRef(false);
+
+  const [selectedId, setSelectedId] = useState<string | null>(() => {
+    const id = routeIdFromUrl(routes);
+    cameFromUrl.current = id !== null;
+    return id;
+  });
+
+  // "Link copied" is only worth showing until the member moves on, so it resets
+  // when the selection changes and after a short delay.
+  const [shareState, setShareState] = useState<'idle' | 'copied' | 'manual'>('idle');
+  const copyTimer = useRef<number | null>(null);
+  const detailRef = useRef<HTMLDivElement | null>(null);
+
   const [distanceUnit, setDistanceUnit] = useState<DistanceUnit>(() =>
     readUnit(DISTANCE_UNIT_KEY, ['mi', 'km'] as const, 'mi'),
   );
@@ -94,6 +150,37 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
 
   const selected = routes.find((r) => r.id === selectedId) ?? null;
 
+  // Keep the address bar on the selected route, so copying the URL by hand gives
+  // the same link the Share button copies. replaceState, not pushState: picking
+  // through the list shouldn't stack up history entries, and Back should still
+  // leave the page in one press. A route whose name yields no usable slug is left
+  // out of the URL rather than linked as a path that can never match it.
+  useEffect(() => {
+    const slug = selected ? routeSlug(selected.name) : '';
+    window.history.replaceState(null, '', slug ? routeShareUrl(ROUTES_PATH, slug) : ROUTES_PATH);
+  }, [selected]);
+
+  // Land a shared link on the route itself: on mobile the detail panel sits below
+  // the map, so without this the visitor arrives at the map with no sign of what
+  // was sent. Only for the initial URL selection — a route someone clicks is
+  // already in front of them.
+  useEffect(() => {
+    if (!cameFromUrl.current || !selectedId) return;
+    cameFromUrl.current = false;
+    detailRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }, [selectedId]);
+
+  // Moving to another route clears the copy confirmation (and any pending timer).
+  useEffect(() => {
+    setShareState('idle');
+    return () => {
+      if (copyTimer.current !== null) {
+        window.clearTimeout(copyTimer.current);
+        copyTimer.current = null;
+      }
+    };
+  }, [selectedId]);
+
   const toggle = (color: RouteColor) => {
     setActive((prev) => {
       const next = new Set(prev);
@@ -101,6 +188,40 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
       else next.add(color);
       return next;
     });
+  };
+
+  // The absolute URL for a route: the share sheet and the clipboard are both no
+  // use with a relative path.
+  const shareUrlFor = (route: Route) =>
+    new URL(routeShareUrl(ROUTES_PATH, routeSlug(route.name)), window.location.origin).href;
+
+  const share = async (route: Route) => {
+    const url = shareUrlFor(route);
+
+    // Phones get the native sheet — that's where sharing a route into the group
+    // chat happens. Desktop deliberately copies instead: see isTouchDevice.
+    if (isTouchDevice() && typeof navigator.share === 'function') {
+      try {
+        await navigator.share({ title: route.name, url });
+        return;
+      } catch (err) {
+        // Dismissing the sheet is a decision, not a failure: don't then copy.
+        if (err instanceof DOMException && err.name === 'AbortError') return;
+        // Anything else (unsupported payload, no share target) falls through to
+        // the clipboard so the member still ends up with a usable link.
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(url);
+      setShareState('copied');
+      if (copyTimer.current !== null) window.clearTimeout(copyTimer.current);
+      copyTimer.current = window.setTimeout(() => setShareState('idle'), COPY_FEEDBACK_MS);
+    } catch {
+      // Clipboard blocked (insecure context, permission denied): show the URL so
+      // it can still be selected and copied by hand.
+      setShareState('manual');
+    }
   };
 
   const unitGroup = <T extends string>(
@@ -204,6 +325,7 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
 
       {selected && (
         <div
+          ref={detailRef}
           className="routes-detail"
           style={{ '--chip': ROUTE_HEX[selected.color] } as React.CSSProperties}
         >
@@ -218,9 +340,28 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
             <p className="routes-rating">Difficulty: {selected.rating}/5</p>
           )}
           {selected.cafeStop && <p>Café stop: {selected.cafeStop}</p>}
-          <a className="btn mt-2.5" href={selected.gpxUrl} download={selected.downloadName}>
-            Download GPX
-          </a>
+          <div className="routes-actions">
+            <a className="btn" href={selected.gpxUrl} download={selected.downloadName}>
+              Download GPX
+            </a>
+            <button type="button" className="btn btn--secondary" onClick={() => share(selected)}>
+              Share
+            </button>
+            <span className="routes-share-status" role="status">
+              {shareState === 'copied' ? 'Link copied' : ''}
+            </span>
+          </div>
+          {shareState === 'manual' && (
+            // Copying was blocked, so hand the member the URL to copy by hand.
+            <input
+              className="routes-share-fallback"
+              type="text"
+              readOnly
+              aria-label={`Link to ${selected.name}`}
+              value={shareUrlFor(selected)}
+              onFocus={(event) => event.currentTarget.select()}
+            />
+          )}
         </div>
       )}
     </div>

@@ -105,6 +105,31 @@
   opacity: 0.75;
 }
 
+/* Detail actions: the GPX download (primary) beside Share (secondary), with the
+   copy confirmation trailing. Wraps rather than squeezing on the narrow column. */
+.routes-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.625rem; /* the spacing the download link used to carry as mt-2.5 */
+}
+/* Always in the DOM — a live region has to be present before its text changes for
+   the announcement to happen — so it must stay quiet when it has nothing to say. */
+.routes-share-status {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+/* Only shown when the clipboard is unavailable: the URL, selectable by hand. */
+.routes-share-fallback {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border: 2px solid var(--color-black);
+  background: var(--color-white);
+  font-size: 0.85rem;
+}
+
 /* Google Maps needs the map container to have an explicit height. */
 .routes-map .gm-style,
 .routes-map > div { height: 100%; }

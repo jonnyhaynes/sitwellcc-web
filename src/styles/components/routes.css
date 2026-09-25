@@ -10,6 +10,11 @@
   padding: 0 1.25rem; /* mirrors the px-5 / lg:px-10 page gutters */
   grid-template-areas: 'filter' 'units' 'map' 'list' 'detail';
 }
+/* Focused view (arrived via a shared link): no filters and no route list, so
+   drop their rows rather than leave gaps. */
+.routes-layout--focused {
+  grid-template-areas: 'units' 'map' 'detail';
+}
 .routes-panel { display: contents; } /* let filter + list + detail place into the grid independently */
 .routes-filter { grid-area: filter; }
 .routes-map,
@@ -34,6 +39,15 @@
       'filter map'
       'units  map'
       'list   map'
+      'detail map';
+  }
+  /* Focused view: just the units and the detail down the left, so the detail
+     sits under the units rather than being pushed to the bottom of the column.
+     Inherits the 22rem / 1fr columns from the rule above. */
+  .routes-layout--focused {
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'units  map'
       'detail map';
   }
   /* Keep the fixed-height panels from stretching; the list fills the 1fr row

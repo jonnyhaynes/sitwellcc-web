@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { isMicrosite } from '../lib/microsites';
 
 const Header = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -11,8 +12,7 @@ const Header = () => {
   const [base, setBase] = useState('');
 
   useEffect(() => {
-    const microsites = ['brand.sitwell.cc', 'routes.sitwell.cc'];
-    if (microsites.includes(window.location.hostname)) {
+    if (isMicrosite(window.location.hostname)) {
       setBase('https://www.sitwell.cc');
     }
   }, []);

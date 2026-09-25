@@ -5,11 +5,13 @@ import {
   ROUTE_HEX,
   routeShareUrl,
   routeSlug,
+  routeSlugFromBarePath,
   routeSlugFromPath,
   routeSlugFromSearch,
   type Route,
   type RouteColor,
 } from '../lib/routes';
+import { isRoutesMicrosite } from '../lib/microsites';
 import {
   formatDistance,
   formatElevation,
@@ -20,22 +22,30 @@ import {
 const DISTANCE_UNIT_KEY = 'routes.distanceUnit';
 const ELEVATION_UNIT_KEY = 'routes.elevationUnit';
 
-// The one page routes live on. A shared route is that page's path plus the slug
-// (see the rewrite in vercel.json), so this is the base for both reading the
-// current selection out of the URL and writing it back.
+// Where routes live on the main site. On the routes microsite they live at the site
+// root instead — see shareBasePath.
 const ROUTES_PATH = '/routes';
 
 // How long the "Link copied" confirmation stays up, in ms.
 const COPY_FEEDBACK_MS = 2000;
 
-// Resolve the route a shared link points at: the pretty /routes/<slug> path, or
-// the ?route= fallback (the rewrite isn't applied by `astro dev`). Returns null
-// for no slug, an unrecognised slug, or a slug that matches no published route —
-// the page then renders with nothing selected rather than erroring.
+// The base a route's path hangs off: '' on the routes microsite, whose root already
+// *is* the routes page (so routes.sitwell.cc/<slug> — no repeated "routes"), and
+// /routes everywhere else.
+function shareBasePath(): string {
+  return isRoutesMicrosite(window.location.hostname) ? '' : ROUTES_PATH;
+}
+
+// Resolve the route a URL points at: /routes/<slug>, the bare /<slug> form the routes
+// microsite shares, or the ?route= fallback (no rewrite at all under `astro dev`).
+// Returns null for no slug, an unrecognised slug, or a slug that matches no published
+// route — the page then renders with nothing selected rather than erroring.
 function routeIdFromUrl(routes: Route[]): string | null {
-  const slug =
-    routeSlugFromPath(window.location.pathname) ??
-    routeSlugFromSearch(window.location.search);
+  const { pathname, search, hostname } = window.location;
+  // A bare segment only means "a route" where the whole site is the routes page;
+  // on www.sitwell.cc it would collide with the site's own pages.
+  const bareSlug = isRoutesMicrosite(hostname) ? routeSlugFromBarePath(pathname) : null;
+  const slug = bareSlug ?? routeSlugFromPath(pathname) ?? routeSlugFromSearch(search);
   if (!slug) return null;
   return routes.find((route) => routeSlug(route.name) === slug)?.id ?? null;
 }
@@ -156,8 +166,10 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
   // leave the page in one press. A route whose name yields no usable slug is left
   // out of the URL rather than linked as a path that can never match it.
   useEffect(() => {
+    const base = shareBasePath();
     const slug = selected ? routeSlug(selected.name) : '';
-    window.history.replaceState(null, '', slug ? routeShareUrl(ROUTES_PATH, slug) : ROUTES_PATH);
+    const next = slug ? routeShareUrl(base, slug) : base || '/';
+    window.history.replaceState(null, '', next);
   }, [selected]);
 
   // Land a shared link on the route itself: on mobile the detail panel sits below
@@ -193,7 +205,7 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
   // The absolute URL for a route: the share sheet and the clipboard are both no
   // use with a relative path.
   const shareUrlFor = (route: Route) =>
-    new URL(routeShareUrl(ROUTES_PATH, routeSlug(route.name)), window.location.origin).href;
+    new URL(routeShareUrl(shareBasePath(), routeSlug(route.name)), window.location.origin).href;
 
   const share = async (route: Route) => {
     const url = shareUrlFor(route);

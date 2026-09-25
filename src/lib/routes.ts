@@ -47,10 +47,11 @@ export function gpxDownloadName(name: string): string {
   return `sitwell-${routeSlug(name) || 'route'}.gpx`;
 }
 
-// A route is shared at /routes/<slug>. That pretty path is a rewrite onto the one
-// prerendered /routes document, so the slug is read back off the pathname (and, as
-// a fallback, off ?route= — the rewrite isn't applied by `astro dev` or any host
-// that ignores vercel.json).
+// A route is shared either as /routes/<slug> (the main site, and local dev) or as a
+// bare /<slug> on the routes microsite, whose root is the routes page. Both serve
+// the same prerendered /routes document via a rewrite, so the slug is read back off
+// the pathname — with ?route= as a fallback for hosts that apply no rewrite at all
+// (`astro dev`).
 // Slugs are [a-z0-9-] only, so no percent-decoding is needed here.
 
 // '/routes/cadeby-loop' (or '…/') -> 'cadeby-loop'. Anything that isn't a single
@@ -60,15 +61,25 @@ export function routeSlugFromPath(pathname: string): string | null {
   return match ? match[1] : null;
 }
 
+// '/barlow' (or '/barlow/') -> 'barlow'. The form a route takes on the routes
+// microsite, where the root *is* the routes page. Callers must only use this where
+// that's true — on www.sitwell.cc a bare segment is one of the site's own pages.
+export function routeSlugFromBarePath(pathname: string): string | null {
+  const match = /^\/([^/]+)\/?$/.exec(pathname);
+  return match ? match[1] : null;
+}
+
 // The ?route= fallback: present, trimmed value, else null.
 export function routeSlugFromSearch(search: string): string | null {
   const value = new URLSearchParams(search).get('route')?.trim();
   return value ? value : null;
 }
 
-// The shareable URL for a route, relative to the site root.
-export function routeShareUrl(pathname: string, slug: string): string {
-  return `${pathname.replace(/\/+$/, '')}/${encodeURIComponent(slug)}`;
+// The shareable URL for a route, relative to the site root. An empty basePath means
+// the site root itself, which is how the routes microsite wants its links
+// (/<slug>, with no /routes prefix).
+export function routeShareUrl(basePath: string, slug: string): string {
+  return `${basePath.replace(/\/+$/, '')}/${encodeURIComponent(slug)}`;
 }
 
 export const ROUTE_HEX: Record<RouteColor, string> = {

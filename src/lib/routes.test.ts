@@ -11,6 +11,7 @@ import {
   routeSlug,
   gpxDownloadName,
   routeSlugFromPath,
+  routeSlugFromBarePath,
   routeSlugFromSearch,
   routeShareUrl,
 } from './routes';
@@ -212,6 +213,26 @@ describe('routeSlugFromPath', () => {
   });
 });
 
+describe('routeSlugFromBarePath', () => {
+  it('reads the slug from a bare root path', () => {
+    expect(routeSlugFromBarePath('/bank-holiday-blowout-holme-moss')).toBe(
+      'bank-holiday-blowout-holme-moss',
+    );
+  });
+  it('tolerates a trailing slash', () => {
+    expect(routeSlugFromBarePath('/barlow/')).toBe('barlow');
+  });
+  it('is null for the root itself', () => {
+    expect(routeSlugFromBarePath('/')).toBeNull();
+    expect(routeSlugFromBarePath('//')).toBeNull();
+    expect(routeSlugFromBarePath('')).toBeNull();
+  });
+  it('is null for deeper paths', () => {
+    expect(routeSlugFromBarePath('/routes/barlow')).toBeNull();
+    expect(routeSlugFromBarePath('/a/b')).toBeNull();
+  });
+});
+
 describe('routeSlugFromSearch', () => {
   it('reads the ?route= fallback', () => {
     expect(routeSlugFromSearch('?route=cadeby-loop')).toBe('cadeby-loop');
@@ -232,6 +253,10 @@ describe('routeShareUrl', () => {
   });
   it('tolerates a trailing slash on the base path', () => {
     expect(routeShareUrl('/routes/', 'cadeby-loop')).toBe('/routes/cadeby-loop');
+  });
+  it('is root-relative when the base is the site root', () => {
+    // The routes microsite form: routes.sitwell.cc/barlow, no /routes prefix.
+    expect(routeShareUrl('', 'barlow')).toBe('/barlow');
   });
   it('encodes the slug', () => {
     expect(routeShareUrl('/routes', 'a b')).toBe('/routes/a%20b');

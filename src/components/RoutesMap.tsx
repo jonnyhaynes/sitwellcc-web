@@ -123,14 +123,20 @@ function FitBounds({ routes }: { routes: Route[] }) {
 export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
   const [active, setActive] = useState<Set<RouteColor>>(() => new Set(ALL_COLORS));
 
+  // The route the URL pointed at on first load, if any — i.e. a shared link.
+  // While it's set the page is *focused* on that one route: the map plots only
+  // it and the panel shows its detail with a Back link where the filters would
+  // be. It never changes after mount; leaving the focused view is a plain
+  // navigation to the routes page, not a state change here.
+  const [sharedRouteId] = useState<string | null>(() => routeIdFromUrl(routes));
+
   // Whether the page was opened on a shared link. Decides the one-off scroll to
   // the detail panel, and nothing else.
   const cameFromUrl = useRef(false);
 
   const [selectedId, setSelectedId] = useState<string | null>(() => {
-    const id = routeIdFromUrl(routes);
-    cameFromUrl.current = id !== null;
-    return id;
+    cameFromUrl.current = sharedRouteId !== null;
+    return sharedRouteId;
   });
 
   // "Link copied" is only worth showing until the member moves on, so it resets
@@ -153,24 +159,26 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
     localStorage.setItem(ELEVATION_UNIT_KEY, elevationUnit);
   }, [elevationUnit]);
 
+  // The shared-link route, resolved against the routes we have. An unrecognised
+  // slug already resolves to null in routeIdFromUrl, so this is only ever a real
+  // route — but resolve defensively rather than assuming.
+  const sharedRoute = sharedRouteId
+    ? routes.find((r) => r.id === sharedRouteId) ?? null
+    : null;
+  const focused = sharedRoute !== null;
+
+  // Selecting a route never rewrites the address bar: browsing stays on the
+  // routes page (/routes, or the site root on the microsite) and the Share button
+  // mints the link instead — see shareUrlFor.
+
+  // In the focused view the shared route is the only one plotted, so the colour
+  // filters don't apply.
   const visible = useMemo(
-    () => routes.filter((r) => active.has(r.color)),
-    [routes, active],
+    () => (focused && sharedRoute ? [sharedRoute] : routes.filter((r) => active.has(r.color))),
+    [routes, active, focused, sharedRoute],
   );
 
-  const selected = routes.find((r) => r.id === selectedId) ?? null;
-
-  // Keep the address bar on the selected route, so copying the URL by hand gives
-  // the same link the Share button copies. replaceState, not pushState: picking
-  // through the list shouldn't stack up history entries, and Back should still
-  // leave the page in one press. A route whose name yields no usable slug is left
-  // out of the URL rather than linked as a path that can never match it.
-  useEffect(() => {
-    const base = shareBasePath();
-    const slug = selected ? routeSlug(selected.name) : '';
-    const next = slug ? routeShareUrl(base, slug) : base || '/';
-    window.history.replaceState(null, '', next);
-  }, [selected]);
+  const selected = focused ? sharedRoute : routes.find((r) => r.id === selectedId) ?? null;
 
   // Land a shared link on the route itself: on mobile the detail panel sits below
   // the map, so without this the visitor arrives at the map with no sign of what
@@ -259,23 +267,27 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
 
   const panel = (
     <div className="routes-panel">
-      <fieldset className="routes-filter">
-        <legend className="visually-hidden">Filter routes by colour</legend>
-        {ALL_COLORS.map((color) => (
-          <label
-            key={color}
-            className="routes-chip"
-            style={{ '--chip': ROUTE_HEX[color] } as React.CSSProperties}
-          >
-            <input
-              type="checkbox"
-              checked={active.has(color)}
-              onChange={() => toggle(color)}
-            />
-            {COLOR_LABEL[color]}
-          </label>
-        ))}
-      </fieldset>
+      {/* A shared link has a single fixed route on the map, so the colour filters
+          don't apply and are dropped. */}
+      {!focused && (
+        <fieldset className="routes-filter">
+          <legend className="visually-hidden">Filter routes by colour</legend>
+          {ALL_COLORS.map((color) => (
+            <label
+              key={color}
+              className="routes-chip"
+              style={{ '--chip': ROUTE_HEX[color] } as React.CSSProperties}
+            >
+              <input
+                type="checkbox"
+                checked={active.has(color)}
+                onChange={() => toggle(color)}
+              />
+              {COLOR_LABEL[color]}
+            </label>
+          ))}
+        </fieldset>
+      )}
 
       <div className="routes-units">
         {unitGroup<DistanceUnit>(
@@ -298,42 +310,44 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
         )}
       </div>
 
-      <ul className="routes-list">
-        {visible.length === 0 ? (
-          <li className="routes-list-empty">
-            {routes.length === 0
-              ? 'No routes published yet.'
-              : 'No routes match the selected colours.'}
-          </li>
-        ) : (
-          visible.map((route) => (
-            <li key={route.id}>
-              <button
-                type="button"
-                className={
-                  route.id === selectedId
-                    ? 'routes-list-item routes-list-item--selected'
-                    : 'routes-list-item'
-                }
-                style={{ '--chip': ROUTE_HEX[route.color] } as React.CSSProperties}
-                aria-pressed={route.id === selectedId}
-                onClick={() => setSelectedId(route.id)}
-              >
-                <span className="routes-list-name">{route.name}</span>
-                <span className="routes-list-meta">
-                  {formatDistance(route.distanceMeters, distanceUnit)}
-                  {route.rating !== null && (
-                    <>
-                      {' · '}
-                      <span className="routes-rating">{route.rating}/5</span>
-                    </>
-                  )}
-                </span>
-              </button>
+      {!focused && (
+        <ul className="routes-list">
+          {visible.length === 0 ? (
+            <li className="routes-list-empty">
+              {routes.length === 0
+                ? 'No routes published yet.'
+                : 'No routes match the selected colours.'}
             </li>
-          ))
-        )}
-      </ul>
+          ) : (
+            visible.map((route) => (
+              <li key={route.id}>
+                <button
+                  type="button"
+                  className={
+                    route.id === selectedId
+                      ? 'routes-list-item routes-list-item--selected'
+                      : 'routes-list-item'
+                  }
+                  style={{ '--chip': ROUTE_HEX[route.color] } as React.CSSProperties}
+                  aria-pressed={route.id === selectedId}
+                  onClick={() => setSelectedId(route.id)}
+                >
+                  <span className="routes-list-name">{route.name}</span>
+                  <span className="routes-list-meta">
+                    {formatDistance(route.distanceMeters, distanceUnit)}
+                    {route.rating !== null && (
+                      <>
+                        {' · '}
+                        <span className="routes-rating">{route.rating}/5</span>
+                      </>
+                    )}
+                  </span>
+                </button>
+              </li>
+            ))
+          )}
+        </ul>
+      )}
 
       {selected && (
         <div
@@ -341,7 +355,9 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
           className="routes-detail"
           style={{ '--chip': ROUTE_HEX[selected.color] } as React.CSSProperties}
         >
-          <h2 className="text-2xl font-ropa leading-none">{selected.name}</h2>
+          {/* The focused view's page heading already names the ride, so repeating
+              it here would just duplicate it. */}
+          {!focused && <h2 className="text-2xl font-ropa leading-none">{selected.name}</h2>}
           <p>
             {formatDistance(selected.distanceMeters, distanceUnit)}
             {selected.elevationGain !== null && (
@@ -379,48 +395,89 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
     </div>
   );
 
+  // The page heading. On a shared link it names the ride, in the ride's colour,
+  // and drops the intro; otherwise it stays the browse view's heading. It lives
+  // here rather than in routes.astro because only the island knows whether the
+  // URL pointed at a route: the page is one static document serving every link.
+  const heading = (
+    <section className="w-full px-5 lg:px-10 mb-10">
+      {focused && sharedRoute ? (
+        <h1
+          className="text-6xl font-ropa-bold"
+          style={{ color: ROUTE_HEX[sharedRoute.color] }}
+        >
+          {sharedRoute.name}
+        </h1>
+      ) : (
+        <>
+          <h1 className="text-6xl font-ropa-bold mb-5">Club routes</h1>
+          <p className="lg:w-3/4">
+            Every club route, plotted. Filter by ride colour, click a route for its distance,
+            café stop and a GPX download for your Garmin, Wahoo or Strava.
+          </p>
+        </>
+      )}
+    </section>
+  );
+
+  // The focused (shared-link) view drops the filter and list rows, so it needs
+  // its own areas. See .routes-layout--focused in routes.css.
+  const layoutClass = focused
+    ? 'routes-layout routes-layout--focused mb-20'
+    : 'routes-layout mb-20';
+
   if (!apiKey) {
     return (
-      <div className="routes-layout mb-20">
-        {panel}
-        <div className="routes-map-fallback">
-          <p>Map unavailable.</p>
+      <>
+        {heading}
+        <div className={layoutClass}>
+          {panel}
+          <div className="routes-map-fallback">
+            <p>Map unavailable.</p>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="routes-layout mb-20">
-      {panel}
-      <div className="routes-map">
-        <APIProvider apiKey={apiKey}>
-          <Map
-            style={{ width: '100%', height: '100%' }}
-            gestureHandling="cooperative"
-            defaultCenter={WHISTON}
-            defaultZoom={11}
-            onClick={() => setSelectedId(null)}
-          >
-            <FitBounds routes={visible} />
-            {visible.map((route) => {
-              const isSelected = route.id === selectedId;
-              const isDimmed = selectedId !== null && !isSelected;
-              return (
-                <Polyline
-                  key={route.id}
-                  path={route.coords}
-                  strokeColor={ROUTE_HEX[route.color]}
-                  strokeWeight={isSelected ? 6 : 3}
-                  strokeOpacity={isDimmed ? 0.3 : 1}
-                  zIndex={isSelected ? 10 : 1}
-                  onClick={() => setSelectedId(route.id)}
-                />
-              );
-            })}
-          </Map>
-        </APIProvider>
+    <>
+      {heading}
+      <div className={layoutClass}>
+        {panel}
+        <div className="routes-map">
+          <APIProvider apiKey={apiKey}>
+            <Map
+              style={{ width: '100%', height: '100%' }}
+              gestureHandling="cooperative"
+              defaultCenter={WHISTON}
+              defaultZoom={11}
+              // The focused view has one fixed route on the map; a background
+              // click must not clear its detail.
+              onClick={() => {
+                if (!focused) setSelectedId(null);
+              }}
+            >
+              <FitBounds routes={visible} />
+              {visible.map((route) => {
+                const isSelected = route.id === selectedId;
+                const isDimmed = selectedId !== null && !isSelected;
+                return (
+                  <Polyline
+                    key={route.id}
+                    path={route.coords}
+                    strokeColor={ROUTE_HEX[route.color]}
+                    strokeWeight={isSelected ? 6 : 3}
+                    strokeOpacity={isDimmed ? 0.3 : 1}
+                    zIndex={isSelected ? 10 : 1}
+                    onClick={() => setSelectedId(route.id)}
+                  />
+                );
+              })}
+            </Map>
+          </APIProvider>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

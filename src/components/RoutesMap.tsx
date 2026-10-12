@@ -1,6 +1,6 @@
-/// <reference types="google.maps" />
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { APIProvider, Map, Polyline, useMap } from '@vis.gl/react-google-maps';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import {
   ROUTE_HEX,
   routeShareUrl,
@@ -80,47 +80,14 @@ const COLOR_LABEL: Record<RouteColor, string> = {
   brown: 'Off-road',
 };
 
-const WHISTON = { lat: 53.405298, lng: -1.327339 };
+// Default camera, as a Leaflet [lat, lng] tuple.
+const WHISTON: [number, number] = [53.405298, -1.327339];
 
 interface RoutesMapProps {
   routes: Route[];
-  apiKey: string | undefined;
 }
 
-/**
- * Fits the map to the bounds of the currently-visible routes whenever that set
- * changes. If nothing plottable is visible it does nothing, leaving the default
- * camera in place.
- */
-function FitBounds({ routes }: { routes: Route[] }) {
-  const map = useMap();
-
-  useEffect(() => {
-    if (!map) return;
-
-    const bounds = new google.maps.LatLngBounds();
-    let hasPoints = false;
-    for (const route of routes) {
-      for (const point of route.coords) {
-        bounds.extend(point);
-        hasPoints = true;
-      }
-    }
-    if (!hasPoints) return;
-
-    // fitBounds derives zoom from the map's pixel size, so it must run once the
-    // map has laid out. On first mount the container may still be sizing (grid),
-    // giving a wrong zoom — so fit now and again after the map goes idle.
-    const fit = () => map.fitBounds(bounds, 32);
-    fit();
-    const listener = google.maps.event.addListenerOnce(map, 'idle', fit);
-    return () => listener.remove();
-  }, [map, routes]);
-
-  return null;
-}
-
-export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
+export default function RoutesMap({ routes }: RoutesMapProps) {
   const [active, setActive] = useState<Set<RouteColor>>(() => new Set(ALL_COLORS));
 
   // The route the URL pointed at on first load, if any — i.e. a shared link.
@@ -200,6 +167,100 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
       }
     };
   }, [selectedId]);
+
+  // --- Leaflet map -------------------------------------------------------
+  // Leaflet owns its own DOM, so the map is imperative: the instance lives in a
+  // ref/state and the React state above drives it, exactly like the panel.
+  const mapRef = useRef<HTMLDivElement | null>(null);
+  const lineGroupRef = useRef<L.LayerGroup | null>(null);
+  const [map, setMap] = useState<L.Map | null>(null);
+
+  // Create the map once; everything below reacts to state changes on it.
+  useEffect(() => {
+    if (!mapRef.current) return;
+    const instance = L.map(mapRef.current, {
+      center: WHISTON,
+      zoom: 11,
+      // Leaflet's equivalent of Google's `gestureHandling="cooperative"`: the
+      // wheel scrolls the page, not the map, unless the member opts in (⌘/ctrl+wheel).
+      scrollWheelZoom: false,
+    });
+
+    // OSM tiles are free and keyless. The attribution is required by OSM's tile
+    // usage policy, and Leaflet renders it from this option.
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 19,
+    }).addTo(instance);
+
+    lineGroupRef.current = L.layerGroup().addTo(instance);
+    setMap(instance);
+
+    return () => {
+      instance.remove();
+      lineGroupRef.current = null;
+      setMap(null);
+    };
+  }, []);
+
+  // A background click clears the selection — except in the focused (shared-link)
+  // view, whose single route must stay put.
+  useEffect(() => {
+    if (!map) return;
+    const clear = () => {
+      if (!focused) setSelectedId(null);
+    };
+    map.on('click', clear);
+    return () => {
+      map.off('click', clear);
+    };
+  }, [map, focused]);
+
+  // Redraw the routes as polylines whenever the visible set or the selection
+  // changes. `bubblingMouseEvents: false` stops a line click from also reaching
+  // the map's click handler and clearing the selection it just made.
+  useEffect(() => {
+    const group = lineGroupRef.current;
+    if (!map || !group) return;
+
+    group.clearLayers();
+    for (const route of visible) {
+      const isSelected = route.id === selectedId;
+      const isDimmed = selectedId !== null && !isSelected;
+      const line = L.polyline(
+        route.coords.map((point) => [point.lat, point.lng] as [number, number]),
+        {
+          color: ROUTE_HEX[route.color],
+          weight: isSelected ? 6 : 3,
+          opacity: isDimmed ? 0.3 : 1,
+          bubblingMouseEvents: false,
+        },
+      );
+      line.on('click', () => setSelectedId(route.id));
+      line.addTo(group);
+      if (isSelected) line.bringToFront();
+    }
+  }, [map, visible, selectedId]);
+
+  // Fit the map to the visible routes. Leaflet measures the container, which in
+  // this grid can size after first paint, so invalidateSize() runs first — the
+  // equivalent of the old "fit again once idle" trick — inside a frame so the
+  // layout has settled.
+  useEffect(() => {
+    if (!map) return;
+
+    const points = visible.flatMap((route) =>
+      route.coords.map((point) => [point.lat, point.lng] as [number, number]),
+    );
+    if (points.length === 0) return;
+
+    const bounds = L.latLngBounds(points);
+    const frame = requestAnimationFrame(() => {
+      map.invalidateSize();
+      map.fitBounds(bounds, { padding: [32, 32] });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [map, visible]);
 
   const toggle = (color: RouteColor) => {
     setActive((prev) => {
@@ -426,56 +487,13 @@ export default function RoutesMap({ routes, apiKey }: RoutesMapProps) {
     ? 'routes-layout routes-layout--focused mb-20'
     : 'routes-layout mb-20';
 
-  if (!apiKey) {
-    return (
-      <>
-        {heading}
-        <div className={layoutClass}>
-          {panel}
-          <div className="routes-map-fallback">
-            <p>Map unavailable.</p>
-          </div>
-        </div>
-      </>
-    );
-  }
-
   return (
     <>
       {heading}
       <div className={layoutClass}>
         {panel}
         <div className="routes-map">
-          <APIProvider apiKey={apiKey}>
-            <Map
-              style={{ width: '100%', height: '100%' }}
-              gestureHandling="cooperative"
-              defaultCenter={WHISTON}
-              defaultZoom={11}
-              // The focused view has one fixed route on the map; a background
-              // click must not clear its detail.
-              onClick={() => {
-                if (!focused) setSelectedId(null);
-              }}
-            >
-              <FitBounds routes={visible} />
-              {visible.map((route) => {
-                const isSelected = route.id === selectedId;
-                const isDimmed = selectedId !== null && !isSelected;
-                return (
-                  <Polyline
-                    key={route.id}
-                    path={route.coords}
-                    strokeColor={ROUTE_HEX[route.color]}
-                    strokeWeight={isSelected ? 6 : 3}
-                    strokeOpacity={isDimmed ? 0.3 : 1}
-                    zIndex={isSelected ? 10 : 1}
-                    onClick={() => setSelectedId(route.id)}
-                  />
-                );
-              })}
-            </Map>
-          </APIProvider>
+          <div ref={mapRef} className="routes-map-canvas" />
         </div>
       </div>
     </>

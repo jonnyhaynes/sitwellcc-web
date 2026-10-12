@@ -17,8 +17,7 @@
 }
 .routes-panel { display: contents; } /* let filter + list + detail place into the grid independently */
 .routes-filter { grid-area: filter; }
-.routes-map,
-.routes-map-fallback { grid-area: map; min-height: 60vh; }
+.routes-map { grid-area: map; min-height: 60vh; }
 .routes-list { grid-area: list; }
 .routes-detail {
   grid-area: detail;
@@ -55,8 +54,7 @@
      height (it spans all rows) and it wouldn't render. */
   .routes-filter,
   .routes-detail { align-self: start; }
-  .routes-map,
-  .routes-map-fallback { min-height: 75vh; }
+  .routes-map { min-height: 75vh; }
 }
 
 /* Route list: capped to show 10 items, then scrolls. Height is derived from the
@@ -144,9 +142,8 @@
   font-size: 0.85rem;
 }
 
-/* Google Maps needs the map container to have an explicit height. */
-.routes-map .gm-style,
-.routes-map > div { height: 100%; }
+/* Leaflet needs the map container to have an explicit height. */
+.routes-map-canvas { height: 100%; width: 100%; }
 
 .routes-filter {
   display: flex;
@@ -191,14 +188,6 @@
   outline: 2px solid var(--color-black);
   outline-offset: 2px;
 }
-.routes-map-fallback {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.05);
-  background: color-mix(in srgb, var(--color-black) 5%, transparent);
-}
-
 /* Units toggle: two small segmented controls (distance, elevation) sitting above
    the route list. Flat bordered idiom — black border + hard offset shadow, no
    rounding. Selected segment inverts to solid black. */

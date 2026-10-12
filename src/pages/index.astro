@@ -131,15 +131,25 @@ const coaching = card('coaching');
   <section class="media flex flex-row w-full flex-wrap px-5 lg:px-10 mb-10">
     <article class="club-rides block relative w-full lg:w-7/12 lg:pr-5 mb-10 h-96">
       <a href={rides.linkHref} class="block w-full h-full overflow-hidden relative">
-        <SanityImage
-          image={rides.image}
-          width={1400}
-          height={768}
-          fallbackSrc={rides.fallbackSrc}
-          fallbackAlt={rides.fallbackAlt}
-          class="absolute inset-0 object-cover object-right w-full h-full"
-          loading="eager"
-        />
+        {/* The Club rides card plays a drone clip rather than a photo — a deliberate
+            replacement, so `rides.image` / `fallbackSrc` / `fallbackAlt` are unused
+            here. Decorative (aria-hidden) because the eyebrow, heading and body carry
+            the meaning, and `pointer-events-none` keeps the whole card one click
+            target for the link. */}
+        <video
+          class="absolute inset-0 object-cover w-full h-full pointer-events-none"
+          data-decorative-video
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster="/video/drone-poster.webp"
+          aria-hidden="true"
+          tabindex="-1"
+        >
+          <source src="/video/drone.webm" type="video/webm" />
+          <source src="/video/drone.mp4" type="video/mp4" />
+        </video>
         <div class="absolute left-0 bottom-0 text-white p-5">
           <h3 class="font-ropa text-lg uppercase">{rides.eyebrow}</h3>
           <h2 class="font-ropa text-3xl whitespace-pre-line">{rides.heading}</h2>
@@ -208,4 +218,15 @@ const coaching = card('coaching');
       </a>
     </article>
   </section>
+
+  {/* Start the decorative clips only when the visitor hasn't asked for reduced
+      motion. The `poster` is already on screen, so there's no flash of a paused
+      frame, and a looping autoplay video is exactly what WCAG 2.2.2 covers. */}
+  <script is:inline>
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document
+        .querySelectorAll('video[data-decorative-video]')
+        .forEach((video) => video.play().catch(() => {}));
+    }
+  </script>
 </Layout>

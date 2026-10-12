@@ -40,7 +40,7 @@ Two map surfaces, both moved to OSM:
 | `src/components/RoutesMap.tsx` | Drop the google import/types and the `apiKey` prop + "Map unavailable" fallback. Map internals rebuilt on Leaflet: create-once map + OSM tile layer, a polyline layer group redrawn on `visible`/`selectedId`, background-click clears selection, and `invalidateSize()` + `fitBounds()` on the visible set. Panel logic (filters, units, list, detail, Share, focused shared-link view) is unchanged. |
 | `src/pages/routes.astro` | Remove the `PUBLIC_GOOGLE_MAPS_API_KEY` read and the `apiKey` prop. |
 | `src/styles/components/routes.css` | Replace the google `.gm-style` height rule with `.routes-map-canvas { height:100%; width:100% }`; drop the now-unused `.routes-map-fallback` rules. |
-| `src/pages/contact.astro` | Replace both `google.com/maps/embed` iframes with OSM `export/embed.html` embeds (same lat/lng as before), adding a `title` to each and dropping `allowfullscreen`. |
+| `src/pages/contact.astro` | Replace both `google.com/maps/embed` iframes with OSM `export/embed.html` embeds, re-pinned to the real meet points: the land opposite the pharmacy between High Street and Turner Lane in Whiston (53.405250, -1.327100), and the car park off Middle Lane South at Herringthorpe Athletics Stadium (53.422950, -1.332350). Adds a `title` to each and drops `allowfullscreen`. |
 | `src/env.d.ts` | Remove `PUBLIC_GOOGLE_MAPS_API_KEY`. |
 
 ### Implementation notes
